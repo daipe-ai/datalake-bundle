@@ -1,1 +1,1 @@
-Azure DataLake bundle for the Pyfony Framework
+DataLake bundle for the Pyfony Framework

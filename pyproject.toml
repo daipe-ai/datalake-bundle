@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "datalake-bundle"
 version = "0.1.0"
-description = "Azure DataLake bundle for the Pyfony Framework"
+description = "DataLake bundle for the Pyfony Framework"
 readme = "README.md"
 repository = "https://github.com/DataSentics/datalake-bundle"
 
