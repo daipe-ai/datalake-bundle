@@ -1,8 +1,8 @@
-import os
 import unittest
 from consolebundle.ConsoleBundle import ConsoleBundle
 from injecta.testing.servicesTester import testServices
 from injecta.config.YamlConfigReader import YamlConfigReader
+from injecta.package.pathResolver import resolvePath
 from typing import List
 from pyfony.PyfonyBundle import PyfonyBundle
 from pyfony.kernel.BaseKernel import BaseKernel
@@ -23,7 +23,7 @@ class DataLakeBundleTest(unittest.TestCase):
 
         kernel = Kernel(
             'test',
-            os.getcwd() + '/DataLakeBundleTest',
+            resolvePath('datalakebundle') + '/DataLakeBundleTest',
             YamlConfigReader()
         )
 
