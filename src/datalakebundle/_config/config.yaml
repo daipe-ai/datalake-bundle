@@ -1,0 +1,74 @@
+parameters:
+  datalakebundle:
+    storage:
+      name:
+      accountKey:
+    acl:
+      # TODO:
+      storages:
+        - filesystem: 'data'
+          maxLevel: 1
+    activeDirectory: # TODO:
+      # Define key value pair for "User/Group name: 'object id from AAD'"
+      #datalake-admin-group: '73d755e9-c7eb-4bee-96df-c8b98398b845'
+      #datalake-user: '6e1a2e8e-856c-42bc-9849-035a8ae4da00'
+
+services:
+  datalakebundle.client.ServiceClientFactory:
+    arguments:
+      - '%datalakebundle.storage.name%'
+      - '%datalakebundle.storage.accountKey%'
+
+  datalakebundle.client.dataLakeServiceClient:
+    class: azure.storage.filedatalake._data_lake_service_client.DataLakeServiceClient
+    factory: ['@datalakebundle.client.ServiceClientFactory', 'create']
+
+  datalakebundle.acl.export.AclExporter:
+    arguments:
+      - '%project.configDir%'
+      - '%datalakebundle.storage.name%'
+      - '@consolebundle.logger'
+      - '%datalakebundle.activeDirectory%'
+
+  datalakebundle.acl.export.AclExportCommand:
+    arguments:
+      - '%datalakebundle.acl.storages%'
+      - '@consolebundle.logger'
+    tags:
+      - 'console.command'
+
+  datalakebundle.acl.set.AclSetter:
+    arguments:
+      - '%project.configDir%'
+      - '%datalakebundle.storage.name%'
+      - '@consolebundle.logger'
+
+  datalakebundle.acl.set.AclSetCommand:
+    arguments:
+      - '%datalakebundle.acl.storages%'
+      - '@consolebundle.logger'
+    tags:
+      - 'console.command'
+
+  datalakebundle.acl.set.AclStringGenerator:
+    arguments:
+      - '@consolebundle.logger'
+
+  datalakebundle.acl.check.AclChecker:
+    arguments:
+      - '%project.configDir%'
+      - '%datalakebundle.storage.name%'
+      - '@consolebundle.logger'
+
+  datalakebundle.acl.check.AclCheckCommand:
+    arguments:
+      - '%datalakebundle.acl.storages%'
+      - '@consolebundle.logger'
+    tags:
+      - 'console.command'
+
+  datalakebundle.acl.AclConfigReader:
+
+  datalakebundle.acl.AclPathResolver:
+    arguments:
+      - '@consolebundle.logger'

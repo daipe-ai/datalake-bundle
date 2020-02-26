@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "datalake-bundle"
+version = "0.1.0"
+description = "Azure DataLake bundle for the Pyfony Framework"
+readme = "README.md"
+repository = "https://github.com/DataSentics/datalake-bundle"
+
+license = "MIT"
+
+authors = [
+    "Jiri Koutny <jiri.koutny@datasentics.com>"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+include = ["*.yaml"]
+
+packages = [
+    { include = "datalakebundle", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "~3.7.3"
+pyfony-bundles = "0.2.*"
+azure-storage-file-datalake = "12.0.0b7"
+urllib3 = "1.24.*"
+pandas = "0.25.*"
+console-bundle = "0.2.*"
+
+[tool.poetry.dev-dependencies]
+pylint = "2.4.*"
+pyfony = "^0.4.0"
+pytest = "5.2.*"
