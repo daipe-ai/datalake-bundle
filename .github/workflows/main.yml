@@ -1,4 +1,4 @@
-name: datalake-bundle
+name: pipeline
 on: [push]
 
 jobs:
