@@ -124,11 +124,11 @@ colorama = "*"
 
 [[package]]
 category = "main"
-description = "Console"
+description = "Console Bundle for the Pyfony Framework"
 name = "console-bundle"
 optional = false
 python-versions = ">=3.7.3,<3.8.0"
-version = "0.2.0"
+version = "0.2.1"
 
 [package.dependencies]
 colorlog = ">=4.0.0,<4.1.0"
@@ -635,8 +635,8 @@ colorlog = [
     {file = "colorlog-4.0.2.tar.gz", hash = "sha256:3cf31b25cbc8f86ec01fef582ef3b840950dea414084ed19ab922c8b493f9b42"},
 ]
 console-bundle = [
-    {file = "console-bundle-0.2.0.tar.gz", hash = "sha256:1d7375cd3bd3d694157517ec64cd473665fa94d0b934c240f69ce320bdd5b516"},
-    {file = "console_bundle-0.2.0-py3-none-any.whl", hash = "sha256:c239601f1e020e869ae0a8db6410ecba144fca0dcd7394c86e394c9c676f3889"},
+    {file = "console-bundle-0.2.1.tar.gz", hash = "sha256:e6396164f5083a85ab6a788726ca6f2141a01ac53d6893020d749d21a429d0d5"},
+    {file = "console_bundle-0.2.1-py3-none-any.whl", hash = "sha256:db1c73f45a9b7832e9007ec9579a93341f21ece58ddfea7a9e4f6e98f7b1f6a2"},
 ]
 cryptography = [
     {file = "cryptography-2.8-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:fb81c17e0ebe3358486cd8cc3ad78adbae58af12fc2bf2bc0bb84e8090fa5ce8"},
