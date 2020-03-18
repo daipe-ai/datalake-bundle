@@ -63,11 +63,19 @@ description = "Console Bundle for the Pyfony Framework"
 name = "console-bundle"
 optional = false
 python-versions = ">=3.7.3,<3.8.0"
-version = "0.2.1"
+version = "0.2.2"
 
 [package.dependencies]
 colorlog = ">=4.0.0,<4.1.0"
 pyfony-bundles = ">=0.2.0,<0.3.0"
+
+[[package]]
+category = "dev"
+description = "Databricks Connect Client"
+name = "databricks-connect"
+optional = false
+python-versions = "*"
+version = "6.4.0"
 
 [[package]]
 category = "dev"
@@ -154,7 +162,7 @@ description = "Core utilities for Python packages"
 name = "packaging"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "20.1"
+version = "20.3"
 
 [package.dependencies]
 pyparsing = ">=2.0.2"
@@ -183,6 +191,14 @@ name = "py"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.8.1"
+
+[[package]]
+category = "dev"
+description = "Enables Python programs to dynamically access arbitrary Java objects"
+name = "py4j"
+optional = false
+python-versions = "*"
+version = "0.10.9"
 
 [[package]]
 category = "dev"
@@ -290,7 +306,7 @@ description = "Style preserving TOML library"
 name = "tomlkit"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.5.8"
+version = "0.5.11"
 
 [[package]]
 category = "dev"
@@ -324,14 +340,14 @@ marker = "python_version < \"3.8\""
 name = "zipp"
 optional = false
 python-versions = ">=3.6"
-version = "3.0.0"
+version = "3.1.0"
 
 [package.extras]
 docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "7f0c0e7a50d44e34bddd2320561009b537ada505fa681eea48c81e4256ed0529"
+content-hash = "cd090279b8ff123587ba92454c3b9abf6b26c888df504f73e35bb17f28240e09"
 python-versions = "~3.7.3"
 
 [metadata.files]
@@ -356,8 +372,11 @@ colorlog = [
     {file = "colorlog-4.0.2.tar.gz", hash = "sha256:3cf31b25cbc8f86ec01fef582ef3b840950dea414084ed19ab922c8b493f9b42"},
 ]
 console-bundle = [
-    {file = "console-bundle-0.2.1.tar.gz", hash = "sha256:e6396164f5083a85ab6a788726ca6f2141a01ac53d6893020d749d21a429d0d5"},
-    {file = "console_bundle-0.2.1-py3-none-any.whl", hash = "sha256:db1c73f45a9b7832e9007ec9579a93341f21ece58ddfea7a9e4f6e98f7b1f6a2"},
+    {file = "console-bundle-0.2.2.tar.gz", hash = "sha256:b4ef3ce50f1f8d9137b4d2c9d7dc78a6e8716c917e5f9d051d6412710576a9a9"},
+    {file = "console_bundle-0.2.2-py3-none-any.whl", hash = "sha256:2fc0bcf95165afa5f06f3e2c99e29af51ff307556f093e2a45705e68e5514572"},
+]
+databricks-connect = [
+    {file = "databricks-connect-6.4.0.tar.gz", hash = "sha256:b1b0977e58638f2159e9fa209216176035b3f2a87478f1b4c75dfa9d10bf031b"},
 ]
 importlib-metadata = [
     {file = "importlib_metadata-1.5.0-py2.py3-none-any.whl", hash = "sha256:b97607a1a18a5100839aec1dc26a1ea17ee0d93b20b0f008d80a5a050afb200b"},
@@ -407,8 +426,8 @@ more-itertools = [
     {file = "more_itertools-8.2.0-py3-none-any.whl", hash = "sha256:5dd8bcf33e5f9513ffa06d5ad33d78f31e1931ac9a18f33d37e77a180d393a7c"},
 ]
 packaging = [
-    {file = "packaging-20.1-py2.py3-none-any.whl", hash = "sha256:170748228214b70b672c581a3dd610ee51f733018650740e98c7df862a583f73"},
-    {file = "packaging-20.1.tar.gz", hash = "sha256:e665345f9eef0c621aa0bf2f8d78cf6d21904eef16a93f020240b704a57f1334"},
+    {file = "packaging-20.3-py2.py3-none-any.whl", hash = "sha256:82f77b9bee21c1bafbf35a84905d604d5d1223801d639cf3ed140bd651c08752"},
+    {file = "packaging-20.3.tar.gz", hash = "sha256:3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3"},
 ]
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
@@ -417,6 +436,10 @@ pluggy = [
 py = [
     {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
     {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
+]
+py4j = [
+    {file = "py4j-0.10.9-py2.py3-none-any.whl", hash = "sha256:859ba728a7bb43e9c2bf058832759fb97a598bb28cc12f34f5fc4abdec08ede6"},
+    {file = "py4j-0.10.9.tar.gz", hash = "sha256:36ec57f43ff8ced260a18aa9a4e46c3500a730cac8860e259cbaa546c2b9db2f"},
 ]
 pyfony = [
     {file = "pyfony-0.4.2-py3-none-any.whl", hash = "sha256:4bb4e30e56e4e2043d7e5d294c6b126161c9a57c33a3fbbeddedb7956dce48e5"},
@@ -462,8 +485,8 @@ six = [
     {file = "six-1.14.0.tar.gz", hash = "sha256:236bdbdce46e6e6a3d61a337c0f8b763ca1e8717c03b369e87a7ec7ce1319c0a"},
 ]
 tomlkit = [
-    {file = "tomlkit-0.5.8-py2.py3-none-any.whl", hash = "sha256:96e6369288571799a3052c1ef93b9de440e1ab751aa045f435b55e9d3bcd0690"},
-    {file = "tomlkit-0.5.8.tar.gz", hash = "sha256:32c10cc16ded7e4101c79f269910658cc2a0be5913f1252121c3cd603051c269"},
+    {file = "tomlkit-0.5.11-py2.py3-none-any.whl", hash = "sha256:4e1bd6c9197d984528f9ff0cc9db667c317d8881288db50db20eeeb0f6b0380b"},
+    {file = "tomlkit-0.5.11.tar.gz", hash = "sha256:f044eda25647882e5ef22b43a1688fb6ab12af2fc50e8456cdfc751c873101cf"},
 ]
 typed-ast = [
     {file = "typed_ast-1.4.1-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:73d785a950fc82dd2a25897d525d003f6378d1cb23ab305578394694202a58c3"},
@@ -496,6 +519,6 @@ wrapt = [
     {file = "wrapt-1.11.2.tar.gz", hash = "sha256:565a021fd19419476b9362b05eeaa094178de64f8361e44468f9e9d7843901e1"},
 ]
 zipp = [
-    {file = "zipp-3.0.0-py3-none-any.whl", hash = "sha256:12248a63bbdf7548f89cb4c7cda4681e537031eda29c02ea29674bc6854460c2"},
-    {file = "zipp-3.0.0.tar.gz", hash = "sha256:7c0f8e91abc0dc07a5068f315c52cb30c66bfbc581e5b50704c8a2f6ebae794a"},
+    {file = "zipp-3.1.0-py3-none-any.whl", hash = "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b"},
+    {file = "zipp-3.1.0.tar.gz", hash = "sha256:c599e4d75c98f6798c509911d08a22e6c021d074469042177c8c86fb92eefd96"},
 ]

@@ -1,0 +1,34 @@
+from pyspark.sql import SparkSession
+from datalakebundle.table.TableWriter import TableWriter
+from datalakebundle.table.TableConfig import TableConfig
+from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
+from datalakebundle.table.SchemaGetter import SchemaGetter
+from datalakebundle.hdfs.HdfsExists import HdfsExists
+
+class TableCreator:
+
+    def __init__(
+        self,
+        spark: SparkSession,
+        schemaGetter: SchemaGetter,
+        tableWriter: TableWriter,
+        tableExistenceChecker: TableExistenceChecker,
+        hdfsExists: HdfsExists,
+    ):
+        self.__spark = spark
+        self.__schemaGetter = schemaGetter
+        self.__tableWriter = tableWriter
+        self.__tableExistenceChecker = tableExistenceChecker
+        self.__hdfsExists = hdfsExists
+
+    def createEmptyTable(self, tableConfig: TableConfig):
+        schema = self.__schemaGetter.get(tableConfig.schemaPath)
+        emptyDf = self.__spark.createDataFrame([], schema)
+
+        if self.__tableExistenceChecker.tableExists(tableConfig.dbName, tableConfig.tableName):
+            raise Exception('Table {} already exists'.format(tableConfig.fullTableName))
+
+        if self.__hdfsExists.exists(tableConfig.targetPath):
+            raise Exception('Path {} already exists'.format(tableConfig.targetPath))
+
+        self.__tableWriter.writeIfNotExist(emptyDf, tableConfig)
