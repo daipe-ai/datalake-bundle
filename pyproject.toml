@@ -26,9 +26,6 @@ packages = [
 [tool.poetry.dependencies]
 python = "~3.7.3"
 pyfony-bundles = "0.2.*"
-azure-storage-file-datalake = "12.0.0b7"
-urllib3 = "1.24.*"
-pandas = "0.25.*"
 console-bundle = "0.2.*"
 
 [tool.poetry.dev-dependencies]
