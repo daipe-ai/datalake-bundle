@@ -31,6 +31,8 @@ services:
     arguments:
       - '%datalakebundle.tables%'
 
+  datalakebundle.table.TableNames:
+
   datalakebundle.table.TablesOptimizerCommand:
     arguments:
       - '@consolebundle.logger'
