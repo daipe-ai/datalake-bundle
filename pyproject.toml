@@ -27,6 +27,7 @@ packages = [
 python = "~3.7.3"
 pyfony-bundles = "0.2.*"
 console-bundle = "0.2.*"
+databricks-bundle = "^0.2.4"
 
 [tool.poetry.dev-dependencies]
 pylint = "2.4.*"

@@ -1,3 +1,6 @@
+imports:
+  - '@databricksbundle/spark/spark_test.yaml'
+
 parameters:
   datalakebundle:
     tables:
@@ -5,9 +8,3 @@ parameters:
         tableName: 'test'
         schemaPath: 'datalakebundle.test.TestSchema'
         targetPath: '/foo/bar/test.delta'
-
-services:
-  datalakebundle.test.SparkSessionFactory:
-
-  pyspark.sql.session.SparkSession:
-    factory: ['@datalakebundle.test.SparkSessionFactory', 'create']

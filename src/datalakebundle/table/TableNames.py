@@ -12,7 +12,12 @@ class TableNames:
     def getByAlias(self, configAlias: str) -> str:
         tableConfig = self.__tablesConfigManager.getByAlias(configAlias)
 
-        if not tableConfig:
-            raise UnknownConfigAliasException(configAlias)
+        if tableConfig:
+            return tableConfig.fullTableName
 
-        return tableConfig.fullTableName
+        externalTableConfig = self.__tablesConfigManager.getExternalByAlias(configAlias)
+
+        if externalTableConfig:
+            return externalTableConfig.fullTableName
+
+        raise UnknownConfigAliasException(configAlias)
