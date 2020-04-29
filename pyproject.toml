@@ -3,7 +3,7 @@ name = "datalake-bundle"
 version = "0.2.3"
 description = "DataLake bundle for the Pyfony Framework"
 readme = "README.md"
-repository = "https://github.com/DataSentics/datalake-bundle"
+repository = "https://github.com/bricksflow/datalake-bundle"
 
 license = "MIT"
 
