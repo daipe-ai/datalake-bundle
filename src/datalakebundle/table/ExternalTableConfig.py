@@ -4,15 +4,15 @@ class ExternalTableConfig:
 
     def __init__(
         self,
-        alias: str,
+        identifier: str,
         tableName: str,
     ):
-        self.__alias = alias
+        self.__identifier = identifier
         self.__tableName = tableName
 
     @property
-    def alias(self):
-        return self.__alias
+    def identifier(self):
+        return self.__identifier
 
     @property
     def tableName(self):
@@ -27,8 +27,8 @@ class ExternalTableConfig:
         return self.__tableName[0:self.__tableName.find('.')]
 
     @staticmethod
-    def fromBox(configAlias: str, boxConfig: Box) -> 'ExternalTableConfig':
+    def fromBox(identifier: str, boxConfig: Box) -> 'ExternalTableConfig':
         return ExternalTableConfig(
-            alias=configAlias,
+            identifier=identifier,
             tableName=boxConfig.tableName,
         )

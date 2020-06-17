@@ -1,0 +1,2 @@
+class UnknownIdentifierException(Exception):
+    pass

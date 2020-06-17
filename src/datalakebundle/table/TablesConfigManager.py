@@ -20,16 +20,16 @@ class TablesConfigManager:
         else:
             self.__externalTableConfigs = []
 
-    def getByAlias(self, configAlias: str) -> Optional[TableConfig]:
+    def get(self, identifier: str) -> Optional[TableConfig]:
         for tableConfig in self.__tableConfigs:
-            if tableConfig.alias == configAlias:
+            if tableConfig.identifier == identifier:
                 return tableConfig
 
         return None
 
-    def getExternalByAlias(self, configAlias: str) -> Optional[ExternalTableConfig]:
+    def getExternal(self, identifier: str) -> Optional[ExternalTableConfig]:
         for externalTableConfig in self.__externalTableConfigs:
-            if externalTableConfig.alias == configAlias:
+            if externalTableConfig.identifier == identifier:
                 return externalTableConfig
 
         return None

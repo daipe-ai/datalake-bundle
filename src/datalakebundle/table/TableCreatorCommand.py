@@ -23,13 +23,13 @@ class TableCreatorCommand(ConsoleCommand):
         return 'Creates single Hive table'
 
     def configure(self, argumentParser: ArgumentParser):
-        argumentParser.add_argument(dest='configAlias', help='Table config alias')
+        argumentParser.add_argument(dest='identifier', help='Table identifier')
 
     def run(self, inputArgs: Namespace):
-        tableConfig = self.__tablesConfigManager.getByAlias(inputArgs.configAlias)
+        tableConfig = self.__tablesConfigManager.get(inputArgs.identifier)
 
         if not tableConfig:
-            self.__logger.error('No config found for {}. Maybe you forgot to add the data lake configuration to table.yaml?'.format(inputArgs.configAlias))
+            self.__logger.error('No config found for {}. Maybe you forgot to add the data lake configuration to table.yaml?'.format(inputArgs.identifier))
             return
 
         self.__logger.info('Creating table {} for {}'.format(tableConfig.fullTableName, tableConfig.targetPath))

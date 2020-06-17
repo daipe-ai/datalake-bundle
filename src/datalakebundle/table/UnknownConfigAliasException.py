@@ -1,2 +1,0 @@
-class UnknownConfigAliasException(Exception):
-    pass

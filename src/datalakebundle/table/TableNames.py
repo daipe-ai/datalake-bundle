@@ -1,5 +1,5 @@
 from datalakebundle.table.TablesConfigManager import TablesConfigManager
-from datalakebundle.table.UnknownConfigAliasException import UnknownConfigAliasException
+from datalakebundle.table.UnknownIdentifierException import UnknownIdentifierException
 
 class TableNames:
 
@@ -9,15 +9,19 @@ class TableNames:
     ):
         self.__tablesConfigManager = tablesConfigManager
 
-    def getByAlias(self, configAlias: str) -> str:
-        tableConfig = self.__tablesConfigManager.getByAlias(configAlias)
+    def get(self, identifier: str) -> str:
+        tableConfig = self.__tablesConfigManager.get(identifier)
 
         if tableConfig:
             return tableConfig.fullTableName
 
-        externalTableConfig = self.__tablesConfigManager.getExternalByAlias(configAlias)
+        externalTableConfig = self.__tablesConfigManager.getExternal(identifier)
 
         if externalTableConfig:
             return externalTableConfig.fullTableName
 
-        raise UnknownConfigAliasException(configAlias)
+        raise UnknownIdentifierException(identifier)
+
+    # @deprecated
+    def getByAlias(self, identifier: str) -> str:
+        return self.get(identifier)

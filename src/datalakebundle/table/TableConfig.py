@@ -4,21 +4,21 @@ class TableConfig:
 
     def __init__(
         self,
-        alias: str,
+        identifier: str,
         tableName: str,
         schemaPath: str,
         targetPath: str,
         partitionBy: list
     ):
-        self.__alias = alias
+        self.__identifier = identifier
         self.__tableName = tableName
         self.__schemaPath = schemaPath
         self.__targetPath = targetPath
         self.__partitionBy = partitionBy
 
     @property
-    def alias(self):
-        return self.__alias
+    def identifier(self):
+        return self.__identifier
 
     @property
     def tableName(self):
@@ -45,7 +45,7 @@ class TableConfig:
         return self.__tableName[0:self.__tableName.find('.')]
 
     @staticmethod
-    def fromBox(configAlias: str, boxConfig: Box) -> 'TableConfig':
+    def fromBox(identifier: str, boxConfig: Box) -> 'TableConfig':
         if 'partitionBy' in boxConfig:
             if isinstance(boxConfig.partitionBy, str):
                 partitionBy = [boxConfig.partitionBy]
@@ -55,7 +55,7 @@ class TableConfig:
             partitionBy = []
 
         return TableConfig(
-            alias=configAlias,
+            identifier=identifier,
             tableName=boxConfig.tableName,
             schemaPath=boxConfig.schemaPath,
             targetPath=boxConfig.targetPath,

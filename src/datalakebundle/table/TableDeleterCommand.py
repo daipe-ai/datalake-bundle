@@ -29,27 +29,27 @@ class TableDeleterCommand(ConsoleCommand):
         return 'Delete Hive table including files stored on HDFS'
 
     def configure(self, argumentParser: ArgumentParser):
-        argumentParser.add_argument(dest='configAlias', help='Table config alias')
+        argumentParser.add_argument(dest='identifier', help='Table identifier')
 
     def run(self, inputArgs: Namespace):
-        configAlias = inputArgs.configAlias
+        identifier = inputArgs.identifier
 
-        tableConfig = self.__tablesConfigManager.getByAlias(configAlias)
+        tableConfig = self.__tablesConfigManager.get(identifier)
 
         if not tableConfig:
-            self.__logger.error('Table {} not found in config'.format(configAlias))
+            self.__logger.error('Table {} not found in config'.format(identifier))
             return
 
         self.__logger.warning('HDFS files to be deleted: {}'.format(tableConfig.targetPath))
 
         if self.__tableExistenceChecker.tableExists(tableConfig.dbName, tableConfig.tableName) is False:
-            self.__logger.error('Table {} does not exist in Hive'.format(configAlias))
+            self.__logger.error('Table {} does not exist in Hive'.format(identifier))
             return
 
-        self.__logger.info('Deleting Hive table {}'.format(configAlias))
+        self.__logger.info('Deleting Hive table {}'.format(identifier))
         self.__spark.sql('DROP TABLE {}'.format(tableConfig.fullTableName))
 
         self.__logger.info('Deleting HDFS files from {}'.format(tableConfig.targetPath))
         self.__hdfsDelete.delete(tableConfig.targetPath, True)
 
-        self.__logger.info('Table {} deleted'.format(configAlias))
+        self.__logger.info('Table {} deleted'.format(identifier))
