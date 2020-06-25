@@ -2,7 +2,7 @@ from argparse import ArgumentParser, Namespace
 from logging import Logger
 from consolebundle.ConsoleCommand import ConsoleCommand
 from datalakebundle.table.TableCreator import TableCreator
-from datalakebundle.table.TablesConfigManager import TablesConfigManager
+from datalakebundle.table.config.TablesConfigManager import TablesConfigManager
 
 class TableCreatorCommand(ConsoleCommand):
 

@@ -2,9 +2,9 @@ from argparse import Namespace
 from logging import Logger
 from pyspark.sql import SparkSession
 from consolebundle.ConsoleCommand import ConsoleCommand
-from datalakebundle.table.TableConfig import TableConfig
+from datalakebundle.table.config.TableConfig import TableConfig
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
-from datalakebundle.table.TablesConfigManager import TablesConfigManager
+from datalakebundle.table.config.TablesConfigManager import TablesConfigManager
 
 class TablesOptimizerCommand(ConsoleCommand):
 

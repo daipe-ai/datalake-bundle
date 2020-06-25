@@ -1,5 +1,5 @@
-from datalakebundle.table.TablesConfigManager import TablesConfigManager
-from datalakebundle.table.UnknownIdentifierException import UnknownIdentifierException
+from datalakebundle.table.config.TablesConfigManager import TablesConfigManager
+from datalakebundle.table.identifier.UnknownIdentifierException import UnknownIdentifierException
 
 class TableNames:
 

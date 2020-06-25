@@ -1,5 +1,13 @@
 parameters:
   datalakebundle:
+    table:
+      identifier:
+        parsingEnabled: True
+        matcher: '{dbName}.{tableName}'
+        parser:
+          class: 'datalakebundle.table.identifier.IdentifierParser'
+          arguments:
+            - '%datalakebundle.table.identifier.matcher%'
     tables:
     externalTables:
 
@@ -8,13 +16,18 @@ services:
 
   datalakebundle.hdfs.HdfsExists:
 
+  datalakebundle.table.config.TablesConfigManager:
+    arguments:
+      - '%datalakebundle.tables%'
+      - '%datalakebundle.externalTables%'
+
+  datalakebundle.table.schema.SchemaGetter:
+
   datalakebundle.table.MissingTablesCreatorCommand:
     arguments:
       - '@consolebundle.logger'
     tags:
       - 'console.command'
-
-  datalakebundle.table.SchemaGetter:
 
   datalakebundle.table.TableCreator:
 
@@ -31,11 +44,6 @@ services:
       - 'console.command'
 
   datalakebundle.table.TableExistenceChecker:
-
-  datalakebundle.table.TablesConfigManager:
-    arguments:
-      - '%datalakebundle.tables%'
-      - '%datalakebundle.externalTables%'
 
   datalakebundle.table.TableNames:
 

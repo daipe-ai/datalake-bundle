@@ -25,9 +25,11 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "~3.7.3"
+injecta = ">=0.7"
 pyfony-bundles = "0.2.*"
 console-bundle = "0.2.*"
 databricks-bundle = "^0.2.4 || 0.3.*"
+simpleeval = "^0.9.10"
 
 [tool.poetry.dev-dependencies]
 pylint = "2.4.*"

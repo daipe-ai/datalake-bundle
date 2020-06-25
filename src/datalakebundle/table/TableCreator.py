@@ -1,8 +1,8 @@
 from pyspark.sql import SparkSession
 from datalakebundle.table.TableWriter import TableWriter
-from datalakebundle.table.TableConfig import TableConfig
+from datalakebundle.table.config.TableConfig import TableConfig
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
-from datalakebundle.table.SchemaGetter import SchemaGetter
+from datalakebundle.table.schema.SchemaGetter import SchemaGetter
 from datalakebundle.hdfs.HdfsExists import HdfsExists
 
 class TableCreator:

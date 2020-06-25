@@ -1,7 +1,7 @@
 from typing import Optional
 from box import Box
-from datalakebundle.table.ExternalTableConfig import ExternalTableConfig
-from datalakebundle.table.TableConfig import TableConfig
+from datalakebundle.table.config.ExternalTableConfig import ExternalTableConfig
+from datalakebundle.table.config.TableConfig import TableConfig
 
 class TablesConfigManager:
 

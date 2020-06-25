@@ -5,9 +5,11 @@ class ExternalTableConfig:
     def __init__(
         self,
         identifier: str,
+        dbName: str,
         tableName: str,
     ):
         self.__identifier = identifier
+        self.__dbName = dbName
         self.__tableName = tableName
 
     @property
@@ -16,19 +18,20 @@ class ExternalTableConfig:
 
     @property
     def tableName(self):
-        return self.__tableName[self.__tableName.find('.') + 1:]
-
-    @property
-    def fullTableName(self):
         return self.__tableName
 
     @property
+    def fullTableName(self):
+        return self.__dbName + '.' + self.__tableName
+
+    @property
     def dbName(self):
-        return self.__tableName[0:self.__tableName.find('.')]
+        return self.__dbName
 
     @staticmethod
     def fromBox(identifier: str, boxConfig: Box) -> 'ExternalTableConfig':
         return ExternalTableConfig(
             identifier=identifier,
+            dbName=boxConfig.dbName,
             tableName=boxConfig.tableName,
         )

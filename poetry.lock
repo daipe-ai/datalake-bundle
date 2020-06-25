@@ -136,7 +136,7 @@ description = "Dependency Injection Container Library"
 name = "injecta"
 optional = false
 python-versions = ">=3.7.3,<3.8.0"
-version = "0.6.2"
+version = "0.7.0"
 
 [package.dependencies]
 PyYAML = ">=5.1.0,<5.2.0"
@@ -349,11 +349,11 @@ description = "Dependency Injection powered framework"
 name = "pyfony"
 optional = false
 python-versions = ">=3.7.3,<3.8.0"
-version = "0.4.2"
+version = "0.4.3"
 
 [package.dependencies]
 console-bundle = ">=0.2.0,<0.3.0"
-injecta = ">=0.6.2,<0.7.0"
+injecta = ">=0.6.0,<0.8.0"
 logger-bundle = ">=0.5.0,<0.6.0"
 
 [[package]]
@@ -445,6 +445,14 @@ version = "5.1.2"
 
 [[package]]
 category = "main"
+description = "A simple, safe single expression evaluator library."
+name = "simpleeval"
+optional = false
+python-versions = "*"
+version = "0.9.10"
+
+[[package]]
+category = "main"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
 optional = false
@@ -514,7 +522,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "9760cfbfbf28d8beecbadaf16ea3e4875046093887f808fb8172cee3fba5b653"
+content-hash = "2a3ee5290158afe89970fee4fcce84db5177220ecccea59a79a4651dae81a039"
 python-versions = "~3.7.3"
 
 [metadata.files]
@@ -566,8 +574,8 @@ importlib-metadata = [
     {file = "importlib_metadata-1.5.0.tar.gz", hash = "sha256:06f5b3a99029c7134207dd882428a66992a9de2bef7c2b699b5641f9886c3302"},
 ]
 injecta = [
-    {file = "injecta-0.6.2-py3-none-any.whl", hash = "sha256:610c54ef06d8b2d9fae3c80e3b8f77f1537e32b051d0a6ac63282721547bc4f0"},
-    {file = "injecta-0.6.2.tar.gz", hash = "sha256:42868234958b9a27ab51f04cdfc3ab82b651e937670004a9641d54ec7ea1292a"},
+    {file = "injecta-0.7.0-py3-none-any.whl", hash = "sha256:a2aca68ee35612f4279a2adb31dd8ea125e5e62623cfcfd51e1ba4d6cbff554a"},
+    {file = "injecta-0.7.0.tar.gz", hash = "sha256:a84be02b2f0bc01b9b47481c132179dabd67356bdc54447faac6059133927210"},
 ]
 ipython = [
     {file = "ipython-7.13.0-py3-none-any.whl", hash = "sha256:eb8d075de37f678424527b5ef6ea23f7b80240ca031c2dd6de5879d687a65333"},
@@ -657,8 +665,8 @@ py4j = [
     {file = "py4j-0.10.9.tar.gz", hash = "sha256:36ec57f43ff8ced260a18aa9a4e46c3500a730cac8860e259cbaa546c2b9db2f"},
 ]
 pyfony = [
-    {file = "pyfony-0.4.2-py3-none-any.whl", hash = "sha256:4bb4e30e56e4e2043d7e5d294c6b126161c9a57c33a3fbbeddedb7956dce48e5"},
-    {file = "pyfony-0.4.2.tar.gz", hash = "sha256:10175279002a8b9c4847879952398465b3c5a6aca417a677be15e1c91d62d14d"},
+    {file = "pyfony-0.4.3-py3-none-any.whl", hash = "sha256:ca330c27c7ab9d3545a56b025674078b483a16c09e542aa55690ad032393a958"},
+    {file = "pyfony-0.4.3.tar.gz", hash = "sha256:1e47c3903b1d3db94e8ed3f22f93856474e70142e72d7e9818164d948cc6518b"},
 ]
 pyfony-bundles = [
     {file = "pyfony-bundles-0.2.2.tar.gz", hash = "sha256:3d0c6be33002df1fad7015319ead1e718a41d8bfe8d2387167daf284f7fe40bf"},
@@ -698,6 +706,9 @@ pyyaml = [
     {file = "PyYAML-5.1.2-cp38-cp38m-win32.whl", hash = "sha256:7ec9b2a4ed5cad025c2278a1e6a19c011c80a3caaac804fd2d329e9cc2c287c9"},
     {file = "PyYAML-5.1.2-cp38-cp38m-win_amd64.whl", hash = "sha256:b631ef96d3222e62861443cc89d6563ba3eeb816eeb96b2629345ab795e53681"},
     {file = "PyYAML-5.1.2.tar.gz", hash = "sha256:01adf0b6c6f61bd11af6e10ca52b7d4057dd0be0343eb9283c878cf3af56aee4"},
+]
+simpleeval = [
+    {file = "simpleeval-0.9.10.tar.gz", hash = "sha256:692055488c2864637f6c2edb5fa48175978a2a07318009e7cf03c9790ca17bea"},
 ]
 six = [
     {file = "six-1.14.0-py2.py3-none-any.whl", hash = "sha256:8f3cd2e254d8f793e7f3d6d9df77b92252b52637291d0f0da013c76ea2724b6c"},

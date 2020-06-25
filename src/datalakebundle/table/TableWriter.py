@@ -1,8 +1,8 @@
 from logging import Logger
 from pyspark.sql.session import SparkSession
 from pyspark.sql.dataframe import DataFrame
-from datalakebundle.table.TableConfig import TableConfig
-from datalakebundle.table.SchemaGetter import SchemaGetter
+from datalakebundle.table.config.TableConfig import TableConfig
+from datalakebundle.table.schema.SchemaGetter import SchemaGetter
 import pyspark.sql.types as T
 import yaml
 

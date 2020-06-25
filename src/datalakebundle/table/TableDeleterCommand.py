@@ -4,7 +4,7 @@ from pyspark.sql.session import SparkSession
 from consolebundle.ConsoleCommand import ConsoleCommand
 from datalakebundle.hdfs.HdfsDelete import HdfsDelete
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
-from datalakebundle.table.TablesConfigManager import TablesConfigManager
+from datalakebundle.table.config.TablesConfigManager import TablesConfigManager
 
 class TableDeleterCommand(ConsoleCommand):
 
