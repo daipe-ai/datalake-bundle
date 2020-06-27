@@ -11,9 +11,9 @@ class TablesConfigParser:
     def __init__(self):
         self.__dTypeResolver = DTypeResolver()
 
-    def parse(self, tablesConfig: Box, transformations: Box, identifierParser: IdentifierParserInterface):
+    def parse(self, tablesConfig: dict, transformations: dict, identifierParser: IdentifierParserInterface):
         tables = dict()
-        defaults = tablesConfig['_defaults'].to_dict() if '_defaults' in tablesConfig else dict()
+        defaults = tablesConfig['_defaults'] if '_defaults' in tablesConfig else dict()
         tablesConfig = {identifier: table for identifier, table in tablesConfig.items() if identifier != '_defaults'}
 
         for identifier, explicitConfig in tablesConfig.items():

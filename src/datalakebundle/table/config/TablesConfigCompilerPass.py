@@ -30,14 +30,14 @@ class TablesConfigCompilerPass(CompilerPassInterface):
 
         if bundleParameters.tables:
             bundleParameters.tables = Box(self.__tablesConfigParser.parse(
-                bundleParameters.tables,
-                identifierParameters.transformations,
+                bundleParameters.tables.to_dict(),
+                identifierParameters.transformations.to_dict(),
                 identifierParser,
             ))
 
         if bundleParameters.externalTables:
             bundleParameters.externalTables = Box(self.__tablesConfigParser.parse(
-                bundleParameters.externalTables,
-                identifierParameters.transformations,
+                bundleParameters.externalTables.to_dict(),
+                identifierParameters.transformations.to_dict(),
                 identifierParser,
             ))
