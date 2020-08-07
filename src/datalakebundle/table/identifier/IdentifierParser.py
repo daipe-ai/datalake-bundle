@@ -12,4 +12,7 @@ class IdentifierParser(IdentifierParserInterface):
 
         matches = re.match(re.compile(escapedTemplate), identifier)
 
+        if not matches:
+            raise Exception(f'Table identifier "{identifier}" doesn\'t match the expected format "{self.__identifierMatcher}"')
+
         return matches.groupdict()
