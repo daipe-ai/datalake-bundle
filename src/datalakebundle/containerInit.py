@@ -1,4 +1,5 @@
 from consolebundle.ConsoleBundle import ConsoleBundle
+from databricksbundle.DatabricksBundle import DatabricksBundle
 from injecta.config.YamlConfigReader import YamlConfigReader
 from injecta.container.ContainerInterface import ContainerInterface
 from injecta.package.pathResolver import resolvePath
@@ -13,6 +14,7 @@ def initContainer(appEnv) -> ContainerInterface:
         def _registerBundles(self) -> List[Bundle]:
             return [
                 ConsoleBundle(),
+                DatabricksBundle('spark_test.yaml'),
                 DataLakeBundle()
             ]
 
