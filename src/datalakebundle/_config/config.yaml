@@ -1,15 +1,8 @@
 parameters:
   datalakebundle:
     table:
-      identifier:
-        parsingEnabled: True
-        matcher: '{dbName}.{tableName}'
-        parser:
-          class: 'datalakebundle.table.identifier.IdentifierParser'
-          arguments:
-            - '%datalakebundle.table.identifier.matcher%'
+      nameTemplate: '%kernel.environment%_{identifier}'
     tables:
-    externalTables:
 
 services:
   datalakebundle.hdfs.HdfsDelete:
@@ -19,7 +12,6 @@ services:
   datalakebundle.table.config.TablesConfigManager:
     arguments:
       - '%datalakebundle.tables%'
-      - '%datalakebundle.externalTables%'
 
   datalakebundle.table.schema.SchemaGetter:
 
@@ -46,6 +38,8 @@ services:
   datalakebundle.table.TableExistenceChecker:
 
   datalakebundle.table.TableNames:
+    arguments:
+      - '%datalakebundle.table.nameTemplate%'
 
   datalakebundle.table.TablesOptimizerCommand:
     arguments:
@@ -56,3 +50,5 @@ services:
   datalakebundle.table.TableWriter:
     arguments:
       - '@consolebundle.logger'
+
+  datalakebundle.table.identifier.IdentifierParser:

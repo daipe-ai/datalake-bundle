@@ -20,7 +20,7 @@ class TableCreatorCommand(ConsoleCommand):
         return 'datalake:table:create'
 
     def getDescription(self):
-        return 'Creates single Hive table'
+        return 'Creates a metastore table based on given schema'
 
     def configure(self, argumentParser: ArgumentParser):
         argumentParser.add_argument(dest='identifier', help='Table identifier')

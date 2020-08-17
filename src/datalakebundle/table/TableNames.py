@@ -1,26 +1,18 @@
-from datalakebundle.table.config.TablesConfigManager import TablesConfigManager
-from datalakebundle.table.identifier.UnknownIdentifierException import UnknownIdentifierException
+from datalakebundle.table.identifier.IdentifierParser import IdentifierParser
+from datalakebundle.table.identifier.fillTemplate import fillTemplate
 
 class TableNames:
 
     def __init__(
         self,
-        tablesConfigManager: TablesConfigManager,
+        tableNameTemplate: str,
+        identifierParser: IdentifierParser
     ):
-        self.__tablesConfigManager = tablesConfigManager
+        self.__tableNameTemplate = tableNameTemplate
+        self.__identifierParser = identifierParser
 
     def get(self, identifier: str) -> str:
-        tableConfig = self.__tablesConfigManager.get(identifier)
-
-        if tableConfig:
-            return tableConfig.fullTableName
-
-        externalTableConfig = self.__tablesConfigManager.getExternal(identifier)
-
-        if externalTableConfig:
-            return externalTableConfig.fullTableName
-
-        raise UnknownIdentifierException(identifier)
+        return fillTemplate(self.__tableNameTemplate, self.__identifierParser.parse(identifier))
 
     # @deprecated
     def getByAlias(self, identifier: str) -> str:

@@ -26,7 +26,7 @@ class TableDeleterCommand(ConsoleCommand):
         return 'datalake:table:delete'
 
     def getDescription(self):
-        return 'Delete Hive table including files stored on HDFS'
+        return 'Deletes a metastore table including data on HDFS'
 
     def configure(self, argumentParser: ArgumentParser):
         argumentParser.add_argument(dest='identifier', help='Table identifier')

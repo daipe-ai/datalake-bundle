@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from box import Box
 
-class DefaultValueResolverInterface(ABC):
+class ValueResolverInterface(ABC):
 
     @abstractmethod
     def resolve(self, rawTableConfig: Box):

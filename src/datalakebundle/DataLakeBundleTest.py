@@ -17,43 +17,29 @@ class DataLakeBundleTest(unittest.TestCase):
         anotherTableConfig = tablesConfig['mydatabase_p.another_table'].to_dict()
 
         self.assertEqual({
-            'dbName': 'prf_test_mydatabase',
-            'targetPath': '/foo/bar/mydatabase/encrypted/mydatabase.delta',
-            'dbNameWithoutEnv': 'mydatabase',
-            'encrypted': True,
+            'schemaPath': 'datalakebundle.test.TestSchema',
+            'dbIdentifier': 'mydatabase_e',
+            'tableIdentifier': 'my_table',
+            'identifier': 'mydatabase_e.my_table',
+            'dbName': 'test_mydatabase_e',
             'tableName': 'my_table',
-            'schemaPath': 'datalakebundle.test.TestSchema'
+            'encrypted': True,
+            'dbIdentifierBase': 'mydatabase',
+            'targetPath': '/foo/bar/mydatabase/encrypted/my_table.delta',
         }, myTableConfig)
 
         self.assertEqual({
-            'dbName': 'prf_test_mydatabase',
-            'targetPath': '/foo/bar/mydatabase/plain/mydatabase.delta',
-            'dbNameWithoutEnv': 'mydatabase',
-            'encrypted': False,
-            'tableName': 'another_table',
             'schemaPath': 'datalakebundle.test.AnotherSchema',
-            'partitionBy': ['date']
-        }, anotherTableConfig)
-
-    def test_externalTables(self):
-        externalTablesConfig = self.__container.getParameters().datalakebundle.externalTables
-
-        myExternalTableConfig = externalTablesConfig['mydatabase_e.my_external_table'].to_dict()
-        anotherExternalTableConfig = externalTablesConfig['mydatabase_p.another_external_table'].to_dict()
-
-        self.assertEqual({
-            'dbName': 'prf_test_mydatabase',
-            'dbNameWithoutEnv': 'mydatabase',
-            'encrypted': True,
-            'tableName': 'my_external_table',
-        }, myExternalTableConfig)
-
-        self.assertEqual({
-            'dbName': 'prf_test_mydatabase',
-            'dbNameWithoutEnv': 'mydatabase',
+            'partitionBy': ['date'],
+            'dbIdentifier': 'mydatabase_p',
+            'tableIdentifier': 'another_table',
+            'identifier': 'mydatabase_p.another_table',
+            'dbName': 'test_mydatabase_p',
+            'tableName': 'another_table',
             'encrypted': False,
-            'tableName': 'another_external_table',
-        }, anotherExternalTableConfig)
+            'dbIdentifierBase': 'mydatabase',
+            'targetPath': '/foo/bar/mydatabase/plain/another_table.delta',
+        }, anotherTableConfig)
 
 if __name__ == '__main__':
     unittest.main()
