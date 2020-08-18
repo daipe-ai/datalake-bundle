@@ -24,7 +24,7 @@ class MissingTablesCreatorCommand(ConsoleCommand):
         return 'datalake:table:create-missing'
 
     def getDescription(self):
-        return 'Creates Hive tables from app configuration'
+        return 'Creates newly defined tables that do not exist in the metastore yet'
 
     def run(self, inputArgs: Namespace):
         self.__logger.info('Creating Hive tables...')

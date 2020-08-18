@@ -20,7 +20,7 @@ class TableCreatorCommand(ConsoleCommand):
         return 'datalake:table:create'
 
     def getDescription(self):
-        return 'Creates a metastore table based on given schema'
+        return 'Creates a metastore table based on it\'s YAML definition (name, schema, data path, ...)'
 
     def configure(self, argumentParser: ArgumentParser):
         argumentParser.add_argument(dest='identifier', help='Table identifier')

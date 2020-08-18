@@ -24,7 +24,7 @@ class TablesOptimizerCommand(ConsoleCommand):
         return 'datalake:table:optimize-all'
 
     def getDescription(self):
-        return 'Run OPTIMIZE query on existing Hive tables from app configuration'
+        return 'Runs the OPTIMIZE command on all defined tables (Delta only)'
 
     def run(self, inputArgs: Namespace):
         self.__logger.info('Optimizing Hive tables...')
