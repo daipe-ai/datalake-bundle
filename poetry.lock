@@ -93,12 +93,12 @@ description = "Databricks bundle for the Pyfony framework"
 name = "databricks-bundle"
 optional = false
 python-versions = ">=3.7.3,<3.8.0"
-version = "0.5.0"
+version = "0.5.3"
 
 [package.dependencies]
 injecta = ">=0.8.4,<0.9.0"
 ipython = ">=7.0.0,<8.0.0"
-pandas = ">=0.24.2,<0.25.0"
+pandas = ">=0.24.2"
 pyarrow = ">=0.16.0,<0.17.0"
 pyfony-bundles = ">=0.2.0,<0.3.0"
 
@@ -589,7 +589,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "91772c16028151d11fe7d044906eee3b109cd7e05b9f06d8e606fffe59ea85ae"
+content-hash = "4e86cd53445537d870eaccea69e0d502e2498e58ac7ccb57b3348e66ec344b29"
 python-versions = "~3.7.3"
 
 [metadata.files]
@@ -626,7 +626,7 @@ console-bundle = [
     {file = "console_bundle-0.2.5-py3-none-any.whl", hash = "sha256:f2029bbe346001a759b9774ce30455f6d3a80c36c500c8392400194fe12858f7"},
 ]
 databricks-bundle = [
-    {file = "databricks_bundle-0.5.0-py3-none-any.whl", hash = "sha256:bfd4d71a2d9def71179edbf449a699d01de85ecb189b3fdecfce8a196c80831f"},
+    {file = "databricks_bundle-0.5.3-py3-none-any.whl", hash = "sha256:972182230b3a3d082e707ac7e76321db1e06f7211dc7dc75f2f66e6afda51e49"},
 ]
 databricks-connect = [
     {file = "databricks-connect-6.4.0.tar.gz", hash = "sha256:b1b0977e58638f2159e9fa209216176035b3f2a87478f1b4c75dfa9d10bf031b"},
