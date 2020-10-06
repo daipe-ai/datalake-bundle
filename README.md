@@ -12,7 +12,7 @@ Install the bundle via Poetry:
 $ poetry add datalake-bundle
 ```
 
-Add the bundle to your application's kernel to activate it:
+Add the `DataLakeBundle()` to your application's **Kernel.py** to activate it:
 
 ```python
 from pyfony.kernel.BaseKernel import BaseKernel
