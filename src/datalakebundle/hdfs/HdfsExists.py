@@ -1,16 +1,23 @@
-from pyspark.sql.session import SparkSession
+from databricksbundle.dbutils.DbUtilsWrapper import DbUtilsWrapper
 
 class HdfsExists:
 
     def __init__(
         self,
-        spark: SparkSession,
+        dbutils: DbUtilsWrapper,
     ):
-        self.__spark = spark
+        self.__dbutils = dbutils
 
-    def exists(self, filePath: str):
-        jvm = self.__spark._jvm  # pylint: disable = protected-access
-        jsc = self.__spark._jsc  # pylint: disable = protected-access
-        fs = jvm.org.apache.hadoop.fs.FileSystem.get(jsc.hadoopConfiguration())
+    def exists(self, path: str):
+        try:
+            self.__dbutils.fs.head(path)
 
-        return fs.exists(jvm.org.apache.hadoop.fs.Path(filePath))
+            return True
+        except Exception as e:
+            if 'Cannot head a directory:' in str(e):
+                return True
+
+            if 'java.io.FileNotFoundException' in str(e):
+                return False
+
+            raise

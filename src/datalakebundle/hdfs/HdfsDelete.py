@@ -1,16 +1,13 @@
-from pyspark.sql.session import SparkSession
+from databricksbundle.dbutils.DbUtilsWrapper import DbUtilsWrapper
 
+# @deprecated, use dbutils.fs.rm() instead
 class HdfsDelete:
 
     def __init__(
         self,
-        spark: SparkSession,
+        dbutils: DbUtilsWrapper,
     ):
-        self.__spark = spark
+        self.__dbutils = dbutils
 
     def delete(self, filePath: str, recursive: bool = False):
-        jvm = self.__spark._jvm  # pylint: disable = protected-access
-        jsc = self.__spark._jsc  # pylint: disable = protected-access
-        fs = jvm.org.apache.hadoop.fs.FileSystem.get(jsc.hadoopConfiguration())
-
-        return fs.delete(jvm.org.apache.hadoop.fs.Path(filePath), recursive)
+        self.__dbutils.fs.rm(filePath, recursive)
