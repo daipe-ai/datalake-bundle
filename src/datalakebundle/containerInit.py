@@ -4,6 +4,7 @@ from injecta.config.YamlConfigReader import YamlConfigReader
 from injecta.container.ContainerInterface import ContainerInterface
 from injecta.package.pathResolver import resolvePath
 from typing import List
+from loggerbundle.LoggerBundle import LoggerBundle
 from pyfony.kernel.BaseKernel import BaseKernel
 from pyfonybundles.Bundle import Bundle
 from datalakebundle.DataLakeBundle import DataLakeBundle
@@ -13,6 +14,7 @@ def initContainer(appEnv) -> ContainerInterface:
 
         def _registerBundles(self) -> List[Bundle]:
             return [
+                LoggerBundle(),
                 ConsoleBundle(),
                 DatabricksBundle('spark_test.yaml'),
                 DataLakeBundle()

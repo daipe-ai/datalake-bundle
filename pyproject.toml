@@ -28,7 +28,7 @@ python = "~3.7.3"
 injecta = ">=0.7"
 pyfony-bundles = "0.2.*"
 console-bundle = "0.2.*"
-databricks-bundle = "0.5.* || 0.6.*"
+databricks-bundle = ">=0.5.9 && <0.7.0"
 simpleeval = "^0.9.10"
 
 [tool.poetry.dev-dependencies]
