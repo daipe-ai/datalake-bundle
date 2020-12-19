@@ -1,8 +1,8 @@
 from argparse import ArgumentParser, Namespace
 from logging import Logger
+from databricksbundle.dbutils.DbUtilsWrapper import DbUtilsWrapper
 from pyspark.sql.session import SparkSession
 from consolebundle.ConsoleCommand import ConsoleCommand
-from datalakebundle.hdfs.HdfsDelete import HdfsDelete
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
 from datalakebundle.table.config.TablesConfigManager import TablesConfigManager
 
@@ -14,13 +14,13 @@ class TableDeleterCommand(ConsoleCommand):
         tablesConfigManager: TablesConfigManager,
         tableExistenceChecker: TableExistenceChecker,
         spark: SparkSession,
-        hdfsDelete: HdfsDelete,
+        dbutils: DbUtilsWrapper,
     ):
         self.__logger = logger
         self.__tablesConfigManager = tablesConfigManager
         self.__tableExistenceChecker = tableExistenceChecker
         self.__spark = spark
-        self.__hdfsDelete = hdfsDelete
+        self.__dbutils = dbutils
 
     def getCommand(self) -> str:
         return 'datalake:table:delete'
@@ -50,6 +50,6 @@ class TableDeleterCommand(ConsoleCommand):
         self.__spark.sql('DROP TABLE {}'.format(tableConfig.fullTableName))
 
         self.__logger.info('Deleting HDFS files from {}'.format(tableConfig.targetPath))
-        self.__hdfsDelete.delete(tableConfig.targetPath, True)
+        self.__dbutils.fs.rm(tableConfig.targetPath, True)
 
         self.__logger.info('Table {} deleted'.format(identifier))
