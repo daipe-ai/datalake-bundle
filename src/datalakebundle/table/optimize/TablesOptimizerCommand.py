@@ -34,9 +34,9 @@ class TablesOptimizerCommand(ConsoleCommand):
 
         existingTables = self.__tablesConfigManager.getByFilter(filterFunc)
 
-        self.__logger.info('{} tables to be optimized'.format(len(existingTables)))
+        self.__logger.info(f'{len(existingTables)} tables to be optimized')
 
         for tableConfig in existingTables:
-            self.__logger.info('Running OPTIMIZE {}'.format(tableConfig.fullTableName))
+            self.__logger.info(f'Running OPTIMIZE {tableConfig.fullTableName}')
 
-            self.__spark.sql('OPTIMIZE {}'.format(tableConfig.fullTableName))
+            self.__spark.sql(f'OPTIMIZE {tableConfig.fullTableName}')

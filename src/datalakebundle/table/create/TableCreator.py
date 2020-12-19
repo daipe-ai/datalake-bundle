@@ -26,9 +26,9 @@ class TableCreator:
         emptyDf = self.__spark.createDataFrame([], schema)
 
         if self.__tableExistenceChecker.tableExists(tableConfig.dbName, tableConfig.tableName):
-            raise Exception('Table {} already exists'.format(tableConfig.fullTableName))
+            raise Exception(f'Table {tableConfig.fullTableName} already exists')
 
         if self.__hdfsExists.exists(tableConfig.targetPath):
-            raise Exception('Path {} already exists'.format(tableConfig.targetPath))
+            raise Exception(f'Path {tableConfig.targetPath} already exists')
 
         self.__tableWriter.writeIfNotExist(emptyDf, tableConfig)

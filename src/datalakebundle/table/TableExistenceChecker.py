@@ -6,4 +6,4 @@ class TableExistenceChecker:
         self.__spark = spark
 
     def tableExists(self, dbName: str, tableName: str) -> bool:
-        return self.__spark.sql('SHOW TABLES IN {} LIKE "{}"'.format(dbName, tableName)).collect() != []
+        return self.__spark.sql(f'SHOW TABLES IN {dbName} LIKE "{tableName}"').collect() != []

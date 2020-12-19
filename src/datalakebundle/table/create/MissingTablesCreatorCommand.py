@@ -34,8 +34,8 @@ class MissingTablesCreatorCommand(ConsoleCommand):
 
         configsForCreation = self.__tablesConfigManager.getByFilter(filterFunc)
 
-        self.__logger.info('{} tables to be created'.format(len(configsForCreation)))
+        self.__logger.info(f'{len(configsForCreation)} tables to be created')
 
         for tableConfig in configsForCreation:
-            self.__logger.info('Creating table {} for {}'.format(tableConfig.fullTableName, tableConfig.targetPath))
+            self.__logger.info(f'Creating table {tableConfig.fullTableName} for {tableConfig.targetPath}')
             self.__tableCreator.createEmptyTable(tableConfig)
