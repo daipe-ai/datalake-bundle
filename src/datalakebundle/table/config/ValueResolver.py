@@ -17,7 +17,8 @@ class ValueResolver:
         if isinstance(val, dict):
             resolverType = self.__dTypeResolver.resolve(val['resolverClass'])
             resolverClass = loadClass(resolverType.moduleName, resolverType.className)
-            resolver = resolverClass(*val['resolverArguments']) # type: ValueResolverInterface
+            resolverArguments = val['resolverArguments'] if 'resolverArguments' in val else []
+            resolver: ValueResolverInterface = resolverClass(*resolverArguments)
 
             return resolver.resolve(Box(rawTableConfig))
 
