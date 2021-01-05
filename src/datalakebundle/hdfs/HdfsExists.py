@@ -1,10 +1,10 @@
-from databricksbundle.dbutils.DbUtilsWrapper import DbUtilsWrapper
+from pyspark.dbutils import DBUtils
 
 class HdfsExists:
 
     def __init__(
         self,
-        dbutils: DbUtilsWrapper,
+        dbutils: DBUtils,
     ):
         self.__dbutils = dbutils
 

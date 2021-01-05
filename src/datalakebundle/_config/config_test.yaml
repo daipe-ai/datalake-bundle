@@ -1,4 +1,11 @@
 parameters:
+  databricksbundle:
+    databricksConnect:
+      connection:
+        address: 'https://dbc-123.cloud.databricks.com'
+        token: 'abcd123456'
+        clusterId: '0416-084917-doles835'
+
   datalake:
     basePath: '/foo/bar'
 
@@ -15,8 +22,8 @@ parameters:
 
     tables:
       mydatabase_e.my_table:
-        schemaPath: 'datalakebundle.test.TestSchema'
+        schemaLoader: 'datalakebundle.test.TestSchema:getSchema'
 
       mydatabase_p.another_table:
-        schemaPath: 'datalakebundle.test.AnotherSchema'
+        schemaLoader: 'datalakebundle.test.AnotherSchema:getSchema'
         partitionBy: ['date']

@@ -8,3 +8,6 @@ class SimpleTargetPathResolver(ValueResolverInterface):
 
     def resolve(self, rawTableConfig: Box):
         return self.__basePath + '/' + rawTableConfig.dbIdentifier + '/' + rawTableConfig.tableIdentifier + '.delta'
+
+    def getDependingFields(self) -> set:
+        return {'dbIdentifier', 'tableIdentifier'}

@@ -1,0 +1,2 @@
+class UnknownTableException(Exception):
+    pass

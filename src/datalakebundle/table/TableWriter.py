@@ -2,8 +2,7 @@ from logging import Logger
 from pyspark.sql.session import SparkSession
 from pyspark.sql.dataframe import DataFrame
 from datalakebundle.table.config.TableConfig import TableConfig
-from datalakebundle.table.schema.SchemaGetter import SchemaGetter
-import pyspark.sql.types as T
+import pyspark.sql.types as t
 import yaml
 
 class TableWriter:
@@ -12,11 +11,9 @@ class TableWriter:
         self,
         logger: Logger,
         spark: SparkSession,
-        schemaGetter: SchemaGetter,
     ):
         self.__logger = logger
         self.__spark = spark
-        self.__schemaGetter = schemaGetter
 
     def append(self, df: DataFrame, tableConfig: TableConfig):
         self.__save(df, tableConfig, 'append')
@@ -38,16 +35,16 @@ class TableWriter:
         )
 
     def __checkSchema(self, df: DataFrame, tableConfig: TableConfig):
-        tableSchema = self.__schemaGetter.get(tableConfig.schemaPath)
+        tableSchema = tableConfig.schema
 
-        def printSchema(schema: T.StructType):
+        def printSchema(schema: t.StructType):
             return yaml.dump(schema.jsonValue())
 
         if tableSchema.jsonValue() != df.schema.jsonValue():
             self.__logger.warning('Table and dataframe schemas do NOT match', extra={
                 'dfSchema': printSchema(df.schema),
                 'tableSchema': printSchema(tableSchema),
-                'tableSchemaPath': tableConfig.schemaPath,
+                'tableSchemaLoader': tableConfig.schemaLoader,
                 'table': tableConfig.fullTableName,
             })
 

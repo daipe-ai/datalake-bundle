@@ -1,8 +1,13 @@
 # Datalake bundle
 
-Table & schema management for your Databricks-based data lake (house).
+![alt text](./docs/notebook-functions.png)
 
-Provides console commands to simplify table creation, update/migration and deletion.
+This bundle provides everything you need to create and manage a Databricks-based DataLake(House):
+
+* Tools to simplify & automate table creation, updates and migrations.
+* Explicit table schema enforcing for Hive tables, CSVs, ...
+* Decorators to write well-maintainable and self-documented function-based notebooks
+* Rich configuration options to customize naming standards, paths, and basically anything to match your needs
 
 ## Installation
 
@@ -12,24 +17,11 @@ Install the bundle via Poetry:
 $ poetry add datalake-bundle
 ```
 
-Add the `DataLakeBundle()` to your application's **Kernel.py** to activate it:
-
-```python
-from pyfony.kernel.BaseKernel import BaseKernel
-from datalakebundle.DataLakeBundle import DataLakeBundle
-
-class Kernel(BaseKernel):
-    
-    def _registerBundles(self):
-        return [
-            # ...
-            DataLakeBundle(),
-            # ...
-        ]
-```
-
 ## Usage
 
+1. [Recommended notebooks structure](docs/structure.md)
 1. [Defining DataLake tables](docs/tables.md)
+1. [Using datalake-specific notebook functions](docs/notebook-functions.md)
+1. [Using table-specific configuration](docs/configuration.md)
+1. [Tables management](docs/tables-management.md)
 1. [Parsing fields from table identifier](docs/parsing-fields.md)
-1. [Console commands](docs/console-commands.md)

@@ -9,7 +9,7 @@ Imagine that you have the following tables:
 
 The `e/p` suffixes describe the fact that the table contains *encrypted* or *plain* data. What if we need to use that information in our code?
 
-You may always define the attribute manually in the tables configuration: 
+You may always define the attribute **explictly** in the tables configuration: 
 
 ```yaml
 parameters:
@@ -18,10 +18,8 @@ parameters:
       nameTemplate: '{identifier}'
     tables:
       customer_e.my_table:
-        schemaPath: 'datalakebundle.test.TestSchema'
         encrypted: True
       product_p.another_table:
-        schemaPath: 'datalakebundle.test.AnotherSchema'
         encrypted: False
 ```
 
@@ -36,9 +34,7 @@ parameters:
         encrypted: !expr 'dbIdentifier[-1:] == "e"'
     tables:
       customer_e.my_table:
-        schemaPath: 'datalakebundle.test.TestSchema'
       product_p.another_table:
-        schemaPath: 'datalakebundle.test.AnotherSchema'
 ```
 
 For more complex cases, you may also use a custom resolver to create a new table attribute:
@@ -70,11 +66,9 @@ parameters:
             - '%datalake.basePath%'
     tables:
       customer_e.my_table:
-        schemaPath: 'datalakebundle.test.TestSchema'
       product_p.another_table:
-        schemaPath: 'datalakebundle.test.AnotherSchema'
 ```
 
 ___
 
-Next section: [Console commands provided by this bundle](console-commands.md)
+Next section: [Recommended notebooks structure](structure.md)

@@ -24,19 +24,22 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "~3.7.3"
-injecta = ">=0.7"
-pyfony-bundles = "0.2.*"
-console-bundle = "0.2.*"
-databricks-bundle = ">=0.5.9 && <0.7.0"
-simpleeval = "^0.9.10"
+python = "^3.7"
+injecta = "^0.9.3"
+pyfony-bundles = "^0.3.2"
+console-bundle = "^0.3.1"
+databricks-bundle = ">=0.7.0a1"
+simpleeval = ">=0.9.10,<1.0.0"
 
 [tool.poetry.dev-dependencies]
-pylint = "2.4.*"
-pyfony = "0.5.*"
-pytest = "5.2.*"
-databricks-connect = "^6.4.0"
-py4j = "^0.10.9"
+pyfony-core = "^0.7.1"
+pylint = "^2.4"
+pytest = "^5.2"
+databricks-connect = ">=7.3.7"
 
-[app]
-container-init = ["datalakebundle.containerInit", "initContainer"]
+[tool.poetry.plugins."pyfony.bundle"]
+create = "datalakebundle.DataLakeBundle:DataLakeBundle"
+
+[pyfony.bootstrap]
+containerInit = "pyfonycore.container.containerInit:initWithCurrentBundle"
+rootModuleName = "datalakebundle"

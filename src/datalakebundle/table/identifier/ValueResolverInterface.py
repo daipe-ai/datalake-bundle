@@ -6,3 +6,6 @@ class ValueResolverInterface(ABC):
     @abstractmethod
     def resolve(self, rawTableConfig: Box):
         pass
+
+    def getDependingFields(self) -> set:
+        return set()

@@ -4,7 +4,7 @@ from pyspark.sql import SparkSession
 from consolebundle.ConsoleCommand import ConsoleCommand
 from datalakebundle.table.config.TableConfig import TableConfig
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
-from datalakebundle.table.config.TablesConfigManager import TablesConfigManager
+from datalakebundle.table.config.TableConfigManager import TableConfigManager
 
 class TablesOptimizerCommand(ConsoleCommand):
 
@@ -12,12 +12,12 @@ class TablesOptimizerCommand(ConsoleCommand):
         self,
         logger: Logger,
         spark: SparkSession,
-        tablesConfigManager: TablesConfigManager,
+        tableConfigManager: TableConfigManager,
         tableExistenceChecker: TableExistenceChecker
     ):
         self.__logger = logger
         self.__spark = spark
-        self.__tablesConfigManager = tablesConfigManager
+        self.__tableConfigManager = tableConfigManager
         self.__tableExistenceChecker = tableExistenceChecker
 
     def getCommand(self) -> str:
@@ -32,7 +32,7 @@ class TablesOptimizerCommand(ConsoleCommand):
         def filterFunc(tableConfig: TableConfig):
             return self.__tableExistenceChecker.tableExists(tableConfig.dbName, tableConfig.tableName) is True
 
-        existingTables = self.__tablesConfigManager.getByFilter(filterFunc)
+        existingTables = self.__tableConfigManager.getByFilter(filterFunc)
 
         self.__logger.info(f'{len(existingTables)} tables to be optimized')
 
