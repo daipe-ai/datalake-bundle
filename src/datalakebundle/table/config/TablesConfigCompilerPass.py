@@ -10,7 +10,7 @@ class TablesConfigCompilerPass(CompilerPassInterface):
         self.__dTypeResolver = DTypeResolver()
 
     def process(self, containerBuild: ContainerBuild):
-        parameters = containerBuild.parameters # type: Box
+        parameters: Box = containerBuild.parameters
 
         if 'datalakebundle' not in parameters:
             return
