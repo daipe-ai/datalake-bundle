@@ -11,11 +11,12 @@ class fillTemplateTest(unittest.TestCase):
         self.assertEqual('Hello Jiri, I am 34 years old', result)
 
     def test_missingValue(self):
-        with self.assertRaises(Exception) as cm:
+        with self.assertRaises(Exception) as error:
             values = {'name': 'Jiri'}
 
             fillTemplate('Hello {name}, I am {age} years old', values)
-            self.assertEqual('Value for placeholder {age} not defined', cm.exception.msg)
+
+        self.assertEqual('Value for placeholder {age} not defined', str(error.exception))
 
 if __name__ == '__main__':
     unittest.main()
