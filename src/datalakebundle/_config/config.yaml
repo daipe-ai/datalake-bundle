@@ -4,6 +4,8 @@ parameters:
       moduleTemplate: '%bricksflow.rootModule.name%.{dbIdentifier}.{tableIdentifier}.{tableIdentifier}'
       display:
         enabled: True
+      duplicateColumnsCheck:
+        enabled: True
     table:
       nameTemplate: '%kernel.environment%_{identifier}'
       schema:

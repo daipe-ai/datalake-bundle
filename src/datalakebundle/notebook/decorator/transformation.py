@@ -12,7 +12,7 @@ class transformation(DataFrameReturningDecorator, metaclass=DecoratorMetaclass):
         self._checkDuplicateColumns = checkDuplicateColumns
 
     def afterExecution(self, container: ContainerInterface):
-        if self._checkDuplicateColumns:
+        if self._checkDuplicateColumns and container.getParameters().datalakebundle.notebook.duplicateColumnsCheck.enabled is True:
             duplicateColumnsChecker: DuplicateColumnsChecker = container.get(DuplicateColumnsChecker)
 
             dataFrameDecorators = tuple(decoratorArg for decoratorArg in self._decoratorArgs if isinstance(decoratorArg, DataFrameReturningDecorator))
