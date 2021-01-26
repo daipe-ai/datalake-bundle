@@ -18,5 +18,5 @@ class transformation(DataFrameReturningDecorator, metaclass=DecoratorMetaclass):
             dataFrameDecorators = tuple(decoratorArg for decoratorArg in self._decoratorArgs if isinstance(decoratorArg, DataFrameReturningDecorator))
             duplicateColumnsChecker.check(self._result, dataFrameDecorators)
 
-        if self._display:
+        if self._display and container.getParameters().datalakebundle.notebook.display.enabled is True:
             displayFunction(self._result)

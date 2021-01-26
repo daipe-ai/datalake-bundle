@@ -10,5 +10,5 @@ class dataFrameLoader(DataFrameReturningDecorator, metaclass=DecoratorMetaclass)
         self._display = display
 
     def afterExecution(self, container: ContainerInterface):
-        if self._display:
+        if self._display and container.getParameters().datalakebundle.notebook.display.enabled is True:
             displayFunction(self._result)
