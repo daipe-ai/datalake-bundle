@@ -49,11 +49,16 @@ class TableManager:
     def create(self, identifier: str):
         tableConfig = self.__tableConfigManager.get(identifier)
 
-        self.__logger.info(f'Creating table {tableConfig.fullTableName} for {tableConfig.targetPath}')
+        self.__create(tableConfig)
 
-        self.__tableCreator.createEmptyTable(tableConfig)
+    def createIfNotExists(self, identifier: str):
+        tableConfig = self.__tableConfigManager.get(identifier)
 
-        self.__logger.info(f'Table {tableConfig.fullTableName} successfully created')
+        if self.__tableExistenceChecker.tableExists(tableConfig.dbName, tableConfig.tableName):
+            self.__logger.info(f"Table {tableConfig.fullTableName} already exists, creation skipped")
+            return
+
+        self.__create(tableConfig)
 
     def recreate(self, identifier: str):
         tableConfig = self.__tableConfigManager.get(identifier)
@@ -74,3 +79,10 @@ class TableManager:
 
     def optimizeAll(self):
         self.__tablesOptimizerCommand.run(Namespace())
+
+    def __create(self, tableConfig: TableConfig):
+        self.__logger.info(f'Creating table {tableConfig.fullTableName} for {tableConfig.targetPath}')
+
+        self.__tableCreator.createEmptyTable(tableConfig)
+
+        self.__logger.info(f'Table {tableConfig.fullTableName} successfully created')

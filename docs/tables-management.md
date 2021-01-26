@@ -25,6 +25,7 @@ def customers_table(df: DataFrame, logger: Logger, tableManager: TableManager):
 * `getName('my_crm.customers')` - returns final table name
 * `getConfig('my_crm.customers')` - returns [TableConfig instance](../src/datalakebundle/table/config/TableConfig.py)
 * `create('my_crm.customers')` - creates table
+* `createIfNotExists('my_crm.customers')` - creates table only if not exist yet
 * `recreate('my_crm.customers')` - recreates (deletes Hive table, **deletes data**, create new empty table)
 * `exists('my_crm.customers')` - checks if table exists
 * `delete('my_crm.customers')` - deletes Hive table, **deletes data**
