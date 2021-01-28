@@ -56,5 +56,21 @@ class FieldsResolverTest(unittest.TestCase):
             'targetPath': '/foo/bar/mydatabase/my_table_new2.delta',
         }, result)
 
+    def test_infiniteLoopDetection(self):
+        with self.assertRaises(Exception) as error:
+            self.__fieldsResolver.resolve(
+                {},
+                {
+                    'targetPath': {
+                        'resolverClass': 'datalakebundle.test.SimpleTargetPathResolver',
+                        'resolverArguments': [
+                            '/foo/bar'
+                        ],
+                    }
+                }
+            )
+
+        self.assertEqual('Infinite assignment loop detected. Check getDependingFields() of datalakebundle.test.SimpleTargetPathResolver', str(error.exception))
+
 if __name__ == '__main__':
     unittest.main()
