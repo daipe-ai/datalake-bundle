@@ -1,7 +1,7 @@
 from pyspark.dbutils import DBUtils
 
-class HdfsExists:
 
+class HdfsExists:
     def __init__(
         self,
         dbutils: DBUtils,
@@ -14,10 +14,10 @@ class HdfsExists:
 
             return True
         except Exception as e:
-            if 'Cannot head a directory:' in str(e):
+            if "Cannot head a directory:" in str(e):
                 return True
 
-            if 'java.io.FileNotFoundException' in str(e):
+            if "java.io.FileNotFoundException" in str(e):
                 return False
 
             raise

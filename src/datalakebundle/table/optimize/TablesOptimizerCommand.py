@@ -6,37 +6,33 @@ from datalakebundle.table.config.TableConfig import TableConfig
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
 from datalakebundle.table.config.TableConfigManager import TableConfigManager
 
-class TablesOptimizerCommand(ConsoleCommand):
 
+class TablesOptimizerCommand(ConsoleCommand):
     def __init__(
-        self,
-        logger: Logger,
-        spark: SparkSession,
-        tableConfigManager: TableConfigManager,
-        tableExistenceChecker: TableExistenceChecker
+        self, logger: Logger, spark: SparkSession, table_config_manager: TableConfigManager, table_existence_checker: TableExistenceChecker
     ):
         self.__logger = logger
         self.__spark = spark
-        self.__tableConfigManager = tableConfigManager
-        self.__tableExistenceChecker = tableExistenceChecker
+        self.__table_config_manager = table_config_manager
+        self.__table_existence_checker = table_existence_checker
 
-    def getCommand(self) -> str:
-        return 'datalake:table:optimize-all'
+    def get_command(self) -> str:
+        return "datalake:table:optimize-all"
 
-    def getDescription(self):
-        return 'Runs the OPTIMIZE command on all defined tables (Delta only)'
+    def get_description(self):
+        return "Runs the OPTIMIZE command on all defined tables (Delta only)"
 
-    def run(self, inputArgs: Namespace):
-        self.__logger.info('Optimizing Hive tables...')
+    def run(self, input_args: Namespace):
+        self.__logger.info("Optimizing Hive tables...")
 
-        def filterFunc(tableConfig: TableConfig):
-            return self.__tableExistenceChecker.tableExists(tableConfig.dbName, tableConfig.tableName) is True
+        def filter_func(table_config: TableConfig):
+            return self.__table_existence_checker.table_exists(table_config.db_name, table_config.table_name) is True
 
-        existingTables = self.__tableConfigManager.getByFilter(filterFunc)
+        existing_tables = self.__table_config_manager.get_by_filter(filter_func)
 
-        self.__logger.info(f'{len(existingTables)} tables to be optimized')
+        self.__logger.info(f"{len(existing_tables)} tables to be optimized")
 
-        for tableConfig in existingTables:
-            self.__logger.info(f'Running OPTIMIZE {tableConfig.fullTableName}')
+        for table_config in existing_tables:
+            self.__logger.info(f"Running OPTIMIZE {table_config.full_table_name}")
 
-            self.__spark.sql(f'OPTIMIZE {tableConfig.fullTableName}')
+            self.__spark.sql(f"OPTIMIZE {table_config.full_table_name}")

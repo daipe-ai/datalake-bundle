@@ -1,61 +1,68 @@
 import unittest
 from pathlib import Path
-from injecta.testing.servicesTester import testServices
-from pyfonycore.bootstrap import bootstrappedContainer
+from injecta.testing.services_tester import test_services
+from pyfonycore.bootstrap import bootstrapped_container
 from datalakebundle.table.config.TableConfig import TableConfig
 from datalakebundle.table.config.TableConfigManager import TableConfigManager
 
-class DataLakeBundleTest(unittest.TestCase):
 
+class DataLakeBundleTest(unittest.TestCase):
     def setUp(self):
-        self._container = bootstrappedContainer.init('test')
-        self.maxDiff = 8000*8
+        self._container = bootstrapped_container.init("test")
+        self.max_diff = 8000 * 8
 
     def test_init(self):
-        testServices(self._container)
+        test_services(self._container)
 
-    def test_tableConfigs(self):
-        tableConfigManager: TableConfigManager = self._container.get(TableConfigManager)
+    def test_table_configs(self):
+        table_config_manager: TableConfigManager = self._container.get(TableConfigManager)
 
-        myTableConfig = tableConfigManager.get('mydatabase_e.my_table')
-        anotherTableConfig = tableConfigManager.get('mydatabase_p.another_table')
-
-        self.assertEqual(TableConfig(**{
-            'schemaLoader': 'datalakebundle.test.TestSchema:getSchema',
-            'dbIdentifier': 'mydatabase_e',
-            'tableIdentifier': 'my_table',
-            'identifier': 'mydatabase_e.my_table',
-            'notebookModule': 'datalakebundle.mydatabase_e.my_table.my_table',
-            'dbName': 'test_mydatabase_e',
-            'tableName': 'my_table',
-            'encrypted': True,
-            'dbIdentifierBase': 'mydatabase',
-            'targetPath': '/foo/bar/mydatabase/encrypted/my_table.delta',
-        }), myTableConfig)
+        my_table_config = table_config_manager.get("mydatabase_e.my_table")
+        another_table_config = table_config_manager.get("mydatabase_p.another_table")
 
         self.assertEqual(
-            Path.cwd().joinpath('src/datalakebundle/mydatabase_e/my_table/my_table.py'),
-            myTableConfig.notebookPath
+            TableConfig(
+                **{
+                    "schema_loader": "datalakebundle.test.TestSchema:get_schema",
+                    "db_identifier": "mydatabase_e",
+                    "table_identifier": "my_table",
+                    "identifier": "mydatabase_e.my_table",
+                    "notebook_module": "datalakebundle.mydatabase_e.my_table.my_table",
+                    "db_name": "test_mydatabase_e",
+                    "table_name": "my_table",
+                    "encrypted": True,
+                    "db_identifier_base": "mydatabase",
+                    "target_path": "/foo/bar/mydatabase/encrypted/my_table.delta",
+                }
+            ),
+            my_table_config,
         )
 
-        self.assertEqual(TableConfig(**{
-            'schemaLoader': 'datalakebundle.test.AnotherSchema:getSchema',
-            'partitionBy': ['date'],
-            'dbIdentifier': 'mydatabase_p',
-            'tableIdentifier': 'another_table',
-            'notebookModule': 'datalakebundle.mydatabase_p.another_table.another_table',
-            'identifier': 'mydatabase_p.another_table',
-            'dbName': 'test_mydatabase_p',
-            'tableName': 'another_table',
-            'encrypted': False,
-            'dbIdentifierBase': 'mydatabase',
-            'targetPath': '/foo/bar/mydatabase/plain/another_table.delta',
-        }), anotherTableConfig)
+        self.assertEqual(Path.cwd().joinpath("src/datalakebundle/mydatabase_e/my_table/my_table.py"), my_table_config.notebook_path)
 
         self.assertEqual(
-            Path.cwd().joinpath('src/datalakebundle/mydatabase_p/another_table/another_table.py'),
-            anotherTableConfig.notebookPath
+            TableConfig(
+                **{
+                    "schema_loader": "datalakebundle.test.AnotherSchema:get_schema",
+                    "partition_by": ["date"],
+                    "db_identifier": "mydatabase_p",
+                    "table_identifier": "another_table",
+                    "notebook_module": "datalakebundle.mydatabase_p.another_table.another_table",
+                    "identifier": "mydatabase_p.another_table",
+                    "db_name": "test_mydatabase_p",
+                    "table_name": "another_table",
+                    "encrypted": False,
+                    "db_identifier_base": "mydatabase",
+                    "target_path": "/foo/bar/mydatabase/plain/another_table.delta",
+                }
+            ),
+            another_table_config,
         )
 
-if __name__ == '__main__':
+        self.assertEqual(
+            Path.cwd().joinpath("src/datalakebundle/mydatabase_p/another_table/another_table.py"), another_table_config.notebook_path
+        )
+
+
+if __name__ == "__main__":
     unittest.main()

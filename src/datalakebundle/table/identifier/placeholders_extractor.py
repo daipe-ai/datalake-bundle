@@ -1,5 +1,6 @@
 import string
 
+
 def extract(template: str):
     iterator = string.Formatter().parse(template)
 

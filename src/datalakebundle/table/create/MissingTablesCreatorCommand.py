@@ -6,36 +6,36 @@ from datalakebundle.table.config.TableConfig import TableConfig
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
 from datalakebundle.table.config.TableConfigManager import TableConfigManager
 
-class MissingTablesCreatorCommand(ConsoleCommand):
 
+class MissingTablesCreatorCommand(ConsoleCommand):
     def __init__(
         self,
         logger: Logger,
-        tableConfigManager: TableConfigManager,
-        tableCreator: TableCreator,
-        tableExistenceChecker: TableExistenceChecker
+        table_config_manager: TableConfigManager,
+        table_creator: TableCreator,
+        table_existence_checker: TableExistenceChecker,
     ):
         self.__logger = logger
-        self.__tableConfigManager = tableConfigManager
-        self.__tableCreator = tableCreator
-        self.__tableExistenceChecker = tableExistenceChecker
+        self.__table_config_manager = table_config_manager
+        self.__table_creator = table_creator
+        self.__table_existence_checker = table_existence_checker
 
-    def getCommand(self) -> str:
-        return 'datalake:table:create-missing'
+    def get_command(self) -> str:
+        return "datalake:table:create-missing"
 
-    def getDescription(self):
-        return 'Creates newly defined tables that do not exist in the metastore yet'
+    def get_description(self):
+        return "Creates newly defined tables that do not exist in the metastore yet"
 
-    def run(self, inputArgs: Namespace):
-        self.__logger.info('Creating Hive tables...')
+    def run(self, input_args: Namespace):
+        self.__logger.info("Creating Hive tables...")
 
-        def filterFunc(tableConfig: TableConfig):
-            return self.__tableExistenceChecker.tableExists(tableConfig.dbName, tableConfig.tableName) is False
+        def filter_func(table_config: TableConfig):
+            return self.__table_existence_checker.table_exists(table_config.db_name, table_config.table_name) is False
 
-        configsForCreation = self.__tableConfigManager.getByFilter(filterFunc)
+        configs_for_creation = self.__table_config_manager.get_by_filter(filter_func)
 
-        self.__logger.info(f'{len(configsForCreation)} tables to be created')
+        self.__logger.info(f"{len(configs_for_creation)} tables to be created")
 
-        for tableConfig in configsForCreation:
-            self.__logger.info(f'Creating table {tableConfig.fullTableName} for {tableConfig.targetPath}')
-            self.__tableCreator.createEmptyTable(tableConfig)
+        for table_config in configs_for_creation:
+            self.__logger.info(f"Creating table {table_config.fullTableName} for {table_config.targetPath}")
+            self.__table_creator.create_empty_table(table_config)

@@ -5,8 +5,8 @@ from datalakebundle.table.config.TableConfig import TableConfig
 import pyspark.sql.types as t
 import yaml
 
-class TableWriter:
 
+class TableWriter:
     def __init__(
         self,
         logger: Logger,
@@ -15,47 +15,41 @@ class TableWriter:
         self.__logger = logger
         self.__spark = spark
 
-    def append(self, df: DataFrame, tableConfig: TableConfig):
-        self.__save(df, tableConfig, 'append')
+    def append(self, df: DataFrame, table_config: TableConfig):
+        self.__save(df, table_config, "append")
 
-    def overwrite(self, df: DataFrame, tableConfig: TableConfig):
-        self.__save(df, tableConfig, 'overwrite')
+    def overwrite(self, df: DataFrame, table_config: TableConfig):
+        self.__save(df, table_config, "overwrite")
 
-    def writeIfNotExist(self, df: DataFrame, tableConfig: TableConfig):
-        self.__checkSchema(df, tableConfig)
+    def write_if_not_exist(self, df: DataFrame, table_config: TableConfig):
+        self.__check_schema(df, table_config)
 
         (
-            df
-                .write
-                .partitionBy(tableConfig.partitionBy)
-                .format('delta')
-                .option('overwriteSchema', 'true')
-                .mode('errorifexists')
-                .saveAsTable(tableConfig.fullTableName, path=tableConfig.targetPath)
+            df.write.partitionBy(table_config.partition_by)
+            .format("delta")
+            .option("overwriteSchema", "true")
+            .mode("errorifexists")
+            .saveAsTable(table_config.full_table_name, path=table_config.target_path)
         )
 
-    def __checkSchema(self, df: DataFrame, tableConfig: TableConfig):
-        tableSchema = tableConfig.schema
+    def __check_schema(self, df: DataFrame, table_config: TableConfig):
+        table_schema = table_config.schema
 
-        def printSchema(schema: t.StructType):
+        def print_schema(schema: t.StructType):
             return yaml.dump(schema.jsonValue())
 
-        if tableSchema.jsonValue() != df.schema.jsonValue():
-            self.__logger.warning('Table and dataframe schemas do NOT match', extra={
-                'dfSchema': printSchema(df.schema),
-                'tableSchema': printSchema(tableSchema),
-                'tableSchemaLoader': tableConfig.schemaLoader,
-                'table': tableConfig.fullTableName,
-            })
+        if table_schema.jsonValue() != df.schema.jsonValue():
+            self.__logger.warning(
+                "Table and dataframe schemas do NOT match",
+                extra={
+                    "df_schema": print_schema(df.schema),
+                    "table_schema": print_schema(table_schema),
+                    "table_schema_loader": table_config.schema_loader,
+                    "table": table_config.full_table_name,
+                },
+            )
 
-    def __save(self, df: DataFrame, tableConfig: TableConfig, mode: str):
-        self.__checkSchema(df, tableConfig)
+    def __save(self, df: DataFrame, table_config: TableConfig, mode: str):
+        self.__check_schema(df, table_config)
 
-        (
-            df
-                .write
-                .partitionBy(tableConfig.partitionBy)
-                .format('delta')
-                .mode(mode)
-                .saveAsTable(tableConfig.fullTableName)
-        )
+        (df.write.partitionBy(table_config.partition_by).format("delta").mode(mode).saveAsTable(table_config.full_table_name))

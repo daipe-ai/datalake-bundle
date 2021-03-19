@@ -1,15 +1,15 @@
-from injecta.dtype.classLoader import loadClass
+from injecta.module import attribute_loader
 from injecta.service.parser.DTypeResolver import DTypeResolver
 from datalakebundle.table.identifier.ValueResolverInterface import ValueResolverInterface
 
-class ValueResolverFactory:
 
+class ValueResolverFactory:
     def __init__(self):
-        self.__dTypeResolver = DTypeResolver()
+        self.__d_type_resolver = DTypeResolver()
 
     def create(self, val) -> ValueResolverInterface:
-        resolverType = self.__dTypeResolver.resolve(val['resolverClass'])
-        resolverClass = loadClass(resolverType.moduleName, resolverType.className)
-        resolverArguments = val['resolverArguments'] if 'resolverArguments' in val else []
+        resolver_type = self.__d_type_resolver.resolve(val["resolver_class"])
+        resolver_class = attribute_loader.load(resolver_type.module_name, resolver_type.class_name)
+        resolver_arguments = val["resolver_arguments"] if "resolver_arguments" in val else []
 
-        return resolverClass(*resolverArguments)
+        return resolver_class(*resolver_arguments)

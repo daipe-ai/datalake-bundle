@@ -1,29 +1,31 @@
 from box import Box
 from datalakebundle.table.config.ValueResolverFactory import ValueResolverFactory
 
+
 class FieldsResolver:
-
     def __init__(self):
-        self.__valueResolverFactory = ValueResolverFactory()
+        self.__value_resolver_factory = ValueResolverFactory()
 
-    def resolve(self, allFields: dict, defaults: dict):
-        resolverKeys = [name for name, val in defaults.items() if isinstance(val, dict) and name not in allFields]
+    def resolve(self, all_fields: dict, defaults: dict):
+        resolver_keys = [name for name, val in defaults.items() if isinstance(val, dict) and name not in all_fields]
 
-        unsuccessfullyAssignedFields = set()
+        unsuccessfully_assigned_fields = set()
 
-        while resolverKeys:
-            name = resolverKeys.pop(0)
-            resolver = self.__valueResolverFactory.create(defaults[name])
-            dependentFields = resolver.getDependingFields()
+        while resolver_keys:
+            name = resolver_keys.pop(0)
+            resolver = self.__value_resolver_factory.create(defaults[name])
+            dependent_fields = resolver.get_depending_fields()
 
-            if dependentFields - set(allFields.keys()) == set():
-                unsuccessfullyAssignedFields = set()
-                allFields[name] = resolver.resolve(Box(allFields))
+            if dependent_fields - set(all_fields.keys()) == set():
+                unsuccessfully_assigned_fields = set()
+                all_fields[name] = resolver.resolve(Box(all_fields))
             else:
-                if name in unsuccessfullyAssignedFields:
-                    raise Exception(f'Infinite assignment loop detected. Check getDependingFields() of {defaults[name]["resolverClass"]}')
+                if name in unsuccessfully_assigned_fields:
+                    raise Exception(
+                        f'Infinite assignment loop detected. Check get_depending_fields() of {defaults[name]["resolver_class"]}'
+                    )
 
-                unsuccessfullyAssignedFields.add(name)
-                resolverKeys.append(name)
+                unsuccessfully_assigned_fields.add(name)
+                resolver_keys.append(name)
 
-        return allFields
+        return all_fields

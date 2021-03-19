@@ -1,76 +1,80 @@
 import unittest
 from datalakebundle.table.config.FieldsResolver import FieldsResolver
 
-class FieldsResolverTest(unittest.TestCase):
 
+class FieldsResolverTest(unittest.TestCase):
     def setUp(self):
-        self.__fieldsResolver = FieldsResolver()
+        self.__fields_resolver = FieldsResolver()
 
     def test_basic(self):
-        result = self.__fieldsResolver.resolve(
+        result = self.__fields_resolver.resolve(
             {
-                'dbIdentifier': 'mydatabase',
-                'tableIdentifier': 'my_table',
-                'schemaLoader': 'datalakebundle.test.mydatabase.my_table.schema:getSchema',
+                "db_identifier": "mydatabase",
+                "table_identifier": "my_table",
+                "schema_loader": "datalakebundle.test.mydatabase.my_table.schema:get_schema",
             },
             {
-                'targetPath': {
-                    'resolverClass': 'datalakebundle.test.SimpleTargetPathResolver',
-                    'resolverArguments': [
-                        '/foo/bar'
-                    ],
+                "target_path": {
+                    "resolver_class": "datalakebundle.test.SimpleTargetPathResolver",
+                    "resolver_arguments": ["/foo/bar"],
                 }
-            }
+            },
         )
 
-        self.assertEqual({
-            'dbIdentifier': 'mydatabase',
-            'tableIdentifier': 'my_table',
-            'schemaLoader': 'datalakebundle.test.mydatabase.my_table.schema:getSchema',
-            'targetPath': '/foo/bar/mydatabase/my_table.delta',
-        }, result)
-
-    def test_explicitOverridingDefaults(self):
-        result = self.__fieldsResolver.resolve(
+        self.assertEqual(
             {
-                'dbIdentifier': 'mydatabase',
-                'tableIdentifier': 'my_table',
-                'schemaLoader': 'datalakebundle.test.mydatabase.my_table.schema2:getSchema',
-                'targetPath': '/foo/bar/mydatabase/my_table_new2.delta',
+                "db_identifier": "mydatabase",
+                "table_identifier": "my_table",
+                "schema_loader": "datalakebundle.test.mydatabase.my_table.schema:get_schema",
+                "target_path": "/foo/bar/mydatabase/my_table.delta",
+            },
+            result,
+        )
+
+    def test_explicit_overriding_defaults(self):
+        result = self.__fields_resolver.resolve(
+            {
+                "db_identifier": "mydatabase",
+                "table_identifier": "my_table",
+                "schema_loader": "datalakebundle.test.mydatabase.my_table.schema2:get_schema",
+                "target_path": "/foo/bar/mydatabase/my_table_new2.delta",
             },
             {
-                'schemaLoader': 'datalakebundle.test.{dbIdentifier}.{tableIdentifier}.schema:getSchema',
-                'targetPath': {
-                    'resolverClass': 'datalakebundle.test.SimpleTargetPathResolver',
-                    'resolverArguments': [
-                        '/foo/bar'
-                    ],
-                }
-            }
+                "schema_loader": "datalakebundle.test.{db_identifier}.{table_identifier}.schema:get_schema",
+                "target_path": {
+                    "resolver_class": "datalakebundle.test.SimpleTargetPathResolver",
+                    "resolver_arguments": ["/foo/bar"],
+                },
+            },
         )
 
-        self.assertEqual({
-            'dbIdentifier': 'mydatabase',
-            'tableIdentifier': 'my_table',
-            'schemaLoader': 'datalakebundle.test.mydatabase.my_table.schema2:getSchema',
-            'targetPath': '/foo/bar/mydatabase/my_table_new2.delta',
-        }, result)
+        self.assertEqual(
+            {
+                "db_identifier": "mydatabase",
+                "table_identifier": "my_table",
+                "schema_loader": "datalakebundle.test.mydatabase.my_table.schema2:get_schema",
+                "target_path": "/foo/bar/mydatabase/my_table_new2.delta",
+            },
+            result,
+        )
 
-    def test_infiniteLoopDetection(self):
+    def test_infinite_loop_detection(self):
         with self.assertRaises(Exception) as error:
-            self.__fieldsResolver.resolve(
+            self.__fields_resolver.resolve(
                 {},
                 {
-                    'targetPath': {
-                        'resolverClass': 'datalakebundle.test.SimpleTargetPathResolver',
-                        'resolverArguments': [
-                            '/foo/bar'
-                        ],
+                    "target_path": {
+                        "resolver_class": "datalakebundle.test.SimpleTargetPathResolver",
+                        "resolver_arguments": ["/foo/bar"],
                     }
-                }
+                },
             )
 
-        self.assertEqual('Infinite assignment loop detected. Check getDependingFields() of datalakebundle.test.SimpleTargetPathResolver', str(error.exception))
+        self.assertEqual(
+            "Infinite assignment loop detected. Check get_depending_fields() of datalakebundle.test.SimpleTargetPathResolver",
+            str(error.exception),
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

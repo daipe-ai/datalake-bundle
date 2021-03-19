@@ -1,24 +1,24 @@
 parameters:
   datalakebundle:
     notebook:
-      moduleTemplate: '%bricksflow.rootModule.name%.{dbIdentifier}.{tableIdentifier}.{tableIdentifier}'
+      module_template: '%daipe.root_module.name%.{db_identifier}.{table_identifier}.{table_identifier}'
       display:
         enabled: True
-      duplicateColumnsCheck:
+      duplicate_columns_check:
         enabled: True
     table:
-      nameTemplate: '%kernel.environment%_{identifier}'
+      name_template: '%kernel.environment%_{identifier}'
       schema:
-        loaderTemplate: '{notebookParentModule}.schema:getSchema'
+        loader_template: '{notebook_parent_module}.schema:get_schema'
       defaults:
-        notebookModule:
-          resolverClass: 'datalakebundle.notebook.NotebookModuleResolver'
-          resolverArguments:
-            - '%datalakebundle.notebook.moduleTemplate%'
-        schemaLoader:
-          resolverClass: 'datalakebundle.table.schema.SchemaLoaderResolver'
-          resolverArguments:
-            - '%datalakebundle.table.schema.loaderTemplate%'
+        notebook_module:
+          resolver_class: 'datalakebundle.notebook.NotebookModuleResolver'
+          resolver_arguments:
+            - '%datalakebundle.notebook.module_template%'
+        schema_loader:
+          resolver_class: 'datalakebundle.table.schema.SchemaLoaderResolver'
+          resolver_arguments:
+            - '%datalakebundle.table.schema.loader_template%'
     tables:
 
 services:
@@ -32,7 +32,7 @@ services:
 
   datalakebundle.table.config.TableConfigParser:
     arguments:
-      - '%datalakebundle.table.nameTemplate%'
+      - '%datalakebundle.table.name_template%'
 
   datalakebundle.table.config.TableConfigManager:
     arguments:
@@ -89,7 +89,7 @@ services:
 
   datalakebundle.table.TableManager:
     arguments:
-      - '%datalakebundle.table.nameTemplate%'
+      - '%datalakebundle.table.name_template%'
       - '@datalakebundle.logger'
 
   datalakebundle.table.TableWriter:

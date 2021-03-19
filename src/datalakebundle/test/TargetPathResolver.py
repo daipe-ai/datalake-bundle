@@ -1,12 +1,21 @@
 from box import Box
 from datalakebundle.table.identifier.ValueResolverInterface import ValueResolverInterface
 
+
 class TargetPathResolver(ValueResolverInterface):
+    def __init__(self, base_path: str):
+        self.__base_path = base_path
 
-    def __init__(self, basePath: str):
-        self.__basePath = basePath
+    def resolve(self, raw_table_config: Box):
+        encrypted_string = "encrypted" if raw_table_config.encrypted is True else "plain"
 
-    def resolve(self, rawTableConfig: Box):
-        encryptedString = 'encrypted' if rawTableConfig.encrypted is True else 'plain'
-
-        return self.__basePath + '/' + rawTableConfig.dbIdentifierBase + '/' + encryptedString + '/' + rawTableConfig.tableIdentifier + '.delta'
+        return (
+            self.__base_path
+            + "/"
+            + raw_table_config.db_identifier_base
+            + "/"
+            + encrypted_string
+            + "/"
+            + raw_table_config.table_identifier
+            + ".delta"
+        )

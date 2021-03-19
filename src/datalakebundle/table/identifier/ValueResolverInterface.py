@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 from box import Box
 
-class ValueResolverInterface(ABC):
 
+class ValueResolverInterface(ABC):
     @abstractmethod
-    def resolve(self, rawTableConfig: Box):
+    def resolve(self, raw_table_config: Box):
         pass
 
-    def getDependingFields(self) -> set:
+    def get_depending_fields(self) -> set:
         return set()

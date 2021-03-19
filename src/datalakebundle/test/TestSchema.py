@@ -1,7 +1,10 @@
 import pyspark.sql.types as t
 
-def getSchema():
-    return t.StructType([
-        t.StructField('name', t.StringType(), True),
-        t.StructField('createTime', t.TimestampType(), True),
-    ])
+
+def get_schema():
+    return t.StructType(
+        [
+            t.StructField("name", t.StringType(), True),
+            t.StructField("create_time", t.TimestampType(), True),
+        ]
+    )

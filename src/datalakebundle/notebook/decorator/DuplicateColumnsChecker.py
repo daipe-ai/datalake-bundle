@@ -4,39 +4,39 @@ from typing import Tuple
 from pyspark.sql.dataframe import DataFrame
 from datalakebundle.notebook.decorator.DataFrameReturningDecorator import DataFrameReturningDecorator
 
-class DuplicateColumnsChecker:
 
+class DuplicateColumnsChecker:
     def __init__(
         self,
         logger: Logger,
     ):
         self.__logger = logger
 
-    def check(self, df: DataFrame, resultDecorators: Tuple[DataFrameReturningDecorator]):
-        fieldNames = [field.name.lower() for field in df.schema.fields]
-        duplicateFields = dict()
+    def check(self, df: DataFrame, result_decorators: Tuple[DataFrameReturningDecorator]):
+        field_names = [field.name.lower() for field in df.schema.fields]
+        duplicate_fields = dict()
 
-        for fieldName, count in collections.Counter(fieldNames).items():
+        for field_name, count in collections.Counter(field_names).items():
             if count > 1:
-                duplicateFields[fieldName] = []
+                duplicate_fields[field_name] = []
 
-        if duplicateFields == dict():
+        if duplicate_fields == dict():
             return
 
-        fields2Tables = dict()
+        fields2_tables = dict()
 
-        for resultDecorator in resultDecorators:
-            sourceDf = resultDecorator.result
-            for field in sourceDf.schema.fields:
-                fieldName = field.name.lower()
+        for result_decorator in result_decorators:
+            source_df = result_decorator.result
+            for field in source_df.schema.fields:
+                field_name = field.name.lower()
 
-                if fieldName not in fields2Tables:
-                    fields2Tables[fieldName] = []
+                if field_name not in fields2_tables:
+                    fields2_tables[field_name] = []
 
-                fields2Tables[fieldName].append(resultDecorator.function.__name__)
+                fields2_tables[field_name].append(result_decorator.function.__name__)
 
-        for duplicateField in duplicateFields:
-            self.__logger.error(f'Duplicate field {duplicateField}', extra={'source_dataframes': fields2Tables[duplicateField]})
+        for duplicate_field in duplicate_fields:
+            self.__logger.error(f"Duplicate field {duplicate_field}", extra={"source_dataframes": fields2_tables[duplicate_field]})
 
-        fieldsString = ', '.join(duplicateFields)
-        raise Exception(f'Duplicate output column(s): {fieldsString}. Disable by setting @transformation(checkDuplicateColumns=False)')
+        fields_string = ", ".join(duplicate_fields)
+        raise Exception(f"Duplicate output column(s): {fields_string}. Disable by setting @transformation(check_duplicate_columns=False)")

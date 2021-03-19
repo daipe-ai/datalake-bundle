@@ -1,13 +1,12 @@
 class IdentifierParser:
-
     def parse(self, identifier: str) -> dict:
-        dotPosition = identifier.find('.')
+        dot_position = identifier.find(".")
 
-        if dotPosition == -1:
-            raise Exception('Identifier must meet the following format: {dbIdentifier}.{tableIdentifier}')
+        if dot_position == -1:
+            raise Exception("Identifier must meet the following format: {db_identifier}.{table_identifier}")
 
         return {
-            'dbIdentifier': identifier[:dotPosition],
-            'tableIdentifier': identifier[dotPosition + 1:],
-            'identifier': identifier,
+            "db_identifier": identifier[:dot_position],
+            "table_identifier": identifier[dot_position + 1 :],  # noqa: E203
+            "identifier": identifier,
         }

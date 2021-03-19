@@ -2,113 +2,116 @@
 import json
 import os
 from pathlib import Path
-from injecta.package.pathResolver import resolvePath
-from injecta.module import attributeLoader
+from injecta.package.path_resolver import resolve_path
+from injecta.module import attribute_loader
 import pyspark.sql.types as t
 
-class TableConfig:
 
+class TableConfig:
     def __init__(
         self,
         identifier: str,
-        dbIdentifier: str,
-        dbName: str,
-        tableIdentifier: str,
-        tableName: str,
-        schemaLoader: str,
-        targetPath: str,
-        notebookModule: str,
-        partitionBy: list = None,
+        db_identifier: str,
+        db_name: str,
+        table_identifier: str,
+        table_name: str,
+        schema_loader: str,
+        target_path: str,
+        notebook_module: str,
+        partition_by: list = None,
         **kwargs,
     ):
         self.__identifier = identifier
-        self.__dbIdentifier = dbIdentifier
-        self.__dbName = dbName
-        self.__tableIdentifier = tableIdentifier
-        self.__tableName = tableName
-        self.__schemaLoader = schemaLoader
-        self.__targetPath = targetPath
-        self.__notebookModule = notebookModule
-        self.__partitionBy = partitionBy or []
-        self.__customFields = kwargs
+        self.__db_identifier = db_identifier
+        self.__db_name = db_name
+        self.__table_identifier = table_identifier
+        self.__table_name = table_name
+        self.__schema_loader = schema_loader
+        self.__target_path = target_path
+        self.__notebook_module = notebook_module
+        self.__partition_by = partition_by or []
+        self.__custom_fields = kwargs
 
     @property
     def identifier(self):
         return self.__identifier
 
     @property
-    def dbIdentifier(self):
-        return self.__dbIdentifier
+    def db_identifier(self):
+        return self.__db_identifier
 
     @property
-    def dbName(self):
-        return self.__dbName
+    def db_name(self):
+        return self.__db_name
 
     @property
-    def tableIdentifier(self):
-        return self.__tableIdentifier
+    def table_identifier(self):
+        return self.__table_identifier
 
     @property
-    def tableName(self):
-        return self.__tableName
+    def table_name(self):
+        return self.__table_name
 
     @property
-    def schemaLoader(self):
-        return self.__schemaLoader
+    def schema_loader(self):
+        return self.__schema_loader
 
     @property
     def schema(self) -> t.StructType:
-        getSchema = attributeLoader.loadFromString(self.__schemaLoader)
+        get_schema = attribute_loader.load_from_string(self.__schema_loader)
 
-        return getSchema()
-
-    @property
-    def targetPath(self):
-        return self.__targetPath
+        return get_schema()
 
     @property
-    def notebookModule(self):
-        return self.__notebookModule
+    def target_path(self):
+        return self.__target_path
 
     @property
-    def notebookPath(self) -> Path:
-        parts = self.__notebookModule.split('.')
-        basePath = resolvePath(parts[0])
-
-        return Path(basePath + os.sep + os.sep.join(parts[1:]) + '.py')
+    def notebook_module(self):
+        return self.__notebook_module
 
     @property
-    def partitionBy(self):
-        return self.__partitionBy
+    def notebook_path(self) -> Path:
+        parts = self.__notebook_module.split(".")
+        base_path = resolve_path(parts[0])
+
+        return Path(base_path + os.sep + os.sep.join(parts[1:]) + ".py")
 
     @property
-    def fullTableName(self):
-        return self.__dbName + '.' + self.__tableName
+    def partition_by(self):
+        return self.__partition_by
 
-    def getCustomFields(self):
-        return self.__customFields
+    @property
+    def full_table_name(self):
+        return self.__db_name + "." + self.__table_name
 
-    def asDict(self):
-        return {**self.__customFields, **{
-            'identifier': self.__identifier,
-            'dbIdentifier': self.__dbIdentifier,
-            'dbName': self.__dbName,
-            'tableIdentifier': self.__tableIdentifier,
-            'tableName': self.__tableName,
-            'schemaLoader': self.__schemaLoader,
-            'targetPath': self.__targetPath,
-            'notebookModule': self.__notebookModule,
-            'partitionBy': self.__partitionBy,
-        }}
+    def get_custom_fields(self):
+        return self.__custom_fields
+
+    def as_dict(self):
+        return {
+            **self.__custom_fields,
+            **{
+                "identifier": self.__identifier,
+                "db_identifier": self.__db_identifier,
+                "db_name": self.__db_name,
+                "table_identifier": self.__table_identifier,
+                "table_name": self.__table_name,
+                "schema_loader": self.__schema_loader,
+                "target_path": self.__target_path,
+                "notebook_module": self.__notebook_module,
+                "partition_by": self.__partition_by,
+            },
+        }
 
     def __getattr__(self, item):
-        if item not in self.__customFields:
+        if item not in self.__custom_fields:
             raise Exception(f'Unexpected attribute: "{item}"')
 
-        return self.__customFields[item]
+        return self.__custom_fields[item]
 
-    def __eq__(self, other: 'TableConfig'):
-        return self.asDict() == other.asDict()
+    def __eq__(self, other: "TableConfig"):
+        return self.as_dict() == other.as_dict()
 
     def __repr__(self):
-        return json.dumps(self.asDict(), indent=4)
+        return json.dumps(self.as_dict(), indent=4)

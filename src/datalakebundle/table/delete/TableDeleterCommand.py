@@ -5,37 +5,37 @@ from consolebundle.ConsoleCommand import ConsoleCommand
 from datalakebundle.table.UnknownTableException import UnknownTableException
 from datalakebundle.table.config.TableConfigManager import TableConfigManager
 from datalakebundle.table.delete.TableDeleter import TableDeleter
-from datalakebundle.table.tableActionCommand import tableActionCommand
+from datalakebundle.table.table_action_command import table_action_command
 
-@tableActionCommand
+
+@table_action_command
 class TableDeleterCommand(ConsoleCommand):
-
     def __init__(
         self,
         logger: Logger,
-        tableConfigManager: TableConfigManager,
-        tableDeleter: TableDeleter,
+        table_config_manager: TableConfigManager,
+        table_deleter: TableDeleter,
     ):
         self._logger = logger
-        self._tableConfigManager = tableConfigManager
-        self._tableDeleter = tableDeleter
+        self._table_config_manager = table_config_manager
+        self._table_deleter = table_deleter
 
-    def getCommand(self) -> str:
-        return 'datalake:table:delete'
+    def get_command(self) -> str:
+        return "datalake:table:delete"
 
-    def getDescription(self):
-        return 'Deletes a metastore table including data on HDFS'
+    def get_description(self):
+        return "Deletes a metastore table including data on HDFS"
 
-    def configure(self, argumentParser: ArgumentParser):
-        argumentParser.add_argument(dest='identifier', help='Table identifier')
+    def configure(self, argument_parser: ArgumentParser):
+        argument_parser.add_argument(dest="identifier", help="Table identifier")
 
-    def run(self, inputArgs: Namespace):
-        tableConfig = self._tableConfigManager.get(inputArgs.identifier)
+    def run(self, input_args: Namespace):
+        table_config = self._table_config_manager.get(input_args.identifier)
 
         try:
-            self._tableDeleter.delete(tableConfig)
+            self._table_deleter.delete(table_config)
 
-            self._logger.info(f'Table {tableConfig.fullTableName} successfully deleted')
+            self._logger.info(f"Table {table_config.full_table_name} successfully deleted")
         except UnknownTableException as e:
             self._logger.error(str(e))
             sys.exit(1)
