@@ -1,4 +1,3 @@
-# pylint: disable = all
 import os
 from datalakebundle.notebook.decorator.data_frame_loader import data_frame_loader
 from datalakebundle.notebook.decorator.transformation import transformation

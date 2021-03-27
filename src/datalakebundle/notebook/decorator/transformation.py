@@ -1,4 +1,3 @@
-# pylint: disable = invalid-name, not-callable
 from injecta.container.ContainerInterface import ContainerInterface
 from databricksbundle.display import display as display_function
 from databricksbundle.notebook.decorator.DecoratorMetaclass import DecoratorMetaclass
@@ -7,7 +6,7 @@ from datalakebundle.notebook.decorator.DuplicateColumnsChecker import DuplicateC
 
 
 class transformation(DataFrameReturningDecorator, metaclass=DecoratorMetaclass):  # noqa: N801
-    def __init__(self, *args, display=False, check_duplicate_columns=True):  # pylint: disable = unused-argument
+    def __init__(self, *args, display=False, check_duplicate_columns=True):
         self._display = display
         self._check_duplicate_columns = check_duplicate_columns
 

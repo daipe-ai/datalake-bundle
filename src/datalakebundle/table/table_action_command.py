@@ -1,4 +1,3 @@
-# pylint: disable = protected-access
 import sys
 from argparse import Namespace
 

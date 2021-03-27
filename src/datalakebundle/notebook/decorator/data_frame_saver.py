@@ -1,4 +1,3 @@
-# pylint: disable = invalid-name, not-callable
 from databricksbundle.notebook.decorator.AbstractDecorator import AbstractDecorator
 from databricksbundle.notebook.decorator.DecoratorMetaclass import DecoratorMetaclass
 

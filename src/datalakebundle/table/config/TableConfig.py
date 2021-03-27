@@ -1,4 +1,3 @@
-# pylint: disable = too-many-instance-attributes
 import json
 import os
 from pathlib import Path

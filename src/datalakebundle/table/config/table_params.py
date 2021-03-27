@@ -1,4 +1,3 @@
-# pylint: disable = invalid-name
 from databricksbundle.notebook.decorator.StringableParameterInterface import StringableParameterInterface
 
 

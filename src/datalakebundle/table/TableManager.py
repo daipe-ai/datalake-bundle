@@ -1,4 +1,3 @@
-# pylint: disable = too-many-instance-attributes
 from argparse import Namespace
 from logging import Logger
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker

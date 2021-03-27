@@ -1,4 +1,3 @@
-# pylint: disable = invalid-name
 import yaml
 from simpleeval import simple_eval
 
@@ -14,5 +13,5 @@ class Expression:
         return simple_eval(self.val, names=variables)
 
     @classmethod
-    def from_yaml(cls, loader, node):  # pylint: disable = unused-argument
+    def from_yaml(cls, loader, node):
         return cls(node.value)
