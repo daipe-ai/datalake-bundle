@@ -4,4 +4,4 @@ This bundle allows you to easily create and manage datalake(house) based on the 
 
 ## Resources
 
-* [Documentation](https://datasentics.github.io/ai-platform-docs/data-pipelines-workflow/managing-datalake/)
+* [Documentation](https://docs.daipe.ai/data-pipelines-workflow/managing-datalake/)
