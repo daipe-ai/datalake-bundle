@@ -92,36 +92,17 @@ pyfony-core = ">=0.8.0,<0.9.0"
 python-dotenv = ">=0.13.0,<1.0.0"
 
 [[package]]
-name = "databricks-bundle"
-version = "0.8.0"
-description = "Databricks bundle for the Daipe framework"
+name = "daipe-core"
+version = "0.8.0b1"
+description = "Daipe framework core"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-console-bundle = ">=0.4.0,<0.5.0"
 injecta = ">=0.10.0,<0.11.0"
 logger-bundle = ">=0.7.0,<0.8.0"
 pyfony-bundles = ">=0.4.0,<0.5.0"
-pyfony-core = ">=0.8.0,<0.9.0"
-
-[[package]]
-name = "databricks-connect"
-version = "7.3.7"
-description = "Databricks Connect Client"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-py4j = "0.10.9"
-six = "*"
-
-[package.extras]
-ml = ["numpy (>=1.7)"]
-mllib = ["numpy (>=1.7)"]
-sql = ["pandas (>=0.23.2)", "pyarrow (>=0.15.1)"]
 
 [[package]]
 name = "flake8"
@@ -353,6 +334,35 @@ optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
+name = "pyspark"
+version = "3.1.1"
+description = "Apache Spark Python API"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+py4j = "0.10.9"
+
+[package.extras]
+ml = ["numpy (>=1.7)"]
+mllib = ["numpy (>=1.7)"]
+sql = ["pandas (>=0.23.2)", "pyarrow (>=1.0.0)"]
+
+[[package]]
+name = "pyspark-bundle"
+version = "0.8.0b1"
+description = "PySpark bundle for the Daipe Framework"
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[package.dependencies]
+daipe-core = ">=0.8.0b1,<0.9.0"
+injecta = ">=0.10.0,<0.11.0"
+pyfony-bundles = ">=0.4.0,<0.5.0"
+
+[[package]]
 name = "pytest"
 version = "5.2.4"
 description = "pytest: simple powerful testing with Python"
@@ -483,7 +493,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "ee5ac814b601f0d64a2a4eb7a12eb00c57cbb8e08dd4fc50cb8074b367418dd0"
+content-hash = "9995ce2f315dabf1aa6dc0209b19dfd431c9ed97792f10932303fb61ec7b0a84"
 
 [metadata.files]
 appdirs = [
@@ -516,11 +526,8 @@ colorlog = [
 console-bundle = [
     {file = "console_bundle-0.4.0-py3-none-any.whl", hash = "sha256:6fb19484d5ebf6904e60646fb253558c3eebb6335d283088ddb7054f83505921"},
 ]
-databricks-bundle = [
-    {file = "databricks_bundle-0.8.0-py3-none-any.whl", hash = "sha256:983a422e4a59a49392ecb80dcf7fab1c5532a3f81191651c1e71e0d5cebcfe82"},
-]
-databricks-connect = [
-    {file = "databricks-connect-7.3.7.tar.gz", hash = "sha256:35ead50a0550e65a7d6fd78e2c8e54095b53514fba85180768a2dbcdd3f2cf0b"},
+daipe-core = [
+    {file = "daipe_core-0.8.0b1-py3-none-any.whl", hash = "sha256:faded98345ab787e4b782addcd17b051f6087d9322bcd5a30925e22dafbc6805"},
 ]
 flake8 = [
     {file = "flake8-3.9.0-py2.py3-none-any.whl", hash = "sha256:12d05ab02614b6aee8df7c36b97d1a3b2372761222b19b58621355e82acddcff"},
@@ -605,6 +612,12 @@ pyfony-core = [
 pyparsing = [
     {file = "pyparsing-2.4.6-py2.py3-none-any.whl", hash = "sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec"},
     {file = "pyparsing-2.4.6.tar.gz", hash = "sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f"},
+]
+pyspark = [
+    {file = "pyspark-3.1.1.tar.gz", hash = "sha256:104abc146d4ffb72d4c683d25d7af5a6bf955d94590a76f542ee23185670aa7e"},
+]
+pyspark-bundle = [
+    {file = "pyspark_bundle-0.8.0b1-py3-none-any.whl", hash = "sha256:b89b917785293ed2a8087368ec34ffe9010af141f293204edde35932ea1f37b8"},
 ]
 pytest = [
     {file = "pytest-5.2.4-py3-none-any.whl", hash = "sha256:8e256fe71eb74e14a4d20a5987bb5e1488f0511ee800680aaedc62b9358714e8"},
