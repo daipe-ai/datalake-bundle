@@ -1,9 +1,8 @@
 import unittest
-from pathlib import Path
 from injecta.testing.services_tester import test_services
 from pyfonycore.bootstrap import bootstrapped_container
-from datalakebundle.table.config.TableConfig import TableConfig
-from datalakebundle.table.config.TableConfigManager import TableConfigManager
+from datalakebundle.table.parameters.TableParameters import TableParameters
+from datalakebundle.table.parameters.TableParametersManager import TableParametersManager
 
 
 class DataLakeBundleTest(unittest.TestCase):
@@ -14,20 +13,18 @@ class DataLakeBundleTest(unittest.TestCase):
     def test_init(self):
         test_services(self._container)
 
-    def test_table_configs(self):
-        table_config_manager: TableConfigManager = self._container.get(TableConfigManager)
+    def test_table_parameters(self):
+        table_parameters_manager: TableParametersManager = self._container.get(TableParametersManager)
 
-        my_table_config = table_config_manager.get("mydatabase_e.my_table")
-        another_table_config = table_config_manager.get("mydatabase_p.another_table")
+        my_table_parameters = table_parameters_manager.get_or_parse("mydatabase_e.my_table")
+        another_table_parameters = table_parameters_manager.get_or_parse("mydatabase_p.another_table")
 
         self.assertEqual(
-            TableConfig(
+            TableParameters(
                 **{
-                    "schema_loader": "datalakebundle.test.TestSchema:get_schema",
                     "db_identifier": "mydatabase_e",
                     "table_identifier": "my_table",
                     "identifier": "mydatabase_e.my_table",
-                    "notebook_module": "datalakebundle.mydatabase_e.my_table.my_table",
                     "db_name": "test_mydatabase_e",
                     "table_name": "my_table",
                     "encrypted": True,
@@ -35,19 +32,14 @@ class DataLakeBundleTest(unittest.TestCase):
                     "target_path": "/foo/bar/mydatabase/encrypted/my_table.delta",
                 }
             ),
-            my_table_config,
+            my_table_parameters,
         )
 
-        self.assertEqual(Path.cwd().joinpath("src/datalakebundle/mydatabase_e/my_table/my_table.py"), my_table_config.notebook_path)
-
         self.assertEqual(
-            TableConfig(
+            TableParameters(
                 **{
-                    "schema_loader": "datalakebundle.test.AnotherSchema:get_schema",
-                    "partition_by": ["date"],
                     "db_identifier": "mydatabase_p",
                     "table_identifier": "another_table",
-                    "notebook_module": "datalakebundle.mydatabase_p.another_table.another_table",
                     "identifier": "mydatabase_p.another_table",
                     "db_name": "test_mydatabase_p",
                     "table_name": "another_table",
@@ -56,11 +48,7 @@ class DataLakeBundleTest(unittest.TestCase):
                     "target_path": "/foo/bar/mydatabase/plain/another_table.delta",
                 }
             ),
-            another_table_config,
-        )
-
-        self.assertEqual(
-            Path.cwd().joinpath("src/datalakebundle/mydatabase_p/another_table/another_table.py"), another_table_config.notebook_path
+            another_table_parameters,
         )
 
 

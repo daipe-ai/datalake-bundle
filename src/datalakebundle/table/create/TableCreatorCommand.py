@@ -1,37 +1,43 @@
+import sys
 from argparse import ArgumentParser, Namespace
 from logging import Logger
 from consolebundle.ConsoleCommand import ConsoleCommand
-from datalakebundle.table.config.TableConfigManager import TableConfigManager
+from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
+from datalakebundle.table.class_ import table_schema_loader
 from datalakebundle.table.create.TableCreator import TableCreator
-from datalakebundle.table.table_action_command import table_action_command
+from datalakebundle.table.create.TableDefinitionFactory import TableDefinitionFactory
 
 
-@table_action_command
 class TableCreatorCommand(ConsoleCommand):
     def __init__(
         self,
         logger: Logger,
-        table_config_manager: TableConfigManager,
+        table_definition_factory: TableDefinitionFactory,
+        table_existence_checker: TableExistenceChecker,
         table_creator: TableCreator,
     ):
-        self._logger = logger
-        self._table_config_manager = table_config_manager
-        self._table_creator = table_creator
+        self.__logger = logger
+        self.__table_definition_factory = table_definition_factory
+        self.__table_existence_checker = table_existence_checker
+        self.__table_creator = table_creator
 
     def get_command(self) -> str:
         return "datalake:table:create"
 
     def get_description(self):
-        return "Creates a metastore table based on it's YAML definition (name, schema, data path, ...)"
+        return "Creates a metastore table based on it's identifier and table class"
 
     def configure(self, argument_parser: ArgumentParser):
         argument_parser.add_argument(dest="identifier", help="Table identifier")
+        argument_parser.add_argument(dest="table_schema_path", help="Table class path [module_path].[class_name]")
 
     def run(self, input_args: Namespace):
-        table_config = self._table_config_manager.get(input_args.identifier)
+        table_definition = self.__table_definition_factory.create_from_table_schema(
+            input_args.identifier, table_schema_loader.load(input_args.table_schema_path)
+        )
 
-        self._logger.info(f"Creating table {table_config.fullTableName} for {table_config.targetPath}")
+        if self.__table_existence_checker.table_exists(table_definition.db_name, table_definition.table_name):
+            self.__logger.error(f"Hive table {table_definition.full_table_name} already exists")
+            sys.exit(1)
 
-        self._table_creator.create_empty_table(table_config)
-
-        self._logger.info(f"Table {table_config.fullTableName} successfully created")
+        self.__table_creator.create(table_definition)

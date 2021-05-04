@@ -1,5 +1,5 @@
 from box import Box
-from datalakebundle.table.config.ValueResolverFactory import ValueResolverFactory
+from datalakebundle.table.parameters.ValueResolverFactory import ValueResolverFactory
 
 
 class FieldsResolver:

@@ -1,30 +1,35 @@
-from pyspark.sql import SparkSession
-from datalakebundle.table.TableWriter import TableWriter
-from datalakebundle.table.config.TableConfig import TableConfig
+from logging import Logger
+from datalakebundle.delta.DeltaStorage import DeltaStorage
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
-from datalakebundle.hdfs.HdfsExists import HdfsExists
+from datalakebundle.table.create.TableDefinition import TableDefinition
+from datalakebundle.table.write.TablePropertiesSetter import TablePropertiesSetter
 
 
 class TableCreator:
     def __init__(
         self,
-        spark: SparkSession,
-        table_writer: TableWriter,
+        logger: Logger,
+        delta_storage: DeltaStorage,
         table_existence_checker: TableExistenceChecker,
-        hdfs_exists: HdfsExists,
+        table_properties_setter: TablePropertiesSetter,
     ):
-        self.__spark = spark
-        self.__table_writer = table_writer
+        self.__logger = logger
+        self.__delta_storage = delta_storage
         self.__table_existence_checker = table_existence_checker
-        self.__hdfs_exists = hdfs_exists
+        self.__table_properties_setter = table_properties_setter
 
-    def create_empty_table(self, table_config: TableConfig):
-        empty_df = self.__spark.createDataFrame([], table_config.schema)
+    def create(self, table_definition: TableDefinition):
+        self.__logger.info(f"Creating new table {table_definition.full_table_name} for {table_definition.target_path}")
 
-        if self.__table_existence_checker.table_exists(table_config.db_name, table_config.table_name):
-            raise Exception(f"Table {table_config.fullTableName} already exists")
+        self.__delta_storage.create_table(table_definition)
 
-        if self.__hdfs_exists.exists(table_config.target_path):
-            raise Exception(f"Path {table_config.target_path} already exists")
+        self.__table_properties_setter.set(table_definition)
 
-        self.__table_writer.write_if_not_exist(empty_df, table_config)
+        self.__logger.info(f"Table {table_definition.full_table_name} successfully created")
+
+    def create_if_not_exists(self, table_definition: TableDefinition):
+        if self.__table_existence_checker.table_exists(table_definition.db_name, table_definition.table_name):
+            self.__logger.info(f"Table {table_definition.full_table_name} already exists, creation skipped")
+            return
+
+        self.create(table_definition)

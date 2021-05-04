@@ -1,13 +1,9 @@
 parameters:
-  databricksbundle:
-    databricks_connect:
-      connection:
-        address: 'https://dbc-123.cloud.databricks.com'
-        token: 'abcd123456'
-        cluster_id: '0416-084917-doles835'
-
   datalake:
     base_path: '/foo/bar'
+
+  pysparkbundle:
+    filesystem: dummy_filesystem
 
   datalakebundle:
     table:
@@ -20,10 +16,12 @@ parameters:
           resolver_arguments:
             - '%datalake.base_path%'
 
-    tables:
-      mydatabase_e.my_table:
-        schema_loader: 'datalakebundle.test.TestSchema:get_schema'
+services:
+  datalakebundle.test.DummySparkFactory:
 
-      mydatabase_p.another_table:
-        schema_loader: 'datalakebundle.test.AnotherSchema:get_schema'
-        partition_by: ['date']
+  pyspark.sql.session.SparkSession:
+    factory: ['@datalakebundle.test.DummySparkFactory', 'create']
+
+  pysparkbundle.filesystem.DummyFilesystem:
+    tags:
+      - {name: 'pysparkbundle.filesystem', alias: dummy_filesystem}

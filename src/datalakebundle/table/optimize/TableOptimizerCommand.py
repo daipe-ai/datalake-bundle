@@ -1,22 +1,24 @@
+import sys
 from argparse import Namespace, ArgumentParser
 from logging import Logger
 from pyspark.sql import SparkSession
 from consolebundle.ConsoleCommand import ConsoleCommand
-from datalakebundle.table.config.TableConfigManager import TableConfigManager
-from datalakebundle.table.table_action_command import table_action_command
+from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
+from datalakebundle.table.parameters.TableParametersManager import TableParametersManager
 
 
-@table_action_command
 class TableOptimizerCommand(ConsoleCommand):
     def __init__(
         self,
         logger: Logger,
         spark: SparkSession,
-        table_config_manager: TableConfigManager,
+        table_parameters_manager: TableParametersManager,
+        table_existence_checker: TableExistenceChecker,
     ):
-        self._logger = logger
-        self._spark = spark
-        self._table_config_manager = table_config_manager
+        self.__logger = logger
+        self.__spark = spark
+        self.__table_parameters_manager = table_parameters_manager
+        self.__table_existence_checker = table_existence_checker
 
     def get_command(self) -> str:
         return "datalake:table:optimize"
@@ -28,10 +30,14 @@ class TableOptimizerCommand(ConsoleCommand):
         argument_parser.add_argument(dest="identifier", help="Table identifier")
 
     def run(self, input_args: Namespace):
-        table_config = self._table_config_manager.get(input_args.identifier)
+        table_parameters = self.__table_parameters_manager.get_or_parse(input_args.identifier)
 
-        self._logger.info(f"Running OPTIMIZE {table_config.full_table_name}")
+        if not self.__table_existence_checker.table_exists(table_parameters.db_name, table_parameters.table_name):
+            self.__logger.error(f"Hive table {table_parameters.full_table_name} does NOT exists")
+            sys.exit(1)
 
-        self._spark.sql(f"OPTIMIZE {table_config.full_table_name}")
+        self.__logger.info(f"Running OPTIMIZE {table_parameters.full_table_name}")
 
-        self._logger.info(f"OPTIMIZE for {table_config.full_table_name} completed")
+        self.__spark.sql(f"OPTIMIZE {table_parameters.full_table_name}")
+
+        self.__logger.info(f"OPTIMIZE for {table_parameters.full_table_name} completed")

@@ -1,5 +1,5 @@
 import unittest
-from datalakebundle.table.config.FieldsResolver import FieldsResolver
+from datalakebundle.table.parameters.FieldsResolver import FieldsResolver
 
 
 class FieldsResolverTest(unittest.TestCase):
@@ -11,7 +11,6 @@ class FieldsResolverTest(unittest.TestCase):
             {
                 "db_identifier": "mydatabase",
                 "table_identifier": "my_table",
-                "schema_loader": "datalakebundle.test.mydatabase.my_table.schema:get_schema",
             },
             {
                 "target_path": {
@@ -25,7 +24,6 @@ class FieldsResolverTest(unittest.TestCase):
             {
                 "db_identifier": "mydatabase",
                 "table_identifier": "my_table",
-                "schema_loader": "datalakebundle.test.mydatabase.my_table.schema:get_schema",
                 "target_path": "/foo/bar/mydatabase/my_table.delta",
             },
             result,
@@ -36,11 +34,9 @@ class FieldsResolverTest(unittest.TestCase):
             {
                 "db_identifier": "mydatabase",
                 "table_identifier": "my_table",
-                "schema_loader": "datalakebundle.test.mydatabase.my_table.schema2:get_schema",
                 "target_path": "/foo/bar/mydatabase/my_table_new2.delta",
             },
             {
-                "schema_loader": "datalakebundle.test.{db_identifier}.{table_identifier}.schema:get_schema",
                 "target_path": {
                     "resolver_class": "datalakebundle.test.SimpleTargetPathResolver",
                     "resolver_arguments": ["/foo/bar"],
@@ -52,7 +48,6 @@ class FieldsResolverTest(unittest.TestCase):
             {
                 "db_identifier": "mydatabase",
                 "table_identifier": "my_table",
-                "schema_loader": "datalakebundle.test.mydatabase.my_table.schema2:get_schema",
                 "target_path": "/foo/bar/mydatabase/my_table_new2.delta",
             },
             result,

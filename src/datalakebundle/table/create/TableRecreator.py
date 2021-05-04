@@ -1,50 +1,28 @@
 from logging import Logger
-from datalakebundle.hdfs.HdfsExists import HdfsExists
-from datalakebundle.table.create.TableCreator import TableCreator
-from datalakebundle.table.config.TableConfig import TableConfig
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
-from datalakebundle.table.delete.TableDeleter import TableDeleter
+from datalakebundle.delta.DeltaStorage import DeltaStorage
+from datalakebundle.table.create.TableDefinition import TableDefinition
+from datalakebundle.table.write.TablePropertiesSetter import TablePropertiesSetter
 
 
 class TableRecreator:
     def __init__(
         self,
         logger: Logger,
-        table_creator: TableCreator,
+        delta_storage: DeltaStorage,
         table_existence_checker: TableExistenceChecker,
-        table_deleter: TableDeleter,
-        hdfs_exists: HdfsExists,
+        table_properties_setter: TablePropertiesSetter,
     ):
         self.__logger = logger
-        self.__table_creator = table_creator
+        self.__delta_storage = delta_storage
         self.__table_existence_checker = table_existence_checker
-        self.__table_deleter = table_deleter
-        self.__hdfs_exists = hdfs_exists
+        self.__table_properties_setter = table_properties_setter
 
-    def recreate(self, table_config: TableConfig):
-        if self.__table_existence_checker.table_exists(table_config.db_name, table_config.table_name):
-            self.__recreate_hive_table(table_config)
-        elif self.__hdfs_exists.exists(table_config.target_path):
-            self.__create_new_table_when_data_existed(table_config)
-        else:
-            self.__logger.info(f"Creating new Hive table {table_config.full_table_name} (didn't exist before)")
-            self.__table_creator.create_empty_table(table_config)
+    def recreate(self, table_definition: TableDefinition):
+        self.__logger.info(f"Recreating table {table_definition.full_table_name}")
 
-    def __recreate_hive_table(self, table_config: TableConfig):
-        self.__table_deleter.drop_hive_table(table_config)
+        self.__delta_storage.recreate_table(table_definition)
 
-        if not self.__hdfs_exists.exists(table_config.target_path):
-            self.__logger.warning(f"No files in {table_config.target_path} for existing Hive table {table_config.full_table_name}")
-        else:
-            self.__table_deleter.delete_files(table_config)
+        self.__table_properties_setter.set(table_definition)
 
-        self.__logger.info(f"Recreating Hive table {table_config.full_table_name} (existed before)")
-        self.__table_creator.create_empty_table(table_config)
-
-    def __create_new_table_when_data_existed(self, table_config: TableConfig):
-        self.__logger.warning(f"Hive table {table_config.full_table_name} does NOT exists for existing files in {table_config.target_path}")
-
-        self.__table_deleter.delete_files(table_config)
-
-        self.__logger.info(f"Creating new Hive table {table_config.full_table_name} (data existed before)")
-        self.__table_creator.create_empty_table(table_config)
+        self.__logger.info(f"Table {table_definition.full_table_name} successfully recreated")

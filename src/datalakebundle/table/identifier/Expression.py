@@ -9,9 +9,9 @@ class Expression:
     def __init__(self, val):
         self.val = val
 
-    def evaluate(self, variables: dict):
-        return simple_eval(self.val, names=variables)
-
     @classmethod
     def from_yaml(cls, loader, node):
         return cls(node.value)
+
+    def evaluate(self, variables: dict):
+        return simple_eval(self.val, names=variables)
