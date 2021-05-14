@@ -19,6 +19,61 @@ services:
     arguments:
       - '@datalakebundle.logger'
 
+  datalakebundle.notebook.lineage.argument.ArgumentMapping:
+    tags:
+      - 'lineage.decorator.function.argument_mapping'
+
+  datalakebundle.notebook.lineage.TableWriterParser.overwrite:
+    class: datalakebundle.notebook.lineage.TableWriterParser
+    arguments:
+      - 'table_overwrite'
+      - 'overwrite'
+    tags:
+      - 'lineage.decorator.parser'
+
+  datalakebundle.notebook.lineage.TableWriterParser.append:
+    class: datalakebundle.notebook.lineage.TableWriterParser
+    arguments:
+      - 'table_append'
+      - 'append'
+    tags:
+      - 'lineage.decorator.parser'
+
+  datalakebundle.notebook.lineage.TableWriterParser.upsert:
+    class: datalakebundle.notebook.lineage.TableWriterParser
+    arguments:
+      - 'table_upsert'
+      - 'upsert'
+    tags:
+      - 'lineage.decorator.parser'
+
+  datalakebundle.notebook.lineage.data_frame_loader:
+    class: daipecore.lineage.InputDecoratorParser
+    arguments:
+      - 'data_frame_loader'
+      - 'daipecore.lineage.InputDecorator'
+      - 'InputDecorator'
+    tags:
+      - 'lineage.decorator.parser'
+
+  datalakebundle.notebook.lineage.data_frame_saver:
+    class: daipecore.lineage.InputDecoratorParser
+    arguments:
+      - 'data_frame_saver'
+      - 'daipecore.lineage.InputDecorator'
+      - 'InputDecorator'
+    tags:
+      - 'lineage.decorator.parser'
+
+  datalakebundle.notebook.lineage.transformation:
+    class: daipecore.lineage.InputDecoratorParser
+    arguments:
+      - 'transformation'
+      - 'daipecore.lineage.InputDecorator'
+      - 'InputDecorator'
+    tags:
+      - 'lineage.decorator.parser'
+
   datalakebundle.table.parameters.TableParametersParser:
 
   datalakebundle.table.parameters.TableParametersManager:

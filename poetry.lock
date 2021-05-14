@@ -93,7 +93,7 @@ python-dotenv = ">=0.13.0,<1.0.0"
 
 [[package]]
 name = "daipe-core"
-version = "0.8.0b1"
+version = "0.8.0b4"
 description = "Daipe framework core"
 category = "main"
 optional = false
@@ -527,7 +527,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a5d5cb30c5558c9bcc40e1634294fd987c2960faf5bd017251752eefdcf0d77a"
+content-hash = "fa5a053dd3e143c65779bc4b0988950469095410619f9db7af0df437c5885edd"
 
 [metadata.files]
 appdirs = [
@@ -561,7 +561,7 @@ console-bundle = [
     {file = "console_bundle-0.4.0-py3-none-any.whl", hash = "sha256:6fb19484d5ebf6904e60646fb253558c3eebb6335d283088ddb7054f83505921"},
 ]
 daipe-core = [
-    {file = "daipe_core-0.8.0b1-py3-none-any.whl", hash = "sha256:faded98345ab787e4b782addcd17b051f6087d9322bcd5a30925e22dafbc6805"},
+    {file = "daipe_core-0.8.0b4-py3-none-any.whl", hash = "sha256:fd08aa4e283ae5387e29023da1d3789ba7cc7b96f9bba6c57b55902548bf3c72"},
 ]
 deepdiff = [
     {file = "deepdiff-5.5.0-py3-none-any.whl", hash = "sha256:e054fed9dfe0d83d622921cbb3a3d0b3a6dd76acd2b6955433a0a2d35147774a"},
