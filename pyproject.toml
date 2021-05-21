@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "datalake-bundle"
-version = "0.6.0"
+version = "0.7.0b1"
 description = "DataLake tables management bundle for the Daipe Framework"
 readme = "README.md"
 repository = "https://github.com/daipe-ai/datalake-bundle"
