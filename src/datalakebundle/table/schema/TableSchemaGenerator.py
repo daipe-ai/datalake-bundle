@@ -6,36 +6,51 @@ class TableSchemaGenerator:
     def generate(self, schema: t.StructType) -> str:
         indent = "    "
 
-        def generate_schema_recursively(
-            element: Union[t.StructType, t.StructField], recursion_level: int = 1, last_struct_type_indent: str = indent
-        ):
+        def generate_schema_recursively(element: Union[t.StructType, t.ArrayType, t.StructField], last_struct_type_indent: str = indent):
             schema_string = ""
 
-            if recursion_level == 1:
+            if isinstance(element, t.StructType):
                 schema_string += last_struct_type_indent + "t.StructType(\n"
                 schema_string += last_struct_type_indent + indent + "[\n"
 
                 for field in element:
-                    schema_string += generate_schema_recursively(field, recursion_level + 1, last_struct_type_indent)
+                    schema_string += generate_schema_recursively(field, last_struct_type_indent)
 
                 schema_string += last_struct_type_indent + indent + "],\n"
-                schema_string += last_struct_type_indent + ")\n"
+                schema_string += last_struct_type_indent + "),\n"
 
-            elif isinstance(element.dataType, t.StructType):
-                schema_string += last_struct_type_indent + 2 * indent + "t.StructField(\n"
-                schema_string += last_struct_type_indent + 3 * indent + f'"{element.name}",\n'
-                schema_string += last_struct_type_indent + 3 * indent + "t.StructType(\n"
-                schema_string += last_struct_type_indent + 4 * indent + "[\n"
+            elif isinstance(element, t.ArrayType):
+                if isinstance(element.elementType, t.StructType) or isinstance(element.elementType, t.ArrayType):
+                    schema_string += last_struct_type_indent + "t.ArrayType(\n"
+                    schema_string += generate_schema_recursively(element.elementType, last_struct_type_indent + indent)
+                    schema_string += last_struct_type_indent + "),\n"
 
-                for field in element.dataType:
-                    schema_string += generate_schema_recursively(field, recursion_level + 1, last_struct_type_indent + 3 * indent)
+                else:
+                    schema_string += last_struct_type_indent + f"t.ArrayType(t.{element.elementType}()),\n"
 
-                schema_string += last_struct_type_indent + 4 * indent + "],\n"
-                schema_string += last_struct_type_indent + 3 * indent + "),\n"
-                schema_string += last_struct_type_indent + 2 * indent + "),\n"
+            elif isinstance(element, t.StructField):
+                if isinstance(element.dataType, t.StructType):
+                    schema_string += last_struct_type_indent + 2 * indent + "t.StructField(\n"
+                    schema_string += last_struct_type_indent + 3 * indent + f'"{element.name}",\n'
+                    schema_string += generate_schema_recursively(element.dataType, last_struct_type_indent + 3 * indent)
+                    schema_string += last_struct_type_indent + 2 * indent + "),\n"
 
-            else:
-                schema_string += last_struct_type_indent + 2 * indent + f't.StructField("{element.name}", t.{element.dataType}()),\n'
+                elif isinstance(element.dataType, t.ArrayType):
+                    if isinstance(element.dataType.elementType, t.StructType) or isinstance(element.dataType.elementType, t.ArrayType):
+                        schema_string += last_struct_type_indent + 2 * indent + "t.StructField(\n"
+                        schema_string += last_struct_type_indent + 3 * indent + f'"{element.name}",\n'
+                        schema_string += generate_schema_recursively(element.dataType, last_struct_type_indent + 3 * indent)
+                        schema_string += last_struct_type_indent + 2 * indent + "),\n"
+
+                    else:
+                        schema_string += (
+                            last_struct_type_indent
+                            + 2 * indent
+                            + f't.StructField("{element.name}", t.ArrayType(t.{element.dataType.elementType}())),\n'
+                        )
+
+                else:
+                    schema_string += last_struct_type_indent + 2 * indent + f't.StructField("{element.name}", t.{element.dataType}()),\n'
 
             return schema_string
 
