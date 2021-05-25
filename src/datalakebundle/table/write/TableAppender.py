@@ -16,7 +16,7 @@ class TableAppender:
     def append(self, result: DataFrame, table_definition: TableDefinition, options: dict):
         output_table_name = table_definition.full_table_name
 
-        self.__schema_checker.check(result, output_table_name, table_definition.schema)
+        self.__schema_checker.check(result.schema, output_table_name, table_definition.schema)
 
         self.__logger.info(f"Data to be appended into table: {output_table_name}")
 
