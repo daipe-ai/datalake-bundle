@@ -93,7 +93,7 @@ python-dotenv = ">=0.13.0,<1.0.0"
 
 [[package]]
 name = "daipe-core"
-version = "0.8.0b4"
+version = "1.0.0"
 description = "Daipe framework core"
 category = "main"
 optional = false
@@ -385,14 +385,14 @@ sql = ["pandas (>=0.23.2)", "pyarrow (>=1.0.0)"]
 
 [[package]]
 name = "pyspark-bundle"
-version = "0.8.0b1"
+version = "1.0.0"
 description = "PySpark bundle for the Daipe Framework"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-daipe-core = ">=0.8.0b1,<0.9.0"
+daipe-core = ">=1.0,<2.0"
 injecta = ">=0.10.0,<0.11.0"
 pyfony-bundles = ">=0.4.0,<0.5.0"
 
@@ -527,7 +527,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "fa5a053dd3e143c65779bc4b0988950469095410619f9db7af0df437c5885edd"
+content-hash = "d846939f789a3d3e5b696ce3f9aa44d7f1dfdaccb8250d4644cd0b5301007879"
 
 [metadata.files]
 appdirs = [
@@ -561,7 +561,7 @@ console-bundle = [
     {file = "console_bundle-0.4.0-py3-none-any.whl", hash = "sha256:6fb19484d5ebf6904e60646fb253558c3eebb6335d283088ddb7054f83505921"},
 ]
 daipe-core = [
-    {file = "daipe_core-0.8.0b4-py3-none-any.whl", hash = "sha256:fd08aa4e283ae5387e29023da1d3789ba7cc7b96f9bba6c57b55902548bf3c72"},
+    {file = "daipe_core-1.0.0-py3-none-any.whl", hash = "sha256:157cdf48add2906584770f898b7473732e730e542d240e68abbde75a1ce1ba3a"},
 ]
 deepdiff = [
     {file = "deepdiff-5.5.0-py3-none-any.whl", hash = "sha256:e054fed9dfe0d83d622921cbb3a3d0b3a6dd76acd2b6955433a0a2d35147774a"},
@@ -661,7 +661,7 @@ pyspark = [
     {file = "pyspark-3.1.1.tar.gz", hash = "sha256:104abc146d4ffb72d4c683d25d7af5a6bf955d94590a76f542ee23185670aa7e"},
 ]
 pyspark-bundle = [
-    {file = "pyspark_bundle-0.8.0b1-py3-none-any.whl", hash = "sha256:b89b917785293ed2a8087368ec34ffe9010af141f293204edde35932ea1f37b8"},
+    {file = "pyspark_bundle-1.0.0-py3-none-any.whl", hash = "sha256:193b4370c09efe849a9447a5184fb7223f9b8ecb1ffb8217c426fa61a7eb6487"},
 ]
 pytest = [
     {file = "pytest-5.2.4-py3-none-any.whl", hash = "sha256:8e256fe71eb74e14a4d20a5987bb5e1488f0511ee800680aaedc62b9358714e8"},
