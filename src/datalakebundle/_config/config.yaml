@@ -133,6 +133,10 @@ services:
     arguments:
       - '@datalakebundle.logger'
 
+  datalakebundle.table.schema.MetadataChecker:
+    arguments:
+      - '@datalakebundle.logger'
+
   datalakebundle.table.schema.TableSchemaGenerator:
 
   datalakebundle.table.TableExistenceChecker:

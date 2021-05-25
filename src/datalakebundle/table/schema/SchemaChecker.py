@@ -1,16 +1,22 @@
 import json
 from logging import Logger
+
+from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.types import StructType
 from deepdiff import DeepDiff
 import pprint
 
+from datalakebundle.table.create.TableDefinition import TableDefinition
+from datalakebundle.table.schema.MetadataChecker import MetadataChecker
+
 
 class SchemaChecker:
-    def __init__(self, logger: Logger):
+    def __init__(self, logger: Logger, metadata_checker: MetadataChecker):
         self.__logger = logger
+        self.__metadata_checker = metadata_checker
 
-    def check(self, df_schema: StructType, full_table_name: str, schema: StructType):
-        extra = {"table": full_table_name, "diff": self.generate_diff(df_schema, schema)}
+    def check(self, df: DataFrame, full_table_name: str, table_definition: TableDefinition):
+        extra = {"table": full_table_name, "diff": self.generate_diff(df.schema, table_definition.schema)}
 
         if extra["diff"]:
             error_message = "Table and dataframe schemas do NOT match"
@@ -18,6 +24,8 @@ class SchemaChecker:
 
             self.__logger.error(f"{error_message}\n{report}")
             raise Exception(error_message)
+
+        self.__metadata_checker.check(table_definition)
 
     def generate_diff(self, df_schema: StructType, schema: StructType):
         def remove_metadata(json_schema):
@@ -136,7 +144,7 @@ class SchemaChecker:
                 else:
                     nv = "array"
 
-            result.append(f"{field_path}.{attr} changed from {ov} to {nv}")
+            result.append(f"{field_path}['{attr}'] changed from {ov} to {nv}")
         return result
 
     def __get_iterable_item(self, expected_schema, iterable_items, message):
@@ -157,10 +165,13 @@ class SchemaChecker:
 
             if not field_path:
                 field_path = "root"
-            if attr == "fields":
-                attr = "struct"
-            if attr in ["elementType", "containsNull"]:
-                attr = "array"
 
-            result.append(f"{message} {field_path}.{attr}")
+            if attr == "fields":
+                attr = ".struct"
+            elif attr in ["elementType", "containsNull"]:
+                attr = ".array"
+            else:
+                attr = f"[{attr}]"
+
+            result.append(f"{message} {field_path}{attr}")
         return list(dict.fromkeys(result))

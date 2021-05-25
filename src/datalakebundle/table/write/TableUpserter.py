@@ -16,7 +16,7 @@ class TableUpserter:
     def upsert(self, result: DataFrame, table_definition: TableDefinition):
         output_table_name = table_definition.full_table_name
 
-        self.__schema_checker.check(result.schema, output_table_name, table_definition.schema)
+        self.__schema_checker.check(result, output_table_name, table_definition)
 
         self.__log_upserted_columns(table_definition)
 
