@@ -29,8 +29,8 @@ simpleeval = ">=0.9.10,<1.0.0"
 injecta = "0.10.*"
 pyfony-bundles = "0.4.*"
 console-bundle = "0.4.*"
-daipe-core = "^0.8.0b4"
-pyspark-bundle = "^0.8.0b1"
+daipe-core = "^1.0"
+pyspark-bundle = "^1.0"
 deepdiff = "^5"
 
 [tool.poetry.dev-dependencies]

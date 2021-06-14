@@ -133,6 +133,11 @@ services:
     arguments:
       - '@datalakebundle.logger'
 
+  datalakebundle.table.schema.MetadataChecker:
+    arguments:
+      - ['Type', 'delta.minReaderVersion', 'delta.minWriterVersion']
+      - '@datalakebundle.logger'
+
   datalakebundle.table.schema.TableSchemaGenerator:
 
   datalakebundle.table.TableExistenceChecker:
