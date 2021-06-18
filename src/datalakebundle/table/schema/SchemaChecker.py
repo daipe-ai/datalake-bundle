@@ -1,10 +1,11 @@
 import json
-from logging import Logger
+import pprint
+import re
 
+from deepdiff import DeepDiff
+from logging import Logger
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.types import StructType
-from deepdiff import DeepDiff
-import pprint
 
 from datalakebundle.table.create.TableDefinition import TableDefinition
 from datalakebundle.table.schema.MetadataChecker import MetadataChecker
@@ -42,7 +43,8 @@ class SchemaChecker:
         expected_schema = remove_metadata(schema.jsonValue())
         df_schema = remove_metadata(df_schema.jsonValue())
 
-        ddiff = DeepDiff(expected_schema, df_schema, ignore_string_case=True, ignore_order=True)
+        exclude_nullable = re.compile(r"\['nullable'\]")
+        ddiff = DeepDiff(expected_schema, df_schema, ignore_string_case=True, ignore_order=True, exclude_regex_paths=[exclude_nullable])
 
         result = []
         if ddiff:
