@@ -317,6 +317,97 @@ df_schema_array_reordered_changed_case = t.StructType(
     ],
 )
 
+df_schema_nullable = t.StructType(
+    [
+        t.StructField("FIELD1", t.IntegerType(), nullable=False),
+        t.StructField("FIELD2", t.StringType()),
+        t.StructField(
+            "STRUCT1",
+            t.StructType(
+                [
+                    t.StructField("NESTED_FIELD1", t.StringType()),
+                    t.StructField(
+                        "STRUCT2",
+                        t.StructType(
+                            [
+                                t.StructField("NESTED_FIELD2", t.StringType()),
+                            ],
+                        ),
+                    ),
+                ],
+            ),
+        ),
+    ],
+)
+
+df_schema_array_nullable2 = t.StructType(
+    [
+        t.StructField("FIELD1", t.IntegerType()),
+        t.StructField("FIELD2", t.DoubleType(), nullable=False),
+        t.StructField(
+            "ARRAY1",
+            t.ArrayType(
+                t.ArrayType(
+                    t.StructType(
+                        [
+                            t.StructField("FIELD4", t.IntegerType(), nullable=False),
+                            t.StructField("FIELD5", t.IntegerType()),
+                        ]
+                    )
+                )
+            ),
+            nullable=False,
+        ),
+    ],
+)
+
+df_schema_nullable3 = t.StructType(
+    [
+        t.StructField("FIELD1_nullable", t.IntegerType(), nullable=False),
+        t.StructField("nullable", t.StringType()),
+        t.StructField(
+            "STRUCT1",
+            t.StructType(
+                [
+                    t.StructField("NESTED_FIELD1", t.StringType(), nullable=False),
+                    t.StructField(
+                        "STRUCT2",
+                        t.StructType(
+                            [
+                                t.StructField("NESTED_FIELD2", t.StringType(), nullable=False),
+                            ],
+                        ),
+                    ),
+                ],
+            ),
+        ),
+    ],
+)
+
+expected_schema_nullable3 = t.StructType(
+    [
+        t.StructField("FIELD1_nullable", t.IntegerType(), nullable=True),
+        t.StructField("nullable", t.StringType(), nullable=False),
+        t.StructField("not_nullable", t.StringType()),
+        t.StructField(
+            "STRUCT1",
+            t.StructType(
+                [
+                    t.StructField("NESTED_FIELD1", t.StringType(), nullable=True),
+                    t.StructField(
+                        "['nullable']",
+                        t.StructType(
+                            [
+                                t.StructField("NESTED_FIELD2", t.StringType(), nullable=False),
+                            ],
+                        ),
+                    ),
+                ],
+            ),
+        ),
+    ],
+)
+
 
 class SchemaCheckerTest(unittest.TestCase):
     def setUp(self) -> None:
@@ -388,4 +479,12 @@ class SchemaCheckerTest(unittest.TestCase):
                 "Unexpected field ARRAY1.array.struct",
                 "Missing field ARRAY1.array.array",
             ],
+        )
+
+    def test_ignore_nullable(self):
+        self.assertListEqual(self.__schema_checker.generate_diff(df_schema, df_schema_nullable), [])
+        self.assertListEqual(self.__schema_checker.generate_diff(df_schema_array2, df_schema_array_nullable2), [])
+        self.assertListEqual(
+            self.__schema_checker.generate_diff(df_schema_nullable3, expected_schema_nullable3),
+            ["STRUCT1.['nullable']['name'] changed from ['NULLABLE'] to STRUCT2", "root missing field: NOT_NULLABLE"],
         )
