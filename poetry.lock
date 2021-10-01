@@ -79,7 +79,7 @@ colorama = {version = "*", markers = "sys_platform == \"win32\""}
 
 [[package]]
 name = "console-bundle"
-version = "0.4.0"
+version = "0.5.0"
 description = "Console Bundle for the Pyfony Framework"
 category = "main"
 optional = false
@@ -527,7 +527,7 @@ testing = ["jaraco.itertools", "func-timeout"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "d846939f789a3d3e5b696ce3f9aa44d7f1dfdaccb8250d4644cd0b5301007879"
+content-hash = "2030a1a971918060125690e64c82785dc6e40b2c16e036ea1221284775153798"
 
 [metadata.files]
 appdirs = [
@@ -558,7 +558,7 @@ colorlog = [
     {file = "colorlog-4.7.2.tar.gz", hash = "sha256:18d05b616438a75762d7d214b9ec3b05d274466c9f3ddd92807e755840c88251"},
 ]
 console-bundle = [
-    {file = "console_bundle-0.4.0-py3-none-any.whl", hash = "sha256:6fb19484d5ebf6904e60646fb253558c3eebb6335d283088ddb7054f83505921"},
+    {file = "console_bundle-0.5.0-py3-none-any.whl", hash = "sha256:209351f03f19796c1677cae38416d6ffbf8158c2c217cf85f0e0c3f5ff16b7c2"},
 ]
 daipe-core = [
     {file = "daipe_core-1.0.0-py3-none-any.whl", hash = "sha256:157cdf48add2906584770f898b7473732e730e542d240e68abbde75a1ce1ba3a"},
