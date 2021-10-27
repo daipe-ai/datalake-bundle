@@ -4,12 +4,12 @@ from types import FunctionType
 
 class DecoratorsTest(unittest.TestCase):
     def test_basic(self):
-        from datalakebundle.notebook.decorator.tests.decorators_test import load_data
+        from datalakebundle.notebook.decorator.tests.decorators_test import load_data2, get_list
 
-        result = load_data()
+        result = load_data2()
 
-        self.assertIsInstance(load_data, FunctionType)
-        self.assertEqual(155, result)
+        self.assertIsInstance(load_data2, FunctionType)
+        self.assertEqual([2, 3], get_list(result, "b"))
 
     def test_error(self):
         with self.assertRaises(Exception) as error:
