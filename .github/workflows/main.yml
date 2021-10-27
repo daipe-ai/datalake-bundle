@@ -22,8 +22,6 @@ jobs:
             .venv
             ~/.poetry/env
           key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-venv-
       - name: setup
         run: |
           export SHELL=$SHELL # for python to be able to access the bash version
