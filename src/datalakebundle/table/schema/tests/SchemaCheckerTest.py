@@ -488,3 +488,7 @@ class SchemaCheckerTest(unittest.TestCase):
             self.__schema_checker.generate_diff(df_schema_nullable3, expected_schema_nullable3),
             ["STRUCT1.['nullable']['name'] changed from ['NULLABLE'] to STRUCT2", "root missing field: NOT_NULLABLE"],
         )
+
+
+if __name__ == "__main__":
+    unittest.main()
