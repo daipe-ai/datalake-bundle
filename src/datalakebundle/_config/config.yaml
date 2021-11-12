@@ -8,6 +8,8 @@ parameters:
     table:
       name_template: '%kernel.environment%_{identifier}'
       defaults:
+        base_path: 'dbfs:/%kernel.environment%_datalake'
+        target_path: !expr 'base_path + "/" + db_identifier + "/" + table_identifier + ".delta"'
     tables:
 
 services:

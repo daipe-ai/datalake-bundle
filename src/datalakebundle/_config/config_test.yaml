@@ -11,6 +11,7 @@ parameters:
       defaults:
         encrypted: !expr 'db_identifier[-1:] == "e"'
         db_identifier_base: !expr 'db_identifier[:db_identifier.find("_")]'
+        base_path: '%datalake.base_path%'
         target_path:
           resolver_class: 'datalakebundle.test.TargetPathResolver'
           resolver_arguments:
