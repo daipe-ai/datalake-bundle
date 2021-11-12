@@ -28,9 +28,9 @@ class TableParametersParser:
 
         return TableParameters(
             table_names.db_identifier,
-            table_names.db_name,
+            all_fields["db_name"],
             table_names.table_identifier,
-            table_names.table_name,
+            all_fields["table_name"],
             all_fields["target_path"],
             **{k: v for k, v in all_fields.items() if k not in self.__base_fields}
         )
