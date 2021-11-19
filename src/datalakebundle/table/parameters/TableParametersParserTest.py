@@ -83,6 +83,60 @@ class TableParametersParserTest(unittest.TestCase):
             result,
         )
 
+    def test_explicit_overriding_db_name(self):
+        result = self.__table_parameters_parser.parse(
+            "mydatabase.my_table",
+            {
+                "target_path": {
+                    "resolver_class": "datalakebundle.test.SimpleTargetPathResolver",
+                    "resolver_arguments": ["/foo/bar"],
+                },
+            },
+            {
+                "db_name": "prod_mydatabase",
+            },
+        )
+
+        self.assertEqual(
+            TableParameters(
+                **{
+                    "db_identifier": "mydatabase",
+                    "table_identifier": "my_table",
+                    "db_name": "prod_mydatabase",
+                    "table_name": "my_table",
+                    "target_path": "/foo/bar/mydatabase/my_table.delta",
+                }
+            ),
+            result,
+        )
+
+    def test_explicit_overriding_table_name(self):
+        result = self.__table_parameters_parser.parse(
+            "mydatabase.my_table",
+            {
+                "target_path": {
+                    "resolver_class": "datalakebundle.test.SimpleTargetPathResolver",
+                    "resolver_arguments": ["/foo/bar"],
+                },
+            },
+            {
+                "table_name": "prod_my_table",
+            },
+        )
+
+        self.assertEqual(
+            TableParameters(
+                **{
+                    "db_identifier": "mydatabase",
+                    "table_identifier": "my_table",
+                    "db_name": "test_mydatabase",
+                    "table_name": "prod_my_table",
+                    "target_path": "/foo/bar/mydatabase/my_table.delta",
+                }
+            ),
+            result,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
