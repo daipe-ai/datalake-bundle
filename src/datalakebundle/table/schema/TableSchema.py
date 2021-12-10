@@ -40,3 +40,7 @@ class TableSchema(StructType):
     @property
     def tbl_properties(self) -> dict:
         return self.__tbl_properties
+
+    @classmethod
+    def typeName(cls):  # noqa: N802
+        return "struct"
