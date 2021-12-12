@@ -129,6 +129,8 @@ services:
     tags:
       - 'console.command'
 
+  datalakebundle.table.schema.DiffGenerator:
+
   datalakebundle.table.schema.SchemaChecker:
     arguments:
       - '@datalakebundle.logger'
