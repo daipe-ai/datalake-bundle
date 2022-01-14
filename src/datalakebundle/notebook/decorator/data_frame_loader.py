@@ -1,7 +1,7 @@
 from daipecore.decorator.DecoratedDecorator import DecoratedDecorator
 from injecta.container.ContainerInterface import ContainerInterface
 from datalakebundle.notebook.decorator.DataFrameReturningDecorator import DataFrameReturningDecorator
-from pysparkbundle.dataframe.DataFrameShowMethodInterface import DataFrameShowMethodInterface
+from datalakebundle.dataframe.DataFrameShowMethodInterface import DataFrameShowMethodInterface
 
 
 @DecoratedDecorator
@@ -14,5 +14,5 @@ class data_frame_loader(DataFrameReturningDecorator):  # noqa: N801
         self._set_global_dataframe()
 
         if self._display and container.get_parameters().datalakebundle.notebook.display.enabled is True:
-            data_frame_show_method: DataFrameShowMethodInterface = container.get("pysparkbundle.dataframe.show_method")
+            data_frame_show_method: DataFrameShowMethodInterface = container.get("datalakebundle.dataframe.show_method")
             data_frame_show_method.show(self._result)

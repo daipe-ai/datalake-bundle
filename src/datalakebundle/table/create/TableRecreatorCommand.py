@@ -2,7 +2,7 @@ from argparse import ArgumentParser, Namespace
 from logging import Logger
 from time import sleep
 from consolebundle.ConsoleCommand import ConsoleCommand
-from pysparkbundle.filesystem.FilesystemInterface import FilesystemInterface
+from datalakebundle.filesystem.FilesystemInterface import FilesystemInterface
 from datalakebundle.table.create.TableDefinitionFactory import TableDefinitionFactory
 from datalakebundle.table.create.TableRecreator import TableRecreator
 from datalakebundle.table.class_ import table_schema_loader

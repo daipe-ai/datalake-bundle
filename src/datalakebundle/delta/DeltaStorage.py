@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql.types import StructType
-from pysparkbundle.filesystem.FilesystemInterface import FilesystemInterface
+from datalakebundle.filesystem.FilesystemInterface import FilesystemInterface
 from datalakebundle.table.create.TableDefinition import TableDefinition
 
 

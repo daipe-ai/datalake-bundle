@@ -9,9 +9,31 @@ parameters:
       name_template: '%kernel.environment%_{identifier}'
       defaults:
     tables:
+    filesystem:
+    dataframe:
+      show_method: # Default is None, is set based on running environment
 
 services:
+  datalakebundle.dataframe.DataFrameShowMethod:
+    tags:
+      - { name: 'datalakebundle.dataframe.show_method', alias: dataframe_show }
+
+  datalakebundle.dataframe.show_method:
+    factory: [ '@datalakebundle.dataframe.DataFrameShowMethodInjector', 'get' ]
+
+  datalakebundle.dataframe.DataFrameShowMethodInjector:
+    arguments:
+      - !tagged_aliased [ 'datalakebundle.dataframe.show_method', '%datalakebundle.dataframe.show_method%' ]
+
   datalakebundle.delta.DeltaStorage:
+
+  datalakebundle.filesystem:
+    class: datalakebundle.filesystem.FilesystemInterface
+    factory: [ '@datalakebundle.filesystem.FilesystemInjector', 'get' ]
+
+  datalakebundle.filesystem.FilesystemInjector:
+    arguments:
+      - !tagged_aliased [ 'datalakebundle.filesystem', '%datalakebundle.filesystem%' ]
 
   datalakebundle.logger: "@daipecore.logger"
 
@@ -102,14 +124,14 @@ services:
   datalakebundle.table.create.TableRecreatorCommand:
     arguments:
       - '@datalakebundle.logger'
-      - '@pysparkbundle.filesystem'
+      - '@datalakebundle.filesystem'
     tags:
       - 'console.command'
 
   datalakebundle.table.delete.TableDeleter:
     arguments:
       - '@datalakebundle.logger'
-      - '@pysparkbundle.filesystem'
+      - '@datalakebundle.filesystem'
 
   datalakebundle.table.delete.TableDeleterCommand:
     arguments:

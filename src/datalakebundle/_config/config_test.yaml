@@ -2,9 +2,6 @@ parameters:
   datalake:
     base_path: '/foo/bar'
 
-  pysparkbundle:
-    filesystem: dummy_filesystem
-
   datalakebundle:
     table:
       name_template: '%kernel.environment%_{identifier}'
@@ -15,6 +12,7 @@ parameters:
           resolver_class: 'datalakebundle.test.TargetPathResolver'
           resolver_arguments:
             - '%datalake.base_path%'
+    filesystem: dummy_filesystem
 
 services:
   datalakebundle.test.DummySparkFactory:
@@ -22,6 +20,6 @@ services:
   pyspark.sql.session.SparkSession:
     factory: ['@datalakebundle.test.DummySparkFactory', 'create']
 
-  pysparkbundle.filesystem.DummyFilesystem:
+  datalakebundle.filesystem.DummyFilesystem:
     tags:
-      - {name: 'pysparkbundle.filesystem', alias: dummy_filesystem}
+      - {name: 'datalakebundle.filesystem', alias: dummy_filesystem}

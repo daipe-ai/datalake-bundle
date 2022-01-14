@@ -43,5 +43,5 @@ class transformation(DataFrameReturningDecorator):  # noqa: N801
 
     def __get_display_service(self, df: Union[DataFrame, pd.DataFrame]) -> str:
         if isinstance(df, DataFrame):
-            return "pysparkbundle.dataframe.show_method"
+            return "datalakebundle.dataframe.show_method"
         return "daipecore.pandas.dataframe.show_method"

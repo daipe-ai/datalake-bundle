@@ -1,6 +1,6 @@
 from logging import Logger
 from pyspark.sql.session import SparkSession
-from pysparkbundle.filesystem.FilesystemInterface import FilesystemInterface
+from datalakebundle.filesystem.FilesystemInterface import FilesystemInterface
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
 from datalakebundle.table.UnknownTableException import UnknownTableException
 from datalakebundle.table.parameters.TableParameters import TableParameters
