@@ -9,11 +9,11 @@ def load(table_schema_path: str):
         raise Exception(f"Invalid class path: {table_schema_path}")
 
     module_name = table_schema_path[:last_dot_pos]
-    attribute_name = table_schema_path[last_dot_pos + 1 :]  # noqa: E203
+    attribute_name = table_schema_path[last_dot_pos + 1 :]
 
     schema = attribute_loader.load(module_name, attribute_name)
 
     if isinstance(schema, types.FunctionType):
         return schema()
-    else:
-        return schema
+
+    return schema

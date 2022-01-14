@@ -1,4 +1,4 @@
-from typing import List
+from typing import Callable, List
 from box import Box
 from datalakebundle.table.parameters.TableParameters import TableParameters
 from datalakebundle.table.parameters.TableParametersParser import TableParametersParser
@@ -14,13 +14,13 @@ class TableParametersManager:
         table_defaults: Box,
         table_parameters_parser: TableParametersParser,
     ):
-        self.__table_defaults = table_defaults.to_dict() if table_defaults else dict()
+        self.__table_defaults = table_defaults.to_dict() if table_defaults else {}
         self.__table_parameters_parser = table_parameters_parser
 
-        raw_table_parameters = raw_table_parameters or Box(dict())
+        raw_table_parameters = raw_table_parameters or Box({})
 
         self.__table_parameters = [
-            table_parameters_parser.parse(identifier, self.__table_defaults, explicit_parameters or dict())
+            table_parameters_parser.parse(identifier, self.__table_defaults, explicit_parameters or {})
             for identifier, explicit_parameters in raw_table_parameters.to_dict().items()
         ]
 
@@ -42,7 +42,7 @@ class TableParametersManager:
     def get_all(self):
         return self.__table_parameters
 
-    def get_by_filter(self, filter_function: callable):
+    def get_by_filter(self, filter_function: Callable):
         return list(filter(filter_function, self.__table_parameters))
 
     def get_with_attribute(self, attr_name: str):

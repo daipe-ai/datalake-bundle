@@ -1,33 +1,46 @@
-from typing import Union
+from typing import Union, Optional
 from pyspark.sql.types import StructType
+
+
+def _get_list_value(value, invalid_message: str):
+    if value is None:
+        return []
+
+    if isinstance(value, str):
+        return [value]
+
+    if not isinstance(value, str) and not isinstance(value, list):
+        raise Exception(invalid_message.format(value=value))
+
+    return value
+
+
+def _get_tbl_properties(tbl_properties):
+    if tbl_properties is None:
+        tbl_properties = tbl_properties or {}
+    elif not isinstance(tbl_properties, dict):
+        raise Exception(f"Invalid tbl_properties: {tbl_properties}")
+
+    for k, v in tbl_properties.items():
+        if not isinstance(k, str) or not isinstance(v, str):
+            raise Exception(f"Invalid tbl_properties - keys and values not strings: {tbl_properties}")
+
+    return tbl_properties
 
 
 class TableSchema(StructType):
     def __init__(
-        self, fields: list, primary_key: Union[str, list] = None, partition_by: Union[str, list] = None, tbl_properties: dict = None
+        self,
+        fields: list,
+        primary_key: Optional[Union[str, list]] = None,
+        partition_by: Optional[Union[str, list]] = None,
+        tbl_properties: Optional[dict] = None,
     ):
-        primary_key = primary_key or []
-        partition_by = partition_by or []
-        tbl_properties = tbl_properties or {}
-
-        if not isinstance(primary_key, str) and not isinstance(primary_key, list):
-            raise Exception(f"Invalid primary key: {primary_key}")
-
-        if not isinstance(partition_by, str) and not isinstance(partition_by, list):
-            raise Exception(f"Invalid partition by: {partition_by}")
-
-        if not isinstance(tbl_properties, dict):
-            raise Exception(f"Invalid tbl_properties: {tbl_properties}")
-
-        for k, v in tbl_properties.items():
-            if not isinstance(k, str) or not isinstance(v, str):
-                raise Exception(f"Invalid tbl_properties - keys and values not strings: {tbl_properties}")
-
         super().__init__(fields)
 
-        self.__primary_key = [primary_key] if isinstance(primary_key, str) else primary_key
-        self.__partition_by = [partition_by] if isinstance(partition_by, str) else partition_by
-        self.__tbl_properties = tbl_properties
+        self.__primary_key = _get_list_value(primary_key, "Invalid primary key: {value}")
+        self.__partition_by = _get_list_value(partition_by, "Invalid partition by: {value}")
+        self.__tbl_properties = _get_tbl_properties(tbl_properties)
 
     @property
     def primary_key(self) -> list:
@@ -42,5 +55,5 @@ class TableSchema(StructType):
         return self.__tbl_properties
 
     @classmethod
-    def typeName(cls):  # noqa: N802
+    def typeName(cls):
         return "struct"

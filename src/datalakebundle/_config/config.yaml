@@ -147,8 +147,6 @@ services:
   datalakebundle.table.TableManager:
 
   datalakebundle.table.write.DataWriter:
-    arguments:
-      - '@datalakebundle.logger'
 
   datalakebundle.table.write.TableAppender:
     arguments:

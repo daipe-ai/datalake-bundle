@@ -7,8 +7,8 @@ from datalakebundle.table.schema.TableSchema import TableSchema
 from datalakebundle.table.write.TableUpserter import TableUpserter
 
 
-@DecoratedDecorator
-class table_upsert(OutputDecorator):  # noqa: N801
+@DecoratedDecorator  # pylint: disable = invalid-name
+class table_upsert(OutputDecorator):
     def __init__(self, identifier: str, table_schema: TableSchema):
         self.__identifier = identifier
         self.__table_schema = table_schema

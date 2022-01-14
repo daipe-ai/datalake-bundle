@@ -1,11 +1,12 @@
+# pylint: disable = super-init-not-called
 from daipecore.decorator.DecoratedDecorator import DecoratedDecorator
 from injecta.container.ContainerInterface import ContainerInterface
 from datalakebundle.notebook.decorator.DataFrameReturningDecorator import DataFrameReturningDecorator
 from pysparkbundle.dataframe.DataFrameShowMethodInterface import DataFrameShowMethodInterface
 
 
-@DecoratedDecorator
-class data_frame_loader(DataFrameReturningDecorator):  # noqa: N801
+@DecoratedDecorator  # pylint: disable = invalid-name
+class data_frame_loader(DataFrameReturningDecorator):
     def __init__(self, *args, display=False):
         self._args = args
         self._display = display

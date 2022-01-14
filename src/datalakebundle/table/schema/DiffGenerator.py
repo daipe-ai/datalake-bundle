@@ -8,7 +8,7 @@ class DiffGenerator:
     def generate(self, df_schema: StructType, schema: StructType):
         def remove_metadata(json_schema):
             for field in json_schema["fields"]:
-                field["metadata"] = dict()
+                field["metadata"] = {}
 
             return json_schema
 
@@ -43,14 +43,14 @@ class DiffGenerator:
 
     def __get_field_names(self, current: dict, chnks: list):
         if chnks:
-            ch = chnks[0]
-            if len(ch) == 1 and len(chnks) == 1:
+            chunk = chnks[0]
+            if len(chunk) == 1 and len(chnks) == 1:
                 return
-            if ch[0] == "elementType":
+            if chunk[0] == "elementType":
                 yield "array"
                 yield from self.__get_field_names(current["elementType"], chnks[1:])
             else:
-                new = current[ch[0]][int(ch[1])]
+                new = current[chunk[0]][int(chunk[1])]
                 yield new["name"]
                 yield from self.__get_field_names(new["type"], chnks[1:])
 

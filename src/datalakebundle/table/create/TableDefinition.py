@@ -1,4 +1,3 @@
-from typing import Union
 from pyspark.sql.types import StructType
 
 
@@ -8,8 +7,8 @@ class TableDefinition:
         db_name: str,
         table_name: str,
         schema: StructType,
-        primary_key: Union[list, str],
-        partition_by: Union[list, str],
+        primary_key: list,
+        partition_by: list,
         target_path: str,
         tbl_properties: dict,
     ):

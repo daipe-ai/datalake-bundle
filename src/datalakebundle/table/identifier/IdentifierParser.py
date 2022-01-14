@@ -7,6 +7,6 @@ class IdentifierParser:
 
         return {
             "db_identifier": identifier[:dot_position],
-            "table_identifier": identifier[dot_position + 1 :],  # noqa: E203
+            "table_identifier": identifier[dot_position + 1 :],
             "identifier": identifier,
         }
