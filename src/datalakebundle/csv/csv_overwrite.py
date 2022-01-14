@@ -2,7 +2,7 @@ from daipecore.decorator.DecoratedDecorator import DecoratedDecorator
 from datalakebundle.write.PathWriterDecorator import PathWriterDecorator
 
 
-@DecoratedDecorator
-class csv_overwrite(PathWriterDecorator):  # noqa: N801
+@DecoratedDecorator  # pylint: disable = invalid-name
+class csv_overwrite(PathWriterDecorator):
     _mode = "overwrite"
     _writer_service = "datalakebundle.csv.writer"

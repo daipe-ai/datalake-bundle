@@ -4,9 +4,9 @@ from datalakebundle.notebook.decorator.DataFrameReturningDecorator import DataFr
 from datalakebundle.dataframe.DataFrameShowMethodInterface import DataFrameShowMethodInterface
 
 
-@DecoratedDecorator
-class data_frame_loader(DataFrameReturningDecorator):  # noqa: N801
-    def __init__(self, *args, display=False):
+@DecoratedDecorator  # pylint: disable = invalid-name
+class data_frame_loader(DataFrameReturningDecorator):
+    def __init__(self, *args, display=False):  # pylint: disable = super-init-not-called
         self._args = args
         self._display = display
 

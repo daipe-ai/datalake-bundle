@@ -1,4 +1,5 @@
 from logging import Logger
+from typing import Optional
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType
 
@@ -9,7 +10,7 @@ class PathReader:
         self.__logger = logger
         self.__spark = spark
 
-    def read(self, path: str, schema: StructType = None, options: dict = None):
+    def read(self, path: str, schema: Optional[StructType], options: Optional[dict] = None):
         self.__logger.info(f"Reading {self.__format} from `{path}`", extra={"options": options})
 
         data_frame_reader = self.__spark.read.format(self.__format)

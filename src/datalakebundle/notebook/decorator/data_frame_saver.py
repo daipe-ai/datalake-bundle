@@ -2,7 +2,7 @@ from daipecore.decorator.InputDecorator import InputDecorator
 from daipecore.decorator.DecoratedDecorator import DecoratedDecorator
 
 
-@DecoratedDecorator
-class data_frame_saver(InputDecorator):  # noqa: N801
+@DecoratedDecorator  # pylint: disable = invalid-name
+class data_frame_saver(InputDecorator):
     def __init__(self, *args):
         self._args = args

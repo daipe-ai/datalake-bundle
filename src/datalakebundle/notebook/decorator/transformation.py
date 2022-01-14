@@ -8,8 +8,8 @@ from injecta.container.ContainerInterface import ContainerInterface
 from typing import Union
 
 
-@DecoratedDecorator
-class transformation(DataFrameReturningDecorator):  # noqa: N801
+@DecoratedDecorator  # pylint: disable = invalid-name
+class transformation(DataFrameReturningDecorator):  # pylint: disable = invalid-name
     def __init__(self, *args, display=False, check_duplicate_columns=True):
         self._args = args
         self._display = display
@@ -19,7 +19,7 @@ class transformation(DataFrameReturningDecorator):  # noqa: N801
         if self._result is None:
             return
 
-        if isinstance(self.result, DataFrame) or isinstance(self.result, pd.DataFrame):
+        if isinstance(self.result, (DataFrame, pd.DataFrame)):
             self.__process_df(container)
         else:
             raise TypeError(

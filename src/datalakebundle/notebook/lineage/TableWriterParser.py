@@ -10,10 +10,10 @@ class TableWriterParser(DecoratorParserInterface):
 
     def parse(self, decorator: _ast.Call):
         if hasattr(_ast, "Str"):
-            arg: _ast.Str = decorator.args[0]
+            arg: _ast.Str = decorator.args[0]  # pyre-ignore[9]
             return TableWriter(arg.s, self.__mode)
 
-        arg: _ast.Constant = decorator.args[0]
+        arg: _ast.Constant = decorator.args[0]  # pyre-ignore[9]
         return TableWriter(arg.value, self.__mode)
 
     def get_name(self) -> str:

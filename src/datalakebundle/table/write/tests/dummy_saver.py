@@ -5,11 +5,11 @@ from injecta.container.ContainerInterface import ContainerInterface
 
 
 class TestingStorage:
-    result: None
+    result = None
 
 
-@DecoratedDecorator
-class dummy_saver(OutputDecorator):  # noqa: N801
+@DecoratedDecorator  # pylint: disable = invalid-name
+class dummy_saver(OutputDecorator):
     def __init__(self, identifier: str):
         self._identifier = identifier
 

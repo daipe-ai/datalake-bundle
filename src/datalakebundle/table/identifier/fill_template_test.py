@@ -2,7 +2,7 @@ import unittest
 from datalakebundle.table.identifier.fill_template import fill_template
 
 
-class fill_template_test(unittest.TestCase):  # noqa: N801
+class fill_template_test(unittest.TestCase):  # pylint: disable = invalid-name
     def test_basic(self):
         values = {"name": "Jiri", "age": 34}
 

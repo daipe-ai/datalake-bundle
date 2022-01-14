@@ -1,3 +1,4 @@
+# pylint: disable = invalid-name
 import pyspark.sql.types as t
 from datalakebundle.table.schema.TableSchemaGenerator import TableSchemaGenerator
 

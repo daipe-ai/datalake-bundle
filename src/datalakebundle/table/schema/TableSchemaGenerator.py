@@ -20,9 +20,9 @@ class TableSchemaGenerator:
                 schema_string += last_struct_type_indent + "),\n"
 
             elif isinstance(element, t.ArrayType):
-                if isinstance(element.elementType, t.StructType) or isinstance(element.elementType, t.ArrayType):
+                if isinstance(element.elementType, (t.StructType, t.ArrayType)):
                     schema_string += last_struct_type_indent + "t.ArrayType(\n"
-                    schema_string += generate_schema_recursively(element.elementType, last_struct_type_indent + indent)
+                    schema_string += generate_schema_recursively(element.elementType, last_struct_type_indent + indent)  # pyre-ignore[6]
                     schema_string += last_struct_type_indent + "),\n"
 
                 else:
@@ -32,21 +32,23 @@ class TableSchemaGenerator:
                 if isinstance(element.dataType, t.StructType):
                     schema_string += last_struct_type_indent + 2 * indent + "t.StructField(\n"
                     schema_string += last_struct_type_indent + 3 * indent + f'"{element.name}",\n'
-                    schema_string += generate_schema_recursively(element.dataType, last_struct_type_indent + 3 * indent)
+                    schema_string += generate_schema_recursively(element.dataType, last_struct_type_indent + 3 * indent)  # pyre-ignore[6]
                     schema_string += last_struct_type_indent + 2 * indent + "),\n"
 
                 elif isinstance(element.dataType, t.ArrayType):
-                    if isinstance(element.dataType.elementType, t.StructType) or isinstance(element.dataType.elementType, t.ArrayType):
+                    if isinstance(element.dataType.elementType, (t.StructType, t.ArrayType)):
                         schema_string += last_struct_type_indent + 2 * indent + "t.StructField(\n"
                         schema_string += last_struct_type_indent + 3 * indent + f'"{element.name}",\n'
-                        schema_string += generate_schema_recursively(element.dataType, last_struct_type_indent + 3 * indent)
+                        schema_string += generate_schema_recursively(
+                            element.dataType, last_struct_type_indent + 3 * indent  # pyre-ignore[6]
+                        )
                         schema_string += last_struct_type_indent + 2 * indent + "),\n"
 
                     else:
                         schema_string += (
                             last_struct_type_indent
                             + 2 * indent
-                            + f't.StructField("{element.name}", t.ArrayType(t.{element.dataType.elementType}())),\n'
+                            + f't.StructField("{element.name}", t.ArrayType(t.{element.dataType.elementType}())),\n'  # pyre-ignore[16]
                         )
 
                 else:
@@ -55,7 +57,7 @@ class TableSchemaGenerator:
             return schema_string
 
         def remove_top_level_struct_type(schema_string):
-            return "\n".join([line for line in schema_string.split("\n")[1:-2]]) + "\n"
+            return "\n".join(list(schema_string.split("\n")[1:-2])) + "\n"
 
         table_schema = ""
 

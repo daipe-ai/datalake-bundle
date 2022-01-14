@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Optional, Union
 from datalakebundle.write.PathWriter import PathWriter
 from daipecore.decorator.OutputDecorator import OutputDecorator
 from daipecore.function import arguments_transformer
@@ -6,12 +6,12 @@ from injecta.container.ContainerInterface import ContainerInterface
 from pyspark.sql import DataFrame
 
 
-class PathWriterDecorator(OutputDecorator):  # noqa: N801
+class PathWriterDecorator(OutputDecorator):  # pyre-ignore[13]
 
     _mode: str
     _writer_service: str
 
-    def __init__(self, path: str, partition_by: Union[str, list] = None, options: dict = None):
+    def __init__(self, path: str, partition_by: Optional[Union[str, list]] = None, options: Optional[dict] = None):
         self.__path = path
 
         if partition_by is None:

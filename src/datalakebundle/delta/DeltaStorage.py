@@ -1,3 +1,4 @@
+from typing import Optional
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql.types import StructType
 from datalakebundle.filesystem.FilesystemInterface import FilesystemInterface
@@ -13,12 +14,12 @@ class DeltaStorage:
         self.__filesystem = filesystem
         self.__spark = spark
 
-    def create_table(self, table_definition: TableDefinition, options: dict = None):
+    def create_table(self, table_definition: TableDefinition, options: Optional[dict] = None):
         df = self.__create_empty_df(table_definition.schema)
 
         self.__create(df, table_definition, "errorifexists", options or {})
 
-    def recreate_table(self, table_definition: TableDefinition, options: dict = None):
+    def recreate_table(self, table_definition: TableDefinition, options: Optional[dict] = None):
         self.__spark.sql(f"DROP TABLE IF EXISTS {table_definition.full_table_name}")
         self.__filesystem.delete(table_definition.target_path, True)
         self.create_table(table_definition, options or {})

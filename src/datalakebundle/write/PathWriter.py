@@ -1,3 +1,4 @@
+from typing import Optional
 from logging import Logger
 from pyspark.sql import DataFrame
 
@@ -7,7 +8,7 @@ class PathWriter:
         self.__format = format_
         self.__logger = logger
 
-    def write(self, df: DataFrame, path: str, mode: str, partition_by: list = None, options: dict = None):
+    def write(self, df: DataFrame, path: str, mode: str, partition_by: Optional[list] = None, options: Optional[dict] = None):
         self.__logger.info(
             f"Writing data to: {path}",
             extra={
