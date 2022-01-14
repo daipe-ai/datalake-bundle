@@ -1,6 +1,7 @@
 from typing import List
 from box import Box
 from injecta.dtype.DType import DType
+from injecta.service.argument.TaggedAliasedServiceArgument import TaggedAliasedServiceArgument
 from injecta.service.Service import Service
 from injecta.service.ServiceAlias import ServiceAlias
 from injecta.service.argument.PrimitiveArgument import PrimitiveArgument
@@ -33,11 +34,25 @@ class DataLakeBundle(Bundle):
             self.__create_decorator_parser(format_name, operation) for format_name in formats for operation in ["append", "overwrite"]
         ]
 
+        # backward compatibility, will be removed in 2.0
+        for service in services:
+            if service.name == "datalakebundle.filesystem.FilesystemInjector":
+                service.arguments[0] = TaggedAliasedServiceArgument("pysparkbundle.filesystem", parameters.pysparkbundle.filesystem)
+            if service.name == "datalakebundle.dataframe.DataFrameShowMethodInjector":
+                service.arguments[0] = TaggedAliasedServiceArgument(
+                    "pysparkbundle.dataframe.show_method", parameters.pysparkbundle.dataframe.show_method
+                )
+
         return services + path_readers + path_writers + decorator_parsers, aliases
 
     def modify_parameters(self, parameters: Box) -> Box:
         if is_cli():
             parameters.datalakebundle.dataframe.show_method = "dataframe_show"
+
+            # backward compatibility, will be removed in 2.0
+            if "pysparkbundle" in parameters:
+                parameters.pysparkbundle.dataframe.show_method = "dataframe_show"
+
         return parameters
 
     def __check_defaults(self, table_defaults: dict):

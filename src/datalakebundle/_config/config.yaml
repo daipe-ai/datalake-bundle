@@ -13,10 +13,17 @@ parameters:
     dataframe:
       show_method: # Default is None, is set based on running environment
 
+  # backward compatibility, will be removed in 2.0
+  pysparkbundle:
+    filesystem:
+    dataframe:
+      show_method:
+
 services:
   datalakebundle.dataframe.DataFrameShowMethod:
     tags:
       - { name: 'datalakebundle.dataframe.show_method', alias: dataframe_show }
+      - { name: 'pysparkbundle.dataframe.show_method', alias: dataframe_show } # backward compatibility, will be removed in 2.0
 
   datalakebundle.dataframe.show_method:
     factory: [ '@datalakebundle.dataframe.DataFrameShowMethodInjector', 'get' ]

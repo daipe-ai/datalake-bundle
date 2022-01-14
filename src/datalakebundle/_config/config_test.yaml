@@ -14,6 +14,12 @@ parameters:
             - '%datalake.base_path%'
     filesystem: dummy_filesystem
 
+  # backward compatibility, will be removed in 2.0
+  pysparkbundle:
+    filesystem: "%datalakebundle.filesystem%"
+    dataframe:
+      show_method:
+
 services:
   datalakebundle.test.DummySparkFactory:
 
@@ -23,3 +29,4 @@ services:
   datalakebundle.filesystem.DummyFilesystem:
     tags:
       - {name: 'datalakebundle.filesystem', alias: dummy_filesystem}
+      - {name: 'pysparkbundle.filesystem', alias: dummy_filesystem} # backward compatibility, will be removed in 2.0
