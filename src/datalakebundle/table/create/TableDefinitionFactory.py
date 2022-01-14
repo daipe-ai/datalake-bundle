@@ -33,7 +33,7 @@ class TableDefinitionFactory:
         self.__logger.warning(
             f"No explicit schema provided, using dataframe schema instead. "
             f"You can define schema as:\n\n{self.__table_schema_generator.generate(df.schema)}\n"
-            f'Usage: @{decorator_name}("{identifier}", get_schema())'
+            f'Usage: @dp.{decorator_name}("{identifier}", get_schema())'
         )
         table_parameters = self.__table_parameters_manager.get_or_parse(identifier)
 
