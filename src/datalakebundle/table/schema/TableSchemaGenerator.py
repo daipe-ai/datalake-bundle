@@ -60,7 +60,7 @@ class TableSchemaGenerator:
         table_schema = ""
 
         table_schema += "def get_schema():\n"
-        table_schema += "    return TableSchema(\n"
+        table_schema += "    return dp.TableSchema(\n"
 
         schema_string = generate_schema_recursively(schema)
         schema_string = remove_top_level_struct_type(schema_string)

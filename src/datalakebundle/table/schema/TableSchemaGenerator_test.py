@@ -26,7 +26,7 @@ schema = t.StructType(
 )
 
 expected_result = """def get_schema():
-    return TableSchema(
+    return dp.TableSchema(
         [
             t.StructField("FIELD1", t.IntegerType()),
             t.StructField("FIELD2", t.DoubleType()),
@@ -77,7 +77,7 @@ schema = t.StructType(
 )
 
 expected_result = """def get_schema():
-    return TableSchema(
+    return dp.TableSchema(
         [
             t.StructField("FIELD1", t.IntegerType()),
             t.StructField("FIELD2", t.DoubleType()),
@@ -118,7 +118,7 @@ schema = t.StructType(
 )
 
 expected_result = """def get_schema():
-    return TableSchema(
+    return dp.TableSchema(
         [
             t.StructField("FIELD1", t.IntegerType()),
             t.StructField("FIELD2", t.DoubleType()),
@@ -166,7 +166,7 @@ schema = t.StructType(
 )
 
 expected_result = """def get_schema():
-    return TableSchema(
+    return dp.TableSchema(
         [
             t.StructField("FIELD1", t.IntegerType()),
             t.StructField("FIELD2", t.DoubleType()),
