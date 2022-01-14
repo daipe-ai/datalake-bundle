@@ -8,6 +8,7 @@ from datalakebundle.notebook.decorator.data_frame_saver import data_frame_saver
 
 os.environ["APP_ENV"] = "test"
 
+# pylint: disable = invalid-name
 printed = """   a  b
 0  0  2
 1  1  3
@@ -63,7 +64,7 @@ if __name__ == "__main__":
     with redirect_stdout(io.StringIO()) as f:
 
         @transformation(load_data, load_data2, check_duplicate_columns=False, display=True)
-        def concat(df1: pd.DataFrame, df2: pd.DataFrame):
+        def concat2(df1: pd.DataFrame, df2: pd.DataFrame):
             assert df1["a"].values.tolist() == [0, 1]
             assert df2["b"].values.tolist() == [2, 3]
 

@@ -1,8 +1,9 @@
+from typing import Optional
 from daipecore.decorator.StringableParameterInterface import StringableParameterInterface
 
 
-class table_params(StringableParameterInterface):  # noqa: N801
-    def __init__(self, identifier: str, param_path_parts: list = None):
+class table_params(StringableParameterInterface):  # pylint: disable = invalid-name
+    def __init__(self, identifier: str, param_path_parts: Optional[list] = None):
         self._identifier = identifier
         self._param_path_parts = param_path_parts if param_path_parts else []
 

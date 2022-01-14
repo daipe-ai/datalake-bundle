@@ -1,3 +1,4 @@
+# pylint: disable = super-init-not-called
 from pyspark.sql import SparkSession
 
 

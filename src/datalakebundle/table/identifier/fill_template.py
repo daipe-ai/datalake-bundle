@@ -2,8 +2,8 @@ import re
 
 
 def fill_template(template: str, replacements: dict):
-    def convert(m):
-        placeholder = m.group(1)
+    def convert(matches):
+        placeholder = matches.group(1)
 
         if placeholder not in replacements:
             raise Exception("Value for placeholder {" + placeholder + "} not defined")

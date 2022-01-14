@@ -10,7 +10,7 @@ class Expression:
         self.val = val
 
     @classmethod
-    def from_yaml(cls, loader, node):
+    def from_yaml(cls, loader, node):  # pylint: disable = unused-argument
         return cls(node.value)
 
     def evaluate(self, variables: dict):

@@ -1,6 +1,5 @@
 import string
 import random
-from logging import Logger
 from pyspark.sql.session import SparkSession
 from pyspark.sql.dataframe import DataFrame
 from pyspark.sql.types import StructType
@@ -11,12 +10,10 @@ from datalakebundle.delta.DeltaStorage import DeltaStorage
 class DataWriter:
     def __init__(
         self,
-        logger: Logger,
         spark: SparkSession,
         delta_storage: DeltaStorage,
         upsert_query_creator: UpsertQueryCreator,
     ):
-        self.__logger = logger
         self.__spark = spark
         self.__delta_storage = delta_storage
         self.__upsert_query_creator = upsert_query_creator
@@ -40,7 +37,7 @@ class DataWriter:
         try:
             self.__spark.sql(upsert_sql_statement)
 
-        except BaseException:
+        except BaseException:  # pylint: disable = broad-except, try-except-raise
             raise
 
         finally:

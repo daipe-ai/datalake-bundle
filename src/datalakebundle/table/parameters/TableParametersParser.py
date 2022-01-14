@@ -1,7 +1,7 @@
+from typing import Optional
 from datalakebundle.table.parameters import primitive_value
 from datalakebundle.table.parameters.FieldsResolver import FieldsResolver
 from datalakebundle.table.parameters.TableParameters import TableParameters
-from datalakebundle.table.identifier.IdentifierParser import IdentifierParser
 from datalakebundle.table.name.TableNamesPreparer import TableNamesPreparer
 
 
@@ -11,12 +11,11 @@ class TableParametersParser:
 
     def __init__(self, table_names_preparer: TableNamesPreparer):
         self.__fields_resolver = FieldsResolver()
-        self.__identifier_parser = IdentifierParser()
         self.__table_names_preparer = table_names_preparer
 
-    def parse(self, identifier: str, defaults: dict = None, explicit_parameters: dict = None):
-        defaults = defaults or dict()
-        explicit_parameters = explicit_parameters or dict()
+    def parse(self, identifier: str, defaults: Optional[dict] = None, explicit_parameters: Optional[dict] = None):
+        defaults = defaults or {}
+        explicit_parameters = explicit_parameters or {}
         table_names = self.__table_names_preparer.prepare(identifier)
 
         all_fields = {**table_names.to_dict(), **explicit_parameters}

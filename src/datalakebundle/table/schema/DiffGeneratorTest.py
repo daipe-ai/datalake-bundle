@@ -1,3 +1,4 @@
+# pylint: disable = import-outside-toplevel
 import unittest
 from datalakebundle.table.schema.DiffGenerator import DiffGenerator
 

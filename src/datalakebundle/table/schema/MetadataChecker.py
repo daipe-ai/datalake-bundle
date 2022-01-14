@@ -23,7 +23,7 @@ class MetadataChecker:
 
     def __check_partition_by(self, table_definition: TableDefinition):
         partitions_df = self.__spark.sql(f"DESCRIBE TABLE {table_definition.full_table_name}")
-        partitions_df = partitions_df.filter(col("col_name").contains("Part "))
+        partitions_df = partitions_df.filter(col("col_name").contains("Part "))  # pyre-ignore[29]
 
         if not partitions_df.rdd.isEmpty():
             partitions_col = partitions_df.select("data_type").collect()
@@ -39,10 +39,10 @@ class MetadataChecker:
                 extra = {}
 
                 if unexpected_keys:
-                    extra["unexpected_keys"] = [v for v in unexpected_keys.values()]
+                    extra["unexpected_keys"] = list(unexpected_keys.values())
 
                 if missing_keys:
-                    extra["missing_keys"] = [v for v in missing_keys.values()]
+                    extra["missing_keys"] = list(missing_keys.values())
 
                 if values_changed:
                     extra["values_changed"] = [f'{v["old_value"]} changed to {v["new_value"]}' for v in values_changed.values()]
@@ -55,7 +55,7 @@ class MetadataChecker:
 
     def __check_tbl_properties(self, table_definition: TableDefinition):
         properties_df = self.__spark.sql(f"SHOW TBLPROPERTIES {table_definition.full_table_name}")
-        tbl_properties = {k: v for k, v in properties_df.rdd.map(lambda x: (x.key, x.value)).collect()}
+        tbl_properties = dict(properties_df.rdd.map(lambda x: (x.key, x.value)).collect())
 
         for prop in self.__default_properties:
             tbl_properties.pop(prop, None)

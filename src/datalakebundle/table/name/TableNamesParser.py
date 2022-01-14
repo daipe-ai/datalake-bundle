@@ -17,5 +17,5 @@ class TableNamesParser:
             identifiers["db_identifier"],
             full_table_name[:dot_position],
             identifiers["table_identifier"],
-            full_table_name[dot_position + 1 :],  # noqa: E203,
+            full_table_name[dot_position + 1 :],
         )

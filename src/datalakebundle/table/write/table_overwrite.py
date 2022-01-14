@@ -1,3 +1,4 @@
+from typing import Optional
 from daipecore.decorator.DecoratedDecorator import DecoratedDecorator
 from daipecore.decorator.OutputDecorator import OutputDecorator
 from injecta.container.ContainerInterface import ContainerInterface
@@ -7,9 +8,11 @@ from datalakebundle.table.schema.TableSchema import TableSchema
 from datalakebundle.table.write.TableOverwriter import TableOverwriter
 
 
-@DecoratedDecorator
-class table_overwrite(OutputDecorator):  # noqa: N801
-    def __init__(self, identifier: str, table_schema: TableSchema = None, recreate_table: bool = False, options: dict = None):
+@DecoratedDecorator  # pylint: disable = invalid-name
+class table_overwrite(OutputDecorator):
+    def __init__(
+        self, identifier: str, table_schema: Optional[TableSchema] = None, recreate_table: bool = False, options: Optional[dict] = None
+    ):
         self.__identifier = identifier
         self.__table_schema = table_schema
         self.__recreate_table = recreate_table

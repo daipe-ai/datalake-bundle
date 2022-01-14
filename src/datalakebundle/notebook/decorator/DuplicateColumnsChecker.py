@@ -19,7 +19,7 @@ class DuplicateColumnsChecker:
         if not duplicate_fields:
             return
 
-        fields2_tables = dict()
+        fields2_tables = {}
 
         for result_decorator in result_decorators:
             source_df = result_decorator.result
@@ -38,5 +38,5 @@ class DuplicateColumnsChecker:
     def __get_fields(self, df: Union[DataFrame, pd.DataFrame]) -> Iterable[str]:
         if isinstance(df, DataFrame):
             return map(lambda field: field.name.lower(), df.schema.fields)
-        else:
-            return map(lambda field: field.lower(), df.columns)
+
+        return map(lambda field: field.lower(), df.columns)
