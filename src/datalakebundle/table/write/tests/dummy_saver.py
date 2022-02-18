@@ -1,3 +1,4 @@
+# pylint: disable = super-init-not-called
 from logging import Logger
 from daipecore.decorator.DecoratedDecorator import DecoratedDecorator
 from daipecore.decorator.OutputDecorator import OutputDecorator

@@ -1,3 +1,4 @@
+# pylint: disable = super-init-not-called
 from daipecore.decorator.DecoratedDecorator import DecoratedDecorator
 from daipecore.decorator.OutputDecorator import OutputDecorator
 from injecta.container.ContainerInterface import ContainerInterface
