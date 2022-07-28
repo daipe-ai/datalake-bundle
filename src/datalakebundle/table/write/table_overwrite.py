@@ -9,8 +9,8 @@ from datalakebundle.table.schema.TableSchema import TableSchema
 from datalakebundle.table.write.TableOverwriter import TableOverwriter
 
 
-@DecoratedDecorator  # pylint: disable = invalid-name
-class table_overwrite(OutputDecorator):
+@DecoratedDecorator
+class table_overwrite(OutputDecorator):  # pylint: disable = invalid-name
     def __init__(
         self, identifier: str, table_schema: Optional[TableSchema] = None, recreate_table: bool = False, options: Optional[dict] = None
     ):

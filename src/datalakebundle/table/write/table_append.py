@@ -9,8 +9,8 @@ from datalakebundle.table.schema.TableSchema import TableSchema
 from datalakebundle.table.write.TableAppender import TableAppender
 
 
-@DecoratedDecorator  # pylint: disable = invalid-name
-class table_append(OutputDecorator):
+@DecoratedDecorator
+class table_append(OutputDecorator):  # pylint: disable = invalid-name
     def __init__(self, identifier: str, table_schema: Optional[TableSchema] = None, options: Optional[dict] = None):
         self.__identifier = identifier
         self.__table_schema = table_schema

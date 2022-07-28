@@ -9,8 +9,8 @@ class TestingStorage:
     result = None
 
 
-@DecoratedDecorator  # pylint: disable = invalid-name
-class dummy_saver(OutputDecorator):
+@DecoratedDecorator
+class dummy_saver(OutputDecorator):  # pylint: disable = invalid-name
     def __init__(self, identifier: str):
         self._identifier = identifier
 

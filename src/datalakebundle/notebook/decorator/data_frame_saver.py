@@ -3,7 +3,7 @@ from daipecore.decorator.InputDecorator import InputDecorator
 from daipecore.decorator.DecoratedDecorator import DecoratedDecorator
 
 
-@DecoratedDecorator  # pylint: disable = invalid-name
-class data_frame_saver(InputDecorator):
+@DecoratedDecorator
+class data_frame_saver(InputDecorator):  # pylint: disable = invalid-name
     def __init__(self, *args):
         self._args = args

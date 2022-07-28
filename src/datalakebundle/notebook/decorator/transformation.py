@@ -8,8 +8,8 @@ from injecta.container.ContainerInterface import ContainerInterface
 from typing import Union
 
 
-@DecoratedDecorator  # pylint: disable = invalid-name
-class transformation(DataFrameReturningDecorator):
+@DecoratedDecorator
+class transformation(DataFrameReturningDecorator):  # pylint: disable = invalid-name
     def __init__(self, *args, display=False, check_duplicate_columns=True):
         self._args = args
         self._display = display

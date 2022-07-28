@@ -23,7 +23,7 @@ class MetadataChecker:
 
     def __check_partition_by(self, table_definition: TableDefinition):
         partitions_df = self.__spark.sql(f"DESCRIBE TABLE {table_definition.full_table_name}")
-        partitions_df = partitions_df.filter(col("col_name").contains("Part "))  # pyre-ignore[29]
+        partitions_df = partitions_df.filter(col("col_name").contains("Part "))
 
         if not partitions_df.rdd.isEmpty():
             partitions_col = partitions_df.select("data_type").collect()
