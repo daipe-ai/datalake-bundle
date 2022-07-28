@@ -5,8 +5,8 @@ from datalakebundle.notebook.decorator.DataFrameReturningDecorator import DataFr
 from pysparkbundle.dataframe.DataFrameShowMethodInterface import DataFrameShowMethodInterface
 
 
-@DecoratedDecorator  # pylint: disable = invalid-name
-class data_frame_loader(DataFrameReturningDecorator):
+@DecoratedDecorator
+class data_frame_loader(DataFrameReturningDecorator):  # pylint: disable = invalid-name
     def __init__(self, *args, display=False):
         self._args = args
         self._display = display

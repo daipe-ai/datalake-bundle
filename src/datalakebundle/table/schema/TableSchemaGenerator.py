@@ -26,7 +26,7 @@ class TableSchemaGenerator:
                     schema_string += last_struct_type_indent + "),\n"
 
                 else:
-                    schema_string += last_struct_type_indent + f"t.ArrayType(t.{element.elementType}()),\n"
+                    schema_string += last_struct_type_indent + f"t.ArrayType(t.{element.elementType}),\n"
 
             elif isinstance(element, t.StructField):
                 if isinstance(element.dataType, t.StructType):
@@ -48,11 +48,11 @@ class TableSchemaGenerator:
                         schema_string += (
                             last_struct_type_indent
                             + 2 * indent
-                            + f't.StructField("{element.name}", t.ArrayType(t.{element.dataType.elementType}())),\n'  # pyre-ignore[16]
+                            + f't.StructField("{element.name}", t.ArrayType(t.{element.dataType.elementType})),\n'  # pyre-ignore[16]
                         )
 
                 else:
-                    schema_string += last_struct_type_indent + 2 * indent + f't.StructField("{element.name}", t.{element.dataType}()),\n'
+                    schema_string += last_struct_type_indent + 2 * indent + f't.StructField("{element.name}", t.{element.dataType}),\n'
 
             return schema_string
 
