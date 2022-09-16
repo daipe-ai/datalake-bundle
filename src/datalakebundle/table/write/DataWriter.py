@@ -19,8 +19,7 @@ class DataWriter:
         self.__upsert_query_creator = upsert_query_creator
 
     def append(self, df: DataFrame, full_table_name: str, schema: StructType, options: dict):
-        # insertInto() requires dataframe columns order to match schema columns order
-        df.select([field.name for field in schema.fields]).write.options(**options).insertInto(full_table_name, overwrite=False)
+        df.select([field.name for field in schema.fields]).write.mode("append").options(**options).saveAsTable(full_table_name)
 
     def overwrite(self, df: DataFrame, full_table_name: str, partition_by: list, options: dict):
         self.__delta_storage.overwrite_data(df, full_table_name, partition_by, options)
