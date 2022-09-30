@@ -13,10 +13,10 @@ class TableParametersParser:
         self.__fields_resolver = FieldsResolver()
         self.__table_names_preparer = table_names_preparer
 
-    def parse(self, identifier: str, defaults: Optional[dict] = None, explicit_parameters: Optional[dict] = None):
+    def parse(self, table_name_template: str, identifier: str, defaults: Optional[dict] = None, explicit_parameters: Optional[dict] = None):
         defaults = defaults or {}
         explicit_parameters = explicit_parameters or {}
-        table_names = self.__table_names_preparer.prepare(identifier)
+        table_names = self.__table_names_preparer.prepare(table_name_template, identifier)
 
         all_fields = {**table_names.to_dict(), **explicit_parameters}
 

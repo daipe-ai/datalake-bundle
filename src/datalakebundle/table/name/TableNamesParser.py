@@ -3,11 +3,8 @@ from datalakebundle.table.name.TableNames import TableNames
 
 
 class TableNamesParser:
-    def __init__(self, table_name_template: str):
-        self.__table_name_template = table_name_template
-
-    def parse(self, identifiers: dict):
-        full_table_name = fill_template(self.__table_name_template, identifiers)
+    def parse(self, table_name_template: str, identifiers: dict):
+        full_table_name = fill_template(table_name_template, identifiers)
         dot_position = full_table_name.find(".")
 
         if dot_position == -1:

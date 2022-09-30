@@ -7,7 +7,7 @@ class TableNamesPreparer:
         self.__identifier_parser = identifier_parser
         self.__table_names_parser = table_names_parser
 
-    def prepare(self, identifier: str):
+    def prepare(self, table_name_template: str, identifier: str):
         identifiers = self.__identifier_parser.parse(identifier)
 
-        return self.__table_names_parser.parse(identifiers)
+        return self.__table_names_parser.parse(table_name_template, identifiers)

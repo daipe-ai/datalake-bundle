@@ -16,8 +16,8 @@ class DataLakeBundleTest(unittest.TestCase):
     def test_table_parameters(self):
         table_parameters_manager: TableParametersManager = self._container.get(TableParametersManager)
 
-        my_table_parameters = table_parameters_manager.get_or_parse("mydatabase_e.my_table")
-        another_table_parameters = table_parameters_manager.get_or_parse("mydatabase_p.another_table")
+        my_table_parameters = table_parameters_manager.get_or_parse("test_{identifier}", "mydatabase_e.my_table")
+        another_table_parameters = table_parameters_manager.get_or_parse("test_{identifier}", "mydatabase_p.another_table")
 
         self.assertEqual(
             TableParameters(
