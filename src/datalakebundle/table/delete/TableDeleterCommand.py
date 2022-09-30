@@ -6,6 +6,7 @@ from consolebundle.ConsoleCommand import ConsoleCommand
 from datalakebundle.table.TableExistenceChecker import TableExistenceChecker
 from datalakebundle.table.UnknownTableException import UnknownTableException
 from datalakebundle.table.parameters.TableParametersManager import TableParametersManager
+from datalakebundle.table.name.TableNameTemplateGetter import TableNameTemplateGetter
 from datalakebundle.table.delete.TableDeleter import TableDeleter
 
 
@@ -13,11 +14,13 @@ class TableDeleterCommand(ConsoleCommand):
     def __init__(
         self,
         logger: Logger,
+        table_name_template_getter: TableNameTemplateGetter,
         table_parameters_manager: TableParametersManager,
         table_existence_checker: TableExistenceChecker,
         table_deleter: TableDeleter,
     ):
         self.__logger = logger
+        self.__table_name_template_getter = table_name_template_getter
         self.__table_parameters_manager = table_parameters_manager
         self.__table_existence_checker = table_existence_checker
         self.__table_deleter = table_deleter
@@ -38,7 +41,8 @@ class TableDeleterCommand(ConsoleCommand):
         )
 
     def run(self, input_args: Namespace):
-        table_parameters = self.__table_parameters_manager.get_or_parse(input_args.identifier)
+        table_name_template = self.__table_name_template_getter.get_template_for_write()
+        table_parameters = self.__table_parameters_manager.get_or_parse(table_name_template, input_args.identifier)
 
         if not self.__table_existence_checker.table_exists(table_parameters.db_name, table_parameters.table_name):
             self.__logger.error(f"Hive table {table_parameters.full_table_name} does NOT exists")

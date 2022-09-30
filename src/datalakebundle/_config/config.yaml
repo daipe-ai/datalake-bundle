@@ -7,6 +7,10 @@ parameters:
         enabled: True
     table:
       name_template: '%kernel.environment%_{identifier}'
+      read:
+        name_template: '%datalakebundle.table.name_template%'
+      write:
+        name_template: '%datalakebundle.table.name_template%'
       defaults:
     tables:
 
@@ -118,10 +122,13 @@ services:
       - 'console.command'
 
   datalakebundle.table.name.TableNamesParser:
-    arguments:
-      - '%datalakebundle.table.name_template%'
 
   datalakebundle.table.name.TableNamesPreparer:
+
+  datalakebundle.table.name.TableNameTemplateGetter:
+    arguments:
+      - '%datalakebundle.table.read.name_template%'
+      - '%datalakebundle.table.write.name_template%'
 
   datalakebundle.table.optimize.TableOptimizerCommand:
     arguments:
@@ -143,8 +150,6 @@ services:
   datalakebundle.table.schema.TableSchemaGenerator:
 
   datalakebundle.table.TableExistenceChecker:
-
-  datalakebundle.table.TableManager:
 
   datalakebundle.table.write.DataWriter:
 

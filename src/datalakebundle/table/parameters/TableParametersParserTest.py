@@ -14,6 +14,7 @@ class TableParametersParserTest(unittest.TestCase):
 
     def test_basic(self):
         result = self.__table_parameters_parser.parse(
+            "test_{identifier}",
             "mydatabase.my_table",
             {},
             {
@@ -36,6 +37,7 @@ class TableParametersParserTest(unittest.TestCase):
 
     def test_defaults_only(self):
         result = self.__table_parameters_parser.parse(
+            "test_{identifier}",
             "mydatabase.my_table",
             {
                 "target_path": {
@@ -60,6 +62,7 @@ class TableParametersParserTest(unittest.TestCase):
 
     def test_explicit_overriding_defaults(self):
         result = self.__table_parameters_parser.parse(
+            "test_{identifier}",
             "mydatabase.my_table",
             {
                 "target_path": {
@@ -85,6 +88,7 @@ class TableParametersParserTest(unittest.TestCase):
 
     def test_explicit_overriding_db_name(self):
         result = self.__table_parameters_parser.parse(
+            "test_{identifier}",
             "mydatabase.my_table",
             {
                 "target_path": {
@@ -112,6 +116,7 @@ class TableParametersParserTest(unittest.TestCase):
 
     def test_explicit_overriding_table_name(self):
         result = self.__table_parameters_parser.parse(
+            "test_{identifier}",
             "mydatabase.my_table",
             {
                 "target_path": {
