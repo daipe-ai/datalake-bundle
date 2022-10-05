@@ -12,6 +12,8 @@ parameters:
       write:
         name_template: '%datalakebundle.table.name_template%'
       defaults:
+        base_path: 'dbfs:/%kernel.environment%_datalake'
+        target_path: !expr 'base_path + "/" + db_identifier + "/" + table_identifier + ".delta"'
     tables:
 
 services:

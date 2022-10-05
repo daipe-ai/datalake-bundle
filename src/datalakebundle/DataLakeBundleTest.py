@@ -29,6 +29,7 @@ class DataLakeBundleTest(unittest.TestCase):
                     "table_name": "my_table",
                     "encrypted": True,
                     "db_identifier_base": "mydatabase",
+                    "base_path": "/foo/bar",
                     "target_path": "/foo/bar/mydatabase/encrypted/my_table.delta",
                 }
             ),
@@ -45,6 +46,7 @@ class DataLakeBundleTest(unittest.TestCase):
                     "table_name": "another_table",
                     "encrypted": False,
                     "db_identifier_base": "mydatabase",
+                    "base_path": "/foo/bar",
                     "target_path": "/foo/bar/mydatabase/plain/another_table.delta",
                 }
             ),
